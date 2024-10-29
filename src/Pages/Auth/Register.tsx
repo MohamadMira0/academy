@@ -44,7 +44,7 @@ export default function Register() {
 
   // const { data, isLoading } = useQuery({
   //   queryFn: () =>
-  //     Axios.post(`${baseURL}/${Contact_Us}`, {
+  //     Axios.post(`${base_url_student}/${Contact_Us}`, {
   //       headers: {
   //         'x-api-key': 'mwDA9w',
   //       },
@@ -57,7 +57,7 @@ export default function Register() {
   //   e.preventDefault();
   //   setLoading(true);
   //   try {
-  //     const res = await axios.post(`${baseURL}/${LOGIN}`, form);
+  //     const res = await axios.post(`${base_url_student}/${LOGIN}`, form);
   //     const token = res.data.data.token;
   //     cookie.set("Bearer", token);
   //     setLoading(false);

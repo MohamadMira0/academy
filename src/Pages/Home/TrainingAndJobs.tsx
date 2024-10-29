@@ -2,12 +2,12 @@ import { useQuery } from 'react-query';
 import { Axios } from '../../Api/axios';
 import Employ from './Employ';
 import Training from './Training';
-import { JobsTraining, baseURL } from '../../Api/Api';
+import { JobsTraining, base_url_student } from '../../Api/Api';
 
 export const TrainingAndJobs = () => {
   const { data: training, isLoading } = useQuery({
     queryFn: () =>
-      Axios.get(`${baseURL}/${JobsTraining}`, {
+      Axios.get(`${base_url_student}/${JobsTraining}`, {
         headers: {
           'x-api-key': 'mwDA9w',
         },

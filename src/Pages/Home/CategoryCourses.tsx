@@ -3,7 +3,7 @@ import ArmyCourses from './ArmyCourses';
 import FirstCourses from './FirstCourses';
 import SecCourses from './SecCourses';
 import Sold from './Sold';
-import { baseURL, category_Courses } from '../../Api/Api';
+import { base_url_student, category_Courses } from '../../Api/Api';
 import { Axios } from '../../Api/axios';
 
 export type oneCourseType = {
@@ -26,7 +26,7 @@ export type CategoryCoursesType = {
 export default function CategoryCourses() {
   const { data: categoryCourses, isLoading } = useQuery({
     queryFn: () =>
-      Axios.get(`${baseURL}/${category_Courses}`, {
+      Axios.get(`${base_url_student}/${category_Courses}`, {
         headers: {
           'x-api-key': 'mwDA9w',
         },

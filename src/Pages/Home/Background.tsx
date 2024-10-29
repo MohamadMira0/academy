@@ -2,7 +2,7 @@ import React from 'react';
 import image from '../../assets/background-home.svg';
 import janzeer from '../../assets/janzeer.svg';
 import { useQuery } from 'react-query';
-import { AboutUs_Background, baseURL } from '../../Api/Api';
+import { AboutUs_Background, base_url_student } from '../../Api/Api';
 import { Axios } from '../../Api/axios';
 
 const Background = () => {
@@ -22,7 +22,7 @@ const Background = () => {
 
   const { data, isLoading } = useQuery({
     queryFn: () =>
-      Axios.get(`${baseURL}/${AboutUs_Background}`, {
+      Axios.get(`${base_url_student}/${AboutUs_Background}`, {
         headers: {
           'x-api-key': 'mwDA9w',
         },

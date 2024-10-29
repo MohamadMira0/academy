@@ -23,7 +23,7 @@ export const links = [
   },
   {
     label: 'التدريب والتوظيف ',
-    to: '/dashboard/training-and-employment',
+    to: '/dashboard/training',
     icons: MdWork,
   },
   {

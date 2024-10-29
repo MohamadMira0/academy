@@ -14,7 +14,7 @@ import location from '../assets/icons/location.svg';
 import phone from '../assets/icons/phone.svg';
 import spanFooter from '../assets/spanFooter.png';
 import axios from 'axios';
-import { Contact_Us, baseURL } from '../Api/Api';
+import { Contact_Us, base_url_student } from '../Api/Api';
 import { Axios } from '../Api/axios';
 const Footer = (props: any) => {
   const queryClient = useQueryClient();
@@ -46,7 +46,7 @@ const Footer = (props: any) => {
 
   const { data: contact, isLoading } = useQuery({
     queryFn: () =>
-      Axios.get(`${baseURL}/${Contact_Us}`, {
+      Axios.get(`${base_url_student}/${Contact_Us}`, {
         headers: {
           'x-api-key': 'mwDA9w',
         },
@@ -57,11 +57,15 @@ const Footer = (props: any) => {
 
   const sendForm = async (formData: InitialValuesType) => {
     try {
-      const response = await axios.post(`${baseURL}/Send-Message`, formData, {
-        headers: {
-          'x-api-key': 'mwDA9w',
+      const response = await axios.post(
+        `${base_url_student}/Send-Message`,
+        formData,
+        {
+          headers: {
+            'x-api-key': 'mwDA9w',
+          },
         },
-      });
+      );
       console.log(formData);
       return response.data;
     } catch (error) {

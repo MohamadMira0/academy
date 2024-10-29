@@ -26,10 +26,15 @@ import Blog from './Pages/Blogs/Blog';
 import Dashboard from './Dashboard';
 import Students from './Dashboard/students';
 import Courses from './Dashboard/courses';
-import TrainingAndEmployment from './Dashboard/training-and-employment';
 import BlogsDashboard from './Dashboard/blogs';
 import Content from './Dashboard/content';
 import MainDashboard from './Dashboard/main';
+import LoginAdmin from './Dashboard/Auth/LoginAdmin';
+import Jobs from './Dashboard/training-and-employment';
+import AddJob from './Dashboard/training-and-employment/add-employment';
+import AddTraining from './Dashboard/Training/add-training';
+import UpdateTraining from './Dashboard/Training/update-training';
+import AddBlog from './Dashboard/blogs/add-blog';
 
 function App() {
   usePreventZoom();
@@ -63,12 +68,14 @@ function App() {
         <Route path="/payment" element={<Payment />} />
         <Route path="/course/:id" element={<ShowCourse />} />
         <Route path="/course/:id/exam" element={<Exam />} />
+        <Route path="/admin" element={<LoginAdmin />} />
         <Route path="/dashboard" element={<Dashboard />}>
           <Route path="main" index element={<MainDashboard />} />
-          <Route
-            path="training-and-employment"
-            element={<TrainingAndEmployment />}
-          />
+          <Route path="training" element={<Jobs />} />
+          <Route path="training/:id" element={<UpdateTraining />} />
+          <Route path="add-job" element={<AddJob />} />
+          <Route path="add-training" element={<AddTraining />} />
+          <Route path="add-blog" element={<AddBlog />} />
           <Route path="courses" element={<Courses />} />
           <Route path="student" element={<Students />} />
           <Route path="blogs" element={<BlogsDashboard />} />

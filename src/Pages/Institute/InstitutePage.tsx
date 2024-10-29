@@ -23,7 +23,7 @@ export default function InstitutePage() {
 
   // const { data: contact, isLoading } = useQuery({
   //   queryFn: () =>
-  //     Axios.get(`${baseURL}/${Contact_Us}`, {
+  //     Axios.get(`${base_url_student}/${Contact_Us}`, {
   //       headers: {
   //         'x-api-key': 'mwDA9w',
   //       },

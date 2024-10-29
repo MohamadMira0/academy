@@ -22,7 +22,7 @@ export default function AlertPopUp({
       <div
         id="static-modal"
         data-modal-backdrop="static"
-        tabIndex="-1"
+        tabIndex={-1}
         aria-hidden="true"
         className={`${
           openDetails ? '' : 'hidden'

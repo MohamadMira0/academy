@@ -1,0 +1,27 @@
+export interface BaseFields {
+  description_ar: string;
+  description_en: string;
+  title_ar: string;
+  title_en: string;
+}
+interface IMedia {
+  file_path: string;
+  filename: string;
+  title: string;
+}
+export interface IJobs extends BaseFields {
+  id: number;
+  media: IMedia;
+}
+export interface IInitialValuesAddJobs extends BaseFields {
+  media?: File | null;
+}
+export interface IInitialValuesAddTrainings extends BaseFields {
+  media?: File | null;
+}
+export interface IInitialValuesAddBlogs extends BaseFields {
+  media?: File | null;
+}
+
+export interface ITraining extends IJobs {}
+export interface IBlogs extends IJobs {}

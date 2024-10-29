@@ -3,7 +3,7 @@ import TopBar2 from '../../components/TopBar2';
 import janzeer from '../../assets/janzzerBlue.png';
 import { useMutation, useQuery } from 'react-query';
 import { Axios } from '../../Api/axios';
-import { Contact_Us, baseURL } from '../../Api/Api';
+import { Contact_Us, base_url_student } from '../../Api/Api';
 import facebook from '../../assets/icons/facebook.svg';
 import instagram from '../../assets/icons/instagram.svg';
 import tiktok from '../../assets/icons/tiktok.svg';
@@ -62,7 +62,7 @@ export default function ContactUs() {
   };
   const { data: contact, isLoading } = useQuery({
     queryFn: () =>
-      Axios.get(`${baseURL}/${Contact_Us}`, {
+      Axios.get(`${base_url_student}/${Contact_Us}`, {
         headers: {
           'x-api-key': 'mwDA9w',
         },
@@ -73,11 +73,15 @@ export default function ContactUs() {
 
   const sendForm = async (formData: InitialValuesType) => {
     try {
-      const response = await axios.post(`${baseURL}/Send-Message`, formData, {
-        headers: {
-          'x-api-key': 'mwDA9w',
+      const response = await axios.post(
+        `${base_url_student}/Send-Message`,
+        formData,
+        {
+          headers: {
+            'x-api-key': 'mwDA9w',
+          },
         },
-      });
+      );
       console.log(formData);
       return response.data;
     } catch (error) {

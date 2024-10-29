@@ -3,20 +3,19 @@ import Cookie from 'cookie-universal';
 import logo from '../../assets/logoAuth-removebg.png';
 import lock from '../../assets/icons/lock.svg';
 import message from '../../assets/icons/message (2).svg';
-import phone1 from '../../assets/icons/phone1.svg';
-import profile from '../../assets/icons/profile.svg';
 import TopBar2 from '../../components/TopBar2';
 import image from '../../assets/background-home.svg';
 import { Link } from 'react-router-dom';
 import span from '../../assets/span.png';
 import eye from '../../assets/icons/eye.svg';
-import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
 import { LoginValidation } from '../../Validation/LoginValidation';
+import { AxiosAdmin } from '../../Api/axios';
+import { base_url_admin } from '../../Api/Api';
 
-export default function Login() {
-  // const [err, setErr] = useState('');
-  // const [loading, setLoading] = useState(false);
-  // const cookie = Cookie();
+export default function LoginAdmin() {
+  const [err, setErr] = useState('');
+  const cookie = Cookie();
   const [showPassword, setShowPassword] = useState(false);
 
   type InitialValuesType = {
@@ -31,25 +30,31 @@ export default function Login() {
     remember: false,
   };
   // Handle Submit
-  // async function handleSubmit(e) {
-  //   e.preventDefault();
-  //   setLoading(true);
-  //   try {
-  //     const res = await axios.post(`${base_url_student}/${LOGIN}`, form);
-  //     const token = res.data.data.token;
-  //     cookie.set("Bearer", token);
-  //     setLoading(false);
-  //     window.location.pathname = "/dashboard/home";
-  //   } catch (err) {
-  //     console.log(err);
-  //     setLoading(false);
-  //     if (err.response.status === 401) {
-  //       setErr("Email or Password is not Correct");
-  //     } else {
-  //       setErr("Internal Server ERR");
-  //     }
-  //   }
-  // }
+  const handleSubmit = async (
+    values: InitialValuesType,
+    { setSubmitting }: FormikHelpers<InitialValuesType>,
+  ) => {
+    try {
+      const res = await AxiosAdmin.post(
+        `${base_url_admin}/auth/signin`,
+        values,
+      );
+      const token = res.data.data.token;
+      cookie.set('BearerAdmin', token);
+      window.location.pathname = '/dashboard';
+
+      console.log('Data submitted successfully:', res.data);
+    } catch (error) {
+      if (error.response?.status === 401) {
+        setErr('Email or Password is not Correct');
+      } else {
+        setErr('Internal Server ERR');
+      }
+      console.error('Error submitting data:', err);
+    } finally {
+      setSubmitting(false); // Enable the submit button after request is done
+    }
+  };
 
   return (
     <>
@@ -72,11 +77,10 @@ export default function Login() {
                 <Formik
                   initialValues={initialValues}
                   validationSchema={LoginValidation}
-                  onSubmit={() => {}}
+                  onSubmit={handleSubmit}
                 >
                   {({
                     values,
-                    errors,
                     isSubmitting,
                     setFieldValue,
                     /* and other goodies */
@@ -149,11 +153,15 @@ export default function Login() {
                           هل نسيت كلمة السر؟
                         </Link>
                       </div>
+
                       <div
                         className="text-center mt-16 my-4 flex gap-4 items-center"
                         dir="rtl"
                       >
-                        <button className="bg-primary text-center text-lg text-white rounded-lg px-8 py-1 hover:bg-black duration-300 hover:text-white shadow-md">
+                        <button
+                          disabled={isSubmitting}
+                          className="bg-primary text-center text-lg text-white rounded-lg px-8 py-1 hover:bg-black duration-300 hover:text-white shadow-md"
+                        >
                           تسجيل الدخول
                         </button>
                         <div className="flex">
@@ -166,6 +174,11 @@ export default function Login() {
                           </Link>
                         </div>
                       </div>
+                      {err !== '' && (
+                        <div className="font-bold text-lg text-red-600 text-center">
+                          {err}
+                        </div>
+                      )}
                     </Form>
                   )}
                 </Formik>
