@@ -1,6 +1,15 @@
 import { BLOGS, JOBS, TRAINING } from '../Api/Api';
 import { AxiosWithToken } from '../Api/axios';
 import { IInitialValuesAddJobs, IJobs, ITraining } from '../types';
+//** formatDate */
+export function formatDate(dateString: string): string {
+  const date = new Date(dateString);
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  const year = date.getFullYear();
+  return `${day}/${month}/${year}`;
+}
+
 // ** Jobs **
 export const getJobs = async () => {
   const response = await AxiosWithToken.get(`/${JOBS}`);

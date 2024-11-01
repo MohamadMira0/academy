@@ -12,6 +12,7 @@ interface IMedia {
 export interface IJobs extends BaseFields {
   id: number;
   media: IMedia;
+  created_at: string;
 }
 export interface IInitialValuesAddJobs extends BaseFields {
   media?: File | null;

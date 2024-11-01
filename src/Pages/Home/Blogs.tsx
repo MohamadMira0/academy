@@ -1,50 +1,28 @@
 import Blog from '../../components/Blog';
 import TitleWithLogo from '../../components/TitleWithLogo';
-import radioImage from '../../assets/courses/radio-white.png';
 import Button from '../../components/Button';
+import { useQuery } from 'react-query';
+import { formatDate, getBlogs } from '../../functions';
+import { IBlogs } from '../../types';
 
 export default function Blogs() {
-  const dataCourse = [
-    {
-      title: 'عنوان المدومنة',
-      description:
-        'هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحة ما سيلهي القارئ عن التركيز على الشكل الخارجي للنص أو شكل توضع الفقرات في الصفحة التي يقرأها. ',
-      img: radioImage,
-      show: 100,
-      message: 50,
-      date: '2024/5/12',
-    },
-    {
-      title: 'عنوان المدومنة',
-      description:
-        'هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحة ما سيلهي القارئ عن التركيز على الشكل الخارجي للنص أو شكل توضع الفقرات في الصفحة التي يقرأها. ',
-      img: radioImage,
-      show: 100,
-      message: 50,
-      date: '2024/5/12',
-    },
-    {
-      title: 'عنوان المدومنة',
-      description:
-        'هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحة ما سيلهي القارئ عن التركيز على الشكل الخارجي للنص أو شكل توضع الفقرات في الصفحة التي يقرأها. ',
-      img: radioImage,
-      show: 100,
-      message: 50,
-      date: '2024/5/12',
-    },
-  ];
-
-  const showCourse = dataCourse.map((course) => (
+  // ** Handle Jobs
+  const { data, isLoading } = useQuery(['blogs'], getBlogs);
+  const blogs: IBlogs[] = data?.data;
+  const lastThreeArticles = blogs.slice(0, 3);
+  const showCourse = lastThreeArticles.map((blog) => (
     <Blog
-      img={course.img}
-      title={course.title}
-      description={course.description}
-      date={course.date}
-      show={course.show}
-      message={course.message}
+      img={blog.media.file_path}
+      title={blog.title_ar}
+      description={blog.description_ar}
+      date={formatDate(blog.created_at)}
+      show={200}
+      message={10}
       button="المزيد"
     />
   ));
+
+  if (isLoading) return <p>Loading...</p>;
   return (
     <div className="mb-20">
       <TitleWithLogo title="المدونات" />

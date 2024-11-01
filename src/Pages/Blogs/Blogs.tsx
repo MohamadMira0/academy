@@ -2,82 +2,29 @@ import Footer from '../../components/Footer';
 import TopBar2 from '../../components/TopBar2';
 import janzeer from '../../assets/janzzerBlue.png';
 import Blog from '../../components/Blog';
-import radioImage from '../../assets/courses/radio-white.png';
-import Button from '../../components/Button';
+import { useQuery } from 'react-query';
+import { formatDate, getBlogs } from '../../functions';
+import { IBlogs } from '../../types';
 
 export default function Blogs() {
-  const dataCourse = [
-    {
-      title: 'عنوان المدومنة',
-      description:
-        'هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحة ما سيلهي القارئ عن التركيز على الشكل الخارجي للنص أو شكل توضع الفقرات في الصفحة التي يقرأها. ',
-      img: radioImage,
-      show: 100,
-      message: 50,
-      date: '2024/5/12',
-    },
-    {
-      title: 'عنوان المدومنة',
-      description:
-        'هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحة ما سيلهي القارئ عن التركيز على الشكل الخارجي للنص أو شكل توضع الفقرات في الصفحة التي يقرأها. ',
-      img: radioImage,
-      show: 100,
-      message: 50,
-      date: '2024/5/12',
-    },
-    {
-      title: 'عنوان المدومنة',
-      description:
-        'هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحة ما سيلهي القارئ عن التركيز على الشكل الخارجي للنص أو شكل توضع الفقرات في الصفحة التي يقرأها. ',
-      img: radioImage,
-      show: 100,
-      message: 50,
-      date: '2024/5/12',
-    },
-    {
-      title: 'عنوان المدومنة',
-      description:
-        'هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحة ما سيلهي القارئ عن التركيز على الشكل الخارجي للنص أو شكل توضع الفقرات في الصفحة التي يقرأها. ',
-      img: radioImage,
-      show: 100,
-      message: 50,
-      date: '2024/5/12',
-    },
-    {
-      title: 'عنوان المدومنة',
-      description:
-        'هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحة ما سيلهي القارئ عن التركيز على الشكل الخارجي للنص أو شكل توضع الفقرات في الصفحة التي يقرأها. ',
-      img: radioImage,
-      show: 100,
-      message: 50,
-      date: '2024/5/12',
-    },
-    {
-      title: 'عنوان المدومنة',
-      description:
-        'هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحة ما سيلهي القارئ عن التركيز على الشكل الخارجي للنص أو شكل توضع الفقرات في الصفحة التي يقرأها. ',
-      img: radioImage,
-      show: 100,
-      message: 50,
-      date: '2024/5/12',
-    },
-  ];
-
-  const showCourse = dataCourse.map((course) => (
+  // ** Handle Jobs
+  const { data, isLoading } = useQuery(['blogs'], getBlogs);
+  const blogs: IBlogs[] = data?.data;
+  const showCourse = blogs.map((blog) => (
     <Blog
-      img={course.img}
-      title={course.title}
-      description={course.description}
-      date={course.date}
-      show={course.show}
-      message={course.message}
+      img={blog.media.file_path}
+      title={blog.title_ar}
+      description={blog.description_ar}
+      date={formatDate(blog.created_at)}
+      show={200}
+      message={10}
       button="معرفة المزيد"
     />
   ));
+  if (isLoading) return <div>loading...</div>;
   return (
     <>
       <TopBar2 />
-
       <div className="container lg:px-16 md:px-8 px-3 mx-auto py-16" dir="rtl">
         <div className="flex justify-start relative">
           <div className="absolute top-[-4rem] left-0">
