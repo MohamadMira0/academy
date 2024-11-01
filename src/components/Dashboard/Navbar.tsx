@@ -1,4 +1,4 @@
-import logo from '../../assets/LOGO-svg.svg';
+import logo from '../../assets/logoSvg.svg';
 import { CiSearch } from 'react-icons/ci';
 import { BsPersonFill } from 'react-icons/bs';
 import { IoMdArrowDropdown } from 'react-icons/io';
