@@ -17,7 +17,7 @@ import image3 from '../../assets/contactUs/Contact us-amico 1.svg';
 import profile from '../../assets/icons/profile.svg';
 import Phone from '../../assets/svg/Phone';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
-import { FooterValidation } from '../../Validation/FooterValidation';
+import { FooterValidation } from '../../Validation/pages/FooterValidation';
 import { ChangeEvent, useState } from 'react';
 import Profile from '../../assets/svg/Profile';
 import Cookie from 'cookie-universal';
@@ -31,7 +31,7 @@ import span from '../../assets/span.png';
 import eye from '../../assets/icons/eye.svg';
 import show from '../../assets/icons/show.svg';
 import axios from 'axios';
-import { ContactValidation } from '../../Validation/ContactValidation';
+import { ContactValidation } from '../../Validation/pages/ContactValidation';
 
 export default function ContactUs() {
   const [showPassword, setShowPassword] = useState(false);

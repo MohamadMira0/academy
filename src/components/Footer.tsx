@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Formik, useFormik, Form, Field } from 'formik';
-import { FooterValidation } from '../Validation/FooterValidation';
+import { FooterValidation } from '../Validation/pages/FooterValidation';
 import { useMutation, useQuery } from 'react-query';
 import { useQueryClient } from 'react-query';
 

@@ -12,7 +12,7 @@ import span from '../../assets/span.png';
 import eye from '../../assets/icons/eye.svg';
 import show from '../../assets/icons/show.svg';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
-import { RegisterValidation } from '../../Validation/RegisterValidation';
+import { RegisterValidation } from '../../Validation/auth/RegisterValidation';
 import { useQuery } from 'react-query';
 import { Axios } from '../../Api/axios';
 

@@ -5,7 +5,7 @@ import { ErrorMessage, Field, Form, Formik } from 'formik';
 import message from '../../assets/icons/message (2).svg';
 import phone1 from '../../assets/icons/phone1.svg';
 import profile from '../../assets/icons/profile.svg';
-import { InstituteValidation } from '../../Validation/InstituteValidation';
+import { InstituteValidation } from '../../Validation/pages/InstituteValidation';
 import { ChangeEvent, useState } from 'react';
 import image1 from '../../assets/courses/image2.png';
 import image2 from '../../assets/courses/course.png';

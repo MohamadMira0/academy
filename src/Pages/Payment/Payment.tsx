@@ -17,7 +17,7 @@ import Button from '../../components/Button';
 import CardNumberInput from '../../components/Inputs/CardNumberInput';
 import ExpirationDateInput from '../../components/Inputs/ExpirationDateInput';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
-import { PaymentValidation } from '../../Validation/PaymentValidation';
+import { PaymentValidation } from '../../Validation/pages/PaymentValidation';
 
 export default function Payment() {
   const [complete, setComplete] = useState(false);

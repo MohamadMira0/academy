@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import span from '../../assets/span.png';
 import eye from '../../assets/icons/eye.svg';
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
-import { LoginValidation } from '../../Validation/LoginValidation';
+import { LoginValidation } from '../../Validation/auth/LoginValidation';
 import { AxiosAdmin } from '../../Api/axios';
 import { base_url_admin } from '../../Api/Api';
 

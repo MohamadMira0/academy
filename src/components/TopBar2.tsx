@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import logo from '../assets/Logo-svg.svg';
+import logo from '../assets/logoSvg.svg';
 import english from '../assets/english.svg';
 import arabic from '../assets/arabic.svg';
 import arrow from '../assets/icons/arrow.svg';

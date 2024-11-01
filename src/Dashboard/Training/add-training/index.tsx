@@ -1,4 +1,4 @@
-import { Field, Form, Formik, FormikHelpers } from 'formik';
+import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
 import Button from '../../../components/Button';
 import {
   IInitialValuesAddJobs,
@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { FaRegEdit, FaRegFileImage } from 'react-icons/fa';
 import { AiFillFileImage } from 'react-icons/ai';
 import { useState } from 'react';
+import { AddBasicValidation } from '../../../Validation/dashboard/AddBlogValidation';
 
 const AddTraining = () => {
   const initialValues: IInitialValuesAddJobs = {
@@ -50,7 +51,7 @@ const AddTraining = () => {
   return (
     <div className="bg-white shadow-lg rounded-sm border-none py-4 overflow-x-auto lg:p-16 md:p-8 p-4">
       <Formik
-        // validationSchema={LoginValidation}
+        validationSchema={AddBasicValidation}
         initialValues={initialValues}
         onSubmit={handleSubmit}
       >
@@ -131,9 +132,9 @@ const AddTraining = () => {
                             >
                               <path
                                 stroke="currentColor"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
                                 d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
                               />
                             </svg>
@@ -172,6 +173,11 @@ const AddTraining = () => {
                       setFieldValue('media', file);
                     }}
                   />
+                  <ErrorMessage
+                    name="media"
+                    component="div"
+                    className="error text-red-600 text-sm"
+                  />
                 </div>
               )}
             </div>
@@ -187,6 +193,11 @@ const AddTraining = () => {
                 placeholder="عنوان التدريب باللغة العربية"
                 name="title_ar"
                 id="title_ar"
+              />
+              <ErrorMessage
+                name="title_ar"
+                component="div"
+                className="error text-red-600 text-sm"
               />
             </div>
             <div className="mb-4">
@@ -206,7 +217,12 @@ const AddTraining = () => {
                 cols="30"
                 rows="6"
                 maxLength="300"
-              ></Field>
+              />
+              <ErrorMessage
+                name="description_ar"
+                component="div"
+                className="error text-red-600 text-sm"
+              />
             </div>
             <div className="mb-4">
               <label
@@ -220,6 +236,11 @@ const AddTraining = () => {
                 placeholder="عنوان التدريب باللغة الإنكليزية"
                 name="title_en"
                 id="title_en"
+              />
+              <ErrorMessage
+                name="title_en"
+                component="div"
+                className="error text-red-600 text-sm"
               />
             </div>
             <div className="mb-4">
@@ -239,7 +260,12 @@ const AddTraining = () => {
                 cols="30"
                 rows="6"
                 maxLength="300"
-              ></Field>
+              />
+              <ErrorMessage
+                name="description_en"
+                component="div"
+                className="error text-red-600 text-sm"
+              />
             </div>
 
             <div className="flex justify-center items-center my-4 gap-4 flex-wrap lg:mt-16 mt-8">
