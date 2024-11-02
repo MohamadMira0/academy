@@ -94,9 +94,8 @@ export default function Sold() {
           initialSlide={content.length - 1}
         >
           {content.map((item, index) => (
-            <SwiperSlide>
+            <SwiperSlide key={index}>
               <div
-                key={index}
                 style={{ backgroundImage: `url('${item.img}')` }}
                 className="z-0 bg-cover bg-center w-full bg-no-repeat h-[353px] rounded-lg"
               >

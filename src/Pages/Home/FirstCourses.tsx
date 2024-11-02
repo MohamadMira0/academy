@@ -4,9 +4,7 @@ import radioImage from '../../assets/courses/Radio.png';
 import Button from '../../components/Button';
 import { CategoryCoursesType } from './CategoryCourses';
 
-export default function FirstCourses({ data }: CategoryCoursesType) {
-  console.log(data);
-
+export default function FirstCourses() {
   // const showCourse = data.map((course: CategoryCoursesType, index: number) => (
   //   <Course
   //     img={course?.courses[index]?.image}

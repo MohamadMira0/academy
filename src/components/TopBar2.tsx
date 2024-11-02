@@ -5,6 +5,8 @@ import english from '../assets/english.svg';
 import arabic from '../assets/arabic.svg';
 import arrow from '../assets/icons/arrow.svg';
 import person from '../assets/icons/person.svg';
+import { useDispatch } from 'react-redux';
+import { languageAction } from '../app/features/languages/langSlice';
 
 export default function TopBar2() {
   const [open, setOpen] = useState(false);
@@ -12,6 +14,8 @@ export default function TopBar2() {
   const [openProfile, setOpenProfile] = useState(false);
   const [courses, setCourses] = useState(false);
   const [training, setTraining] = useState(false);
+  const dispatch = useDispatch();
+  const [lang, setLang] = useState('en');
 
   // const [screenSize, setScreenSize] = useState(window.innerWidth);
 
@@ -101,7 +105,13 @@ export default function TopBar2() {
             aria-labelledby="accordion-collapse-heading-1"
           >
             <ul className="py-2 font-medium" role="none">
-              <li>
+              <li
+                onClick={() => {
+                  console.log('en');
+                  setLang('en');
+                  dispatch(languageAction('en'));
+                }}
+              >
                 <a
                   href="#"
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"
@@ -113,7 +123,13 @@ export default function TopBar2() {
                   </div>
                 </a>
               </li>
-              <li>
+              <li
+                onClick={() => {
+                  console.log('ar');
+                  setLang('ar');
+                  dispatch(languageAction('ar'));
+                }}
+              >
                 <a
                   href="#"
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"

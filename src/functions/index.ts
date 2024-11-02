@@ -1,5 +1,5 @@
-import { BLOGS, JOBS, TRAINING } from '../Api/Api';
-import { AxiosWithToken } from '../Api/axios';
+import { BLOGS, Courses, Jobs, JOBS, Training, TRAINING } from '../Api/Api';
+import { Axios, AxiosWithToken } from '../Api/axios';
 import { IInitialValuesAddJobs, IJobs, ITraining } from '../types';
 //** formatDate */
 export function formatDate(dateString: string): string {
@@ -10,6 +10,35 @@ export function formatDate(dateString: string): string {
   return `${day}/${month}/${year}`;
 }
 
+// ** Website **
+// ** get Jobs **
+// export const getJobsWebsite = async (lang: string) => {
+//   const response = await Axios.get(`/jobs`);
+//   return response?.data;
+// };
+export const getJobsWebsite = async (lang: string) => {
+  const response = await Axios.get(`/jobs`, {
+    headers: {
+      'X-App-Locale': lang, // إضافة اللغة كـ header
+    },
+  });
+  return response?.data; // إرجاع البيانات
+};
+
+// ** get Training **
+export const getTrainingsWebsite = async (lang: string) => {
+  const response = await Axios.get(`/${Training}`);
+  return response?.data;
+};
+//** get Courses */
+export const getCoursesWebsite = async (lang: string) => {
+  const response = await Axios.get(`/${Courses}/index-main`);
+  return response?.data;
+};
+
+// ** Website **
+
+//** dashboard */
 // ** Jobs **
 export const getJobs = async () => {
   const response = await AxiosWithToken.get(`/${JOBS}`);

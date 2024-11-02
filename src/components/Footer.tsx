@@ -44,16 +44,16 @@ const Footer = (props: any) => {
     youtube: string;
   };
 
-  const { data: contact, isLoading } = useQuery({
-    queryFn: () =>
-      Axios.get(`${base_url_student}/${Contact_Us}`, {
-        headers: {
-          'x-api-key': 'mwDA9w',
-        },
-      }),
-    queryKey: ['Contact_Us'],
-  });
-  const links: SocialMediaData = contact?.data?.data;
+  // const { data: contact, isLoading } = useQuery({
+  //   queryFn: () =>
+  //     Axios.get(`${base_url_student}/${Contact_Us}`, {
+  //       headers: {
+  //         'x-api-key': 'mwDA9w',
+  //       },
+  //     }),
+  //   queryKey: ['Contact_Us'],
+  // });
+  // const links: SocialMediaData = contact?.data?.data;
 
   const sendForm = async (formData: InitialValuesType) => {
     try {
@@ -98,7 +98,7 @@ const Footer = (props: any) => {
           >
             <div>
               <h3 className="text-xl font-bold">تواصل معنا</h3>
-              <div className="flex gap-4 text-2xl my-6">
+              {/* <div className="flex gap-4 text-2xl my-6">
                 <Link to={links?.facebook} className="text-stroke">
                   <img src={facebook} alt="" />
                 </Link>
@@ -114,9 +114,9 @@ const Footer = (props: any) => {
                 <Link to={links?.whatsapp} className="text-stroke">
                   <img src={whatsapp} alt="" />
                 </Link>
-              </div>
+              </div> */}
               <h3 className="font-bold text-xl mt-10">ارقام التواصل</h3>
-              <div className="flex my-4">
+              {/* <div className="flex my-4">
                 <img src={phone} alt="" />
                 <p
                   className="mr-4 md:block hidden"
@@ -156,7 +156,7 @@ const Footer = (props: any) => {
               <div className="flex my-4">
                 <img src={location} alt="" />
                 <p className="mr-4">{links?.address}</p>
-              </div>
+              </div> */}
             </div>
             <div className="p-2">
               <Formik

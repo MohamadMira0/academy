@@ -9,9 +9,10 @@ export default function Blogs() {
   // ** Handle Jobs
   const { data, isLoading } = useQuery(['blogs'], getBlogs);
   const blogs: IBlogs[] = data?.data;
-  const lastThreeArticles = blogs.slice(0, 3);
-  const showCourse = lastThreeArticles.map((blog) => (
+  const lastThreeArticles = blogs?.slice(0, 3);
+  const showCourse = lastThreeArticles?.map((blog, idx) => (
     <Blog
+      key={idx}
       img={blog.media.file_path}
       title={blog.title_ar}
       description={blog.description_ar}

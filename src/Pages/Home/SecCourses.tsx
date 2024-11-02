@@ -27,8 +27,9 @@ export default function SecCourses() {
     },
   ];
 
-  const showCourse = dataCourse.map((course) => (
+  const showCourse = dataCourse.map((course, idx) => (
     <Course
+      key={idx}
       img={course.img}
       name={course.name}
       price={course.price}

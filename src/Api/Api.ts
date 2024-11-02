@@ -1,14 +1,15 @@
-export const base_url_student = 'https://back.gmdss-academy.com/api';
-export const base_url_admin = 'https://back.gmdss-academy.com/admin';
-
 // ** Website **
+export const base_url_student = 'https://back.gmdss-academy.com/api';
 export const SEARCH = 'search';
-export const JobsTraining = 'Jobs-Training';
+export const Training = 'trainings';
+export const Jobs = 'jobs';
+export const Courses = 'courses';
 export const Contact_Us = 'Contact-Us';
 export const AboutUs_Background = 'AboutUs-Background';
 export const category_Courses = 'category-Courses';
 
 // **-- Admin --** //
+export const base_url_admin = 'https://back.gmdss-academy.com/admin';
 // ** Users **
 export const USER = 'users';
 // ** Dashboard **

@@ -14,6 +14,12 @@ export interface IJobs extends BaseFields {
   media: IMedia;
   created_at: string;
 }
+export interface jobsWebsite {
+  title: string;
+  description: string;
+  media: IMedia;
+}
+export interface trainingsWebsite extends jobsWebsite {}
 export interface IInitialValuesAddJobs extends BaseFields {
   media?: File | null;
 }
