@@ -1,6 +1,13 @@
+import { QueryFunction } from 'react-query';
 import { BLOGS, Courses, Jobs, JOBS, Training, TRAINING } from '../Api/Api';
 import { Axios, AxiosWithToken } from '../Api/axios';
-import { IInitialValuesAddJobs, IJobs, ITraining } from '../types';
+import {
+  ApplyInstitutesType,
+  blogsWebsite,
+  IInitialValuesAddJobs,
+  IJobs,
+  ITraining,
+} from '../types';
 //** formatDate */
 export function formatDate(dateString: string): string {
   const date = new Date(dateString);
@@ -19,20 +26,43 @@ export function formatDate(dateString: string): string {
 export const getJobsWebsite = async (lang: string) => {
   const response = await Axios.get(`/jobs`, {
     headers: {
-      'X-App-Locale': lang, // إضافة اللغة كـ header
+      'X-App-Locale': lang,
     },
   });
-  return response?.data; // إرجاع البيانات
+  return response?.data;
 };
 
 // ** get Training **
 export const getTrainingsWebsite = async (lang: string) => {
-  const response = await Axios.get(`/${Training}`);
+  const response = await Axios.get(`/${Training}`, {
+    headers: {
+      'X-App-Locale': lang,
+    },
+  });
   return response?.data;
 };
 //** get Courses */
 export const getCoursesWebsite = async (lang: string) => {
-  const response = await Axios.get(`/${Courses}/index-main`);
+  const response = await Axios.get(`/${Courses}/index-main`, {
+    headers: {
+      'X-App-Locale': lang,
+    },
+  });
+  return response?.data;
+};
+//** get Blogs */
+export const getBlogsWebsite = async (lang: string) => {
+  const response = await Axios.get(`/${BLOGS}`, {
+    headers: {
+      'X-App-Locale': lang,
+    },
+  });
+  return response?.data;
+};
+export const createApplyInstitutesWebsite = async (
+  data: ApplyInstitutesType,
+) => {
+  const response = await Axios.post(`/apply-institute/send`, data);
   return response?.data;
 };
 

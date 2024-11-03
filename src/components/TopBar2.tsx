@@ -5,8 +5,9 @@ import english from '../assets/english.svg';
 import arabic from '../assets/arabic.svg';
 import arrow from '../assets/icons/arrow.svg';
 import person from '../assets/icons/person.svg';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { languageAction } from '../app/features/languages/langSlice';
+import { RootState } from '../app/store';
 
 export default function TopBar2() {
   const [open, setOpen] = useState(false);
@@ -16,24 +17,23 @@ export default function TopBar2() {
   const [training, setTraining] = useState(false);
   const dispatch = useDispatch();
   const [lang, setLang] = useState('en');
-
-  // const [screenSize, setScreenSize] = useState(window.innerWidth);
-
+  const language: string = useSelector(
+    (state: RootState) => state.language.lang,
+  );
+  const [screenSize, setScreenSize] = useState(window.innerWidth);
   useEffect(() => {
     const handleResize = () => {
-      // setScreenSize(window.innerWidth);
+      setScreenSize(window.innerWidth);
       setCourses(false);
       setOpenLang(false);
       setTraining(false);
       setOpenProfile(false);
     };
-
     window.addEventListener('resize', handleResize);
-
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, []);
+  }, [screenSize]);
 
   return (
     <nav
@@ -50,7 +50,12 @@ export default function TopBar2() {
 
         <div className="relative flex items-center md:order-2 space-x-1 md:space-x-0 rtl:space-x-reverse">
           <button
-            onClick={() => setOpenLang((prev) => !prev)}
+            onClick={() => {
+              setOpenLang((prev) => !prev);
+              setCourses(false);
+              setOpenProfile(false);
+              setTraining(false);
+            }}
             type="button"
             data-accordion-target="#accordion-collapse-body-1"
             aria-expanded="true"
@@ -64,85 +69,63 @@ export default function TopBar2() {
             >
               <div className="inline-flex items-center">
                 <span className="flex gap-1 items-center">
-                  <img src={arabic} alt="icon" className="me-2" />
-                  العربية
+                  <img
+                    src={language === 'ar' ? arabic : english}
+                    alt="icon"
+                    className="me-2"
+                  />
+                  {language === 'ar' ? 'العربية' : 'English'}
                   <img src={arrow} alt="icon" />
                 </span>
               </div>
             </a>
           </button>
-
-          {/* <!-- Dropdown --> */}
-          {/* <div
-            id="accordion-collapse-body-1"
-            className="hidden"
-            aria-labelledby="accordion-collapse-heading-1"
-          >
-            <div className="p-5 border border-b-0 border-gray-200 dark:border-gray-700 dark:bg-gray-900">
-              <p className="mb-2 text-gray-500 dark:text-gray-400">
-                Flowbite is an open-source library of interactive components
-                built on top of Tailwind CSS including buttons, dropdowns,
-                modals, navbars, and more.
-              </p>
-              <p className="text-gray-500 dark:text-gray-400">
-                Check out this guide to learn how to{' '}
-                <a
-                  href="/docs/getting-started/introduction/"
-                  className="text-blue-600 dark:text-blue-500 hover:underline"
+          {openLang && (
+            <div
+              className={`w-[120px] z-50 lang-hover-custom absolute right-0 top-[20px]  my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700`}
+              id="accordion-collapse-body-1"
+              aria-labelledby="accordion-collapse-heading-1"
+            >
+              <ul className="py-2 font-medium" role="none">
+                <li
+                  onClick={() => {
+                    setLang('en');
+                    dispatch(languageAction('en'));
+                    setOpenLang(false);
+                  }}
                 >
-                  get started
-                </a>{' '}
-                and start developing websites even faster with components on top
-                of Tailwind CSS.
-              </p>
+                  <a
+                    href="#"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"
+                    role="menuitem"
+                  >
+                    <div className="inline-flex items-center">
+                      <img src={english} alt="english" />
+                      English (US)
+                    </div>
+                  </a>
+                </li>
+                <li
+                  onClick={() => {
+                    setLang('ar');
+                    dispatch(languageAction('ar'));
+                    setOpenLang(false);
+                  }}
+                >
+                  <a
+                    href="#"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"
+                    role="menuitem"
+                  >
+                    <div className="inline-flex items-center">
+                      <img src={arabic} alt="icon" />
+                      العربية
+                    </div>
+                  </a>
+                </li>
+              </ul>
             </div>
-          </div> */}
-          <div
-            className={`${
-              openLang ? 'block' : 'hidden'
-            } w-[120px] z-50 lang-hover-custom absolute right-0 top-[20px]  my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700`}
-            id="accordion-collapse-body-1"
-            aria-labelledby="accordion-collapse-heading-1"
-          >
-            <ul className="py-2 font-medium" role="none">
-              <li
-                onClick={() => {
-                  console.log('en');
-                  setLang('en');
-                  dispatch(languageAction('en'));
-                }}
-              >
-                <a
-                  href="#"
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"
-                  role="menuitem"
-                >
-                  <div className="inline-flex items-center">
-                    <img src={english} alt="english" />
-                    English (US)
-                  </div>
-                </a>
-              </li>
-              <li
-                onClick={() => {
-                  console.log('ar');
-                  setLang('ar');
-                  dispatch(languageAction('ar'));
-                }}
-              >
-                <a
-                  href="#"
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"
-                  role="menuitem"
-                >
-                  <div className="inline-flex items-center">
-                    <img src={arabic} alt="icon" />
-                    العربية
-                  </div>
-                </a>
-              </li>
-            </ul>
-          </div>
+          )}
           <button
             onClick={() => setOpen((prev) => !prev)}
             data-collapse-toggle="navbar-language"
@@ -181,8 +164,13 @@ export default function TopBar2() {
             <li>
               <div className="relative">
                 <p
-                  className="cursor-pointer"
-                  onClick={() => setOpenProfile((prev) => !prev)}
+                  className="cursor-pointer select-none"
+                  onClick={() => {
+                    setOpenProfile((prev) => !prev);
+                    setTraining(false);
+                    setCourses(false);
+                    setOpenLang(false);
+                  }}
                 >
                   <span className="flex gap-1">
                     <img src={person} alt="icon" />
@@ -247,7 +235,12 @@ export default function TopBar2() {
             </li>
             <li className="relative">
               <a
-                onClick={() => setCourses((prev) => !prev)}
+                onClick={() => {
+                  setCourses((prev) => !prev);
+                  setOpenLang(false);
+                  setOpenProfile(false);
+                  setTraining(false);
+                }}
                 href={'#'}
                 className={`block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700`}
               >
@@ -312,7 +305,12 @@ export default function TopBar2() {
             </li>
             <li className="relative">
               <a
-                onClick={() => setTraining((prev) => !prev)}
+                onClick={() => {
+                  setTraining((prev) => !prev);
+                  setCourses(false);
+                  setOpenLang(false);
+                  setOpenProfile(false);
+                }}
                 href="#"
                 className="block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
               >

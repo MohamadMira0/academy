@@ -6,6 +6,9 @@ export const InstituteValidation = Yup.object({
   email: Yup.string()
     .email('الرجاء ادخال بريد الكتروني صحيح')
     .required('الرجاء ادخال بريد الكتروني'),
+  educational_qualification: Yup.string().required(
+    'الرجاء ادخال المؤهل التعليمي',
+  ),
   phone: Yup.string()
     .matches(/^\d+$/, 'الرجاء ادخال رقم هاتف صحيح')
     .max(11, 'الرجاء ادخال رقم صحيح')

@@ -1,35 +1,40 @@
 import Footer from '../../components/Footer';
 import TopBar2 from '../../components/TopBar2';
 import janzeer from '../../assets/janzzerBlue.png';
-import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
 import message from '../../assets/icons/message (2).svg';
 import phone1 from '../../assets/icons/phone1.svg';
 import profile from '../../assets/icons/profile.svg';
 import { InstituteValidation } from '../../Validation/pages/InstituteValidation';
 import { ChangeEvent } from 'react';
+import { ApplyInstitutesType } from '../../types';
+import { createApplyInstitutesWebsite } from '../../functions';
+import { useMutation, useQueryClient } from 'react-query';
 
 export default function InstitutePage() {
-  type InitialValuesType = {
-    name: string;
-    phone: number | null;
-    email: string;
-  };
-
-  const initialValues: InitialValuesType = {
+  const initialValues: ApplyInstitutesType = {
     name: '',
-    phone: null,
+    phone: '',
     email: '',
+    educational_qualification: '',
   };
-
-  // const { data: contact, isLoading } = useQuery({
-  //   queryFn: () =>
-  //     Axios.get(`${base_url_student}/${Contact_Us}`, {
-  //       headers: {
-  //         'x-api-key': 'mwDA9w',
-  //       },
-  //     }),
-  //   queryKey: ['Contact_Us'],
-  // });
+  const queryClient = useQueryClient();
+  const addApplyInstitutesMutation = useMutation(createApplyInstitutesWebsite, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(['apply-institutes']);
+    },
+  });
+  const handleSubmit = async (
+    values: ApplyInstitutesType,
+    { setSubmitting }: FormikHelpers<ApplyInstitutesType>,
+  ) => {
+    try {
+      const res = await addApplyInstitutesMutation.mutateAsync(values);
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <>
@@ -57,11 +62,10 @@ export default function InstitutePage() {
           <Formik
             initialValues={initialValues}
             validationSchema={InstituteValidation}
-            onSubmit={() => {}}
+            onSubmit={handleSubmit}
           >
             {({
               values,
-              errors,
               isSubmitting,
               setFieldValue,
               /* and other goodies */
@@ -124,8 +128,28 @@ export default function InstitutePage() {
                     />
                   </div>
                 </div>
+                <div className="flex items-start gap-8 md:mb-6 mb-3">
+                  <img src={message} alt="person" className="w-8" />
+                  <div className="w-full">
+                    <Field
+                      type="text"
+                      placeholder="IT Information"
+                      className="text-black text-xl rounded-md px-6 py-2 bg-white outline-none custom-shadow w-full border-2 border-transparent duration-300 focus:border-secondary3"
+                      name="educational_qualification"
+                    />
+                    <ErrorMessage
+                      name="educational_qualification"
+                      component="div"
+                      className="text-sm text-red-600 mt-2 "
+                    />
+                  </div>
+                </div>
                 <div className="flex justify-center mt-10">
-                  <button className="bg-primary text-white text-lg py-1 lg:px-16 px-8 rounded-md border border-transparent hover:bg-white hover:border-primary hover:text-primary duration-300">
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="bg-primary text-white text-lg py-1 lg:px-16 px-8 rounded-md border border-transparent hover:bg-white hover:border-primary hover:text-primary duration-300"
+                  >
                     ارسال
                   </button>
                 </div>

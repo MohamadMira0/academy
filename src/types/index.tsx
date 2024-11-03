@@ -20,6 +20,9 @@ export interface jobsWebsite {
   media: IMedia;
 }
 export interface trainingsWebsite extends jobsWebsite {}
+export interface blogsWebsite extends jobsWebsite {
+  updated_at: string;
+}
 export interface IInitialValuesAddJobs extends BaseFields {
   media?: File | null;
 }
@@ -32,3 +35,10 @@ export interface IInitialValuesAddBlogs extends BaseFields {
 
 export interface ITraining extends IJobs {}
 export interface IBlogs extends IJobs {}
+
+export interface ApplyInstitutesType {
+  name: string;
+  phone: number | null;
+  email: string;
+  educational_qualification: string;
+}

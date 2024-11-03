@@ -2,20 +2,33 @@ import TitleWithLogo from '../../components/TitleWithLogo';
 import Button from '../../components/Button';
 import { useQuery } from 'react-query';
 import { getTrainingsWebsite } from '../../functions';
-import { ITraining, trainingsWebsite } from '../../types';
+import { trainingsWebsite } from '../../types';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../app/store';
 
 export default function Training() {
+  const lang: string = useSelector((state: RootState) => state.language.lang);
+
   // ** Handle Training
   const { data: training, isLoading } = useQuery(
-    ['training'],
-    getTrainingsWebsite,
+    ['training', lang],
+    () => getTrainingsWebsite(lang),
+    {
+      keepPreviousData: true,
+    },
   );
   const trainingData: trainingsWebsite[] = training?.data.trainings;
-  console.log(trainingData);
 
   const trainingsShow = trainingData?.map((item, idx) => (
     <div key={idx}>
-      <div className="text-right lg:w-3/5  grid items-center gap-4">
+      <div className="flex lg:justify-start justify-center w-[276px]">
+        <img
+          className="w-full h-65 object-cover"
+          src={item?.media.file_path}
+          alt=""
+        />
+      </div>
+      <div className="text-center mt-4 grid items-center gap-4">
         <h3 className="text-primary font-bold text-2xl">{item?.title}</h3>
         <p className="text-text-gray text-lg">{item.description}</p>
         <div>
@@ -25,9 +38,6 @@ export default function Training() {
             title="انضم الينا"
           />
         </div>
-      </div>
-      <div className="flex lg:justify-start justify-center w-[276px]">
-        <img className="w-full" src={item?.media.file_path} alt="" />
       </div>
     </div>
   ));

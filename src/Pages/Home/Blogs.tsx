@@ -2,21 +2,28 @@ import Blog from '../../components/Blog';
 import TitleWithLogo from '../../components/TitleWithLogo';
 import Button from '../../components/Button';
 import { useQuery } from 'react-query';
-import { formatDate, getBlogs } from '../../functions';
-import { IBlogs } from '../../types';
+import { formatDate, getBlogs, getBlogsWebsite } from '../../functions';
+import { blogsWebsite, IBlogs } from '../../types';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../app/store';
 
 export default function Blogs() {
+  const lang: string = useSelector((state: RootState) => state.language.lang);
+
   // ** Handle Jobs
-  const { data, isLoading } = useQuery(['blogs'], getBlogs);
-  const blogs: IBlogs[] = data?.data;
-  const lastThreeArticles = blogs?.slice(0, 3);
+  const { data, isLoading } = useQuery(['blogs', lang], () =>
+    getBlogsWebsite(lang),
+  );
+  const blogsData: blogsWebsite[] = data?.data || [];
+
+  const lastThreeArticles = blogsData?.slice(0, 3);
   const showCourse = lastThreeArticles?.map((blog, idx) => (
     <Blog
       key={idx}
-      img={blog.media.file_path}
-      title={blog.title_ar}
-      description={blog.description_ar}
-      date={formatDate(blog.created_at)}
+      img={blog?.media.file_path}
+      title={blog?.title}
+      description={blog?.description}
+      date={formatDate(blog?.updated_at)}
       show={200}
       message={10}
       button="المزيد"

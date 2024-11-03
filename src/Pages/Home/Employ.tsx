@@ -1,13 +1,12 @@
 import TitleWithLogo from '../../components/TitleWithLogo';
 import Button from '../../components/Button';
-import { IJobs, jobsWebsite } from '../../types';
+import { jobsWebsite } from '../../types';
 import { useQuery } from 'react-query';
 import { getJobsWebsite } from '../../functions';
 import { RootState } from '../../app/store';
 import { useSelector } from 'react-redux';
 
 export default function Employ() {
-  // تأكد من أن lang معرف كـ string وليس كـ String
   const lang: string = useSelector((state: RootState) => state.language.lang);
 
   // ** Handle Jobs
@@ -20,7 +19,6 @@ export default function Employ() {
   );
 
   const jobsData: jobsWebsite[] = jobs?.data || [];
-  console.log(jobsData);
 
   const jobsShow = jobsData?.map((item, idx) => (
     <div
