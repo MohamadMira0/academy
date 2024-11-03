@@ -38,7 +38,7 @@ export interface IBlogs extends IJobs {}
 
 export interface ApplyInstitutesType {
   name: string;
-  phone: number | null;
+  phone: number | string;
   email: string;
   educational_qualification: string;
 }
