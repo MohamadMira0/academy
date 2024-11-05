@@ -4,11 +4,13 @@ type PopUpType = {
   openDetails: boolean;
   setOpenDetails: React.Dispatch<React.SetStateAction<boolean>>;
   name: string;
+  description?: string;
 };
 export default function AlertPopUp({
   openDetails,
   setOpenDetails,
   name,
+  description,
 }: PopUpType) {
   return (
     <>
@@ -62,11 +64,8 @@ export default function AlertPopUp({
             </div>
             {/* <!-- Modal body --> */}
             <div className="p-4 md:p-5 space-y-4">
-              <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400 text-right font-bold text-gray-7">
-                هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحة ما
-                سيلهي القارئ عن التركيز على الشكل الخارجي للنص أو شكل توضع
-                الفقرات في الصفحة التي يقرأها. ولذلك يتم استخدام طريقة لوريم
-                إيبسوم لأنها تعطي توزيعاَ طبيعياَ
+              <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400 text-center font-bold text-gray-7">
+                {description}
               </p>
             </div>
             <div className="flex justify-center pb-8">

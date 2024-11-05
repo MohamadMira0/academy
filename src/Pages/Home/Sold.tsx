@@ -13,8 +13,14 @@ import 'swiper/css/pagination';
 import { EffectCoverflow, Pagination } from 'swiper/modules';
 import Button from '../../components/Button';
 import AlertPopUp from '../../components/AlertPopUp';
+import { ICourseWebsite } from '../../types';
 
-export default function Sold() {
+interface IProps {
+  data: ICourseWebsite[];
+}
+export default function Sold(props: IProps) {
+  const data: ICourseWebsite[] = props.data;
+  console.log(data);
   const [name, setName] = useState('');
   const content = [
     {
@@ -63,12 +69,8 @@ export default function Sold() {
       img: imgCourse,
     },
   ];
-
   const [openDetails, setOpenDetails] = useState(false);
 
-  // const showCourse = dataCourse.map((course) => (
-  //   <Course img={course.img} name={course.name} price={course.price} />
-  // ));
   return (
     <div className="mb-20">
       <TitleWithLogo title="كورسات حصرية" />
@@ -93,16 +95,16 @@ export default function Sold() {
           className="mySwiper"
           initialSlide={content.length - 1}
         >
-          {content.map((item, index) => (
+          {data?.map((item, index) => (
             <SwiperSlide key={index}>
               <div
-                style={{ backgroundImage: `url('${item.img}')` }}
+                style={{ backgroundImage: `url('${item?.media_path}')` }}
                 className="z-0 bg-cover bg-center w-full bg-no-repeat h-[353px] rounded-lg"
               >
                 <div className="grid grid-cols-1 h-full">
                   <div className="z-20 text-white relative">
                     <h2 className="text-right text-white pt-10 pe-10 text-2xl z-10">
-                      {item.name}
+                      {item.title}
                     </h2>
                   </div>
                   <div className="flex items-end px-3 justify-between flex-wrap pb-8 z-20 text-white relative content-end ">
@@ -110,11 +112,14 @@ export default function Sold() {
                       <div className="text-center">
                         <div className="flex items-center justify-center gap-1">
                           <span>ج.م</span>
-                          <p>احجز جميع الكورسات ووفر 100</p>
+                          <p>
+                            احجز جميع الكورسات ووفر
+                            {item.instead_of && item?.instead_of - item?.price}
+                          </p>
                         </div>
                         <div className="flex items-center justify-center gap-1">
                           <span className="text-3xl font-bold">ج.م</span>
-                          <p className="text-3xl font-bold">{item.price}</p>
+                          <p className="text-3xl font-bold">{item?.price}</p>
                         </div>
                       </div>
                     </div>
@@ -124,7 +129,7 @@ export default function Sold() {
                         className="bg-gray-1 text-primary py-1 px-2 rounded-md text-sm hover:text-secondary3 hover:bg-white duration-300"
                         title="المزيد من المعلومات"
                         onClick={() => {
-                          setName(item.name);
+                          setName(item.title);
                           setOpenDetails(true);
                         }}
                       />

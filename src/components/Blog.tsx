@@ -11,13 +11,18 @@ export default function Blog(props: any) {
           <img src={props.img} className="w-full h-[275px]" />
           <div className="flex justify-around">
             <div className="flex items-center gap-1 pt-4">
-              <p className="text-xs">{props.show}مشاهدة</p>
+              <p className="text-xs  gap-1">
+                <span> مشاهدة </span> <span>{props.show}</span>
+              </p>
               <span>
                 <img src={show} alt="" />
               </span>
             </div>
-            <div className="flex items-center gap-1 pt-4">
-              <p className="text-xs">{props.message}تعليق</p>
+            <div className="flex items-center  gap-1 pt-4">
+              <p className="text-xs flex flex-row gap-1">
+                <span>تعليق</span>
+                <span>{props.message}</span>
+              </p>
               <span>
                 <img src={message} alt="" />
               </span>

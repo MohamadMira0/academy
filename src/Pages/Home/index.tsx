@@ -1,10 +1,6 @@
 import Background from './Background';
 import Footer from '../../components/Footer';
 import About from './About';
-import FirstCourses from './FirstCourses';
-import SecCourses from './SecCourses';
-import Sold from './Sold';
-import ArmyCourses from './ArmyCourses';
 import Institute from './Institute';
 import Blogs from './Blogs';
 import TopBar2 from '../../components/TopBar2';
@@ -19,10 +15,6 @@ const index = () => {
       <Background />
       <About />
       <Courses />
-      {/* <FirstCourses /> */}
-      {/* <SecCourses /> */}
-      {/* <Sold /> */}
-      {/* <ArmyCourses /> */}
       <Institute />
       <Employ />
       <Training />

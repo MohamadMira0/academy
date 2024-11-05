@@ -7,12 +7,12 @@ import phone1 from '../../assets/icons/phone1.svg';
 import profile from '../../assets/icons/profile.svg';
 import { InstituteValidation } from '../../Validation/pages/InstituteValidation';
 import { ChangeEvent } from 'react';
-import { ApplyInstitutesType } from '../../types';
+import { IApplyInstitutesType } from '../../types';
 import { createApplyInstitutesWebsite } from '../../functions';
 import { useMutation, useQueryClient } from 'react-query';
 
 export default function InstitutePage() {
-  const initialValues: ApplyInstitutesType = {
+  const initialValues: IApplyInstitutesType = {
     name: '',
     phone: '',
     email: '',
@@ -25,8 +25,8 @@ export default function InstitutePage() {
     },
   });
   const handleSubmit = async (
-    values: ApplyInstitutesType,
-    { setSubmitting }: FormikHelpers<ApplyInstitutesType>,
+    values: IApplyInstitutesType,
+    { setSubmitting }: FormikHelpers<IApplyInstitutesType>,
   ) => {
     try {
       const res = await addApplyInstitutesMutation.mutateAsync(values);

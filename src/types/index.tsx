@@ -36,9 +36,25 @@ export interface IInitialValuesAddBlogs extends BaseFields {
 export interface ITraining extends IJobs {}
 export interface IBlogs extends IJobs {}
 
-export interface ApplyInstitutesType {
+export interface IApplyInstitutesType {
   name: string;
   phone: number | string;
   email: string;
   educational_qualification: string;
+}
+export interface IContactUsType {
+  name: string;
+  phone: number | string;
+  email: string;
+  message: string;
+}
+
+export interface ICourseWebsite {
+  id?: number;
+  media_path: string;
+  price: number;
+  title: string;
+  description: string;
+  type_payment?: string;
+  instead_of?: number;
 }

@@ -1,25 +1,30 @@
 import Course from '../../components/Course';
 import TitleWithLogo from '../../components/TitleWithLogo';
-import radioImage from '../../assets/courses/Radio.png';
 import Button from '../../components/Button';
-import { CategoryCoursesType } from './CategoryCourses';
+import { ICourseWebsite } from '../../types';
 
-export default function FirstCourses() {
-  // const showCourse = data.map((course: CategoryCoursesType, index: number) => (
-  //   <Course
-  //     img={course?.courses[index]?.image}
-  //     name={course?.courses[index]?.title}
-  //     price={course?.courses[index]?.price_egp}
-  //     currency={course?.courses[index]?.price_sar}
-  //   />
-  // ));
+interface IProps {
+  data: ICourseWebsite[];
+}
+export default function FirstCourses(props: IProps) {
+  const data: ICourseWebsite[] = props?.data;
+  const showCourse = data?.map((course: ICourseWebsite) => (
+    <Course
+      key={course?.id}
+      media_path={course?.media_path}
+      title={course?.title}
+      description={course?.description}
+      price={course?.price}
+      currency={'ج.م'}
+    />
+  ));
   return (
     <div className="mb-20">
       <TitleWithLogo title="كورسات الفرقة الاولى" />
       <div className="bg-secondary2 pt-32 pb-10 ">
         <div className="lg:px-16 md:px-8 px-3">
           <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-25 ">
-            {/* {showCourse} */}
+            {showCourse}
           </div>
 
           <div className="text-center pt-20">

@@ -1,39 +1,22 @@
 import Course from '../../components/Course';
 import TitleWithLogo from '../../components/TitleWithLogo';
-import radioImage from '../../assets/courses/Radio.png';
 import Button from '../../components/Button';
+import { ICourseWebsite } from '../../types';
 
-export default function SecCourses() {
-  const dataCourse = [
-    {
-      name: 'اسم الكورس',
-      price: '500',
-      currency: 'ج.م',
-      img: radioImage,
-    },
-    {
-      name: 'اسم الكورس',
-      price: '500',
-      currency: 'ج.م',
+interface IProps {
+  data: ICourseWebsite[];
+}
+export default function SecCourses(props: IProps) {
+  const data: ICourseWebsite[] = props.data;
 
-      img: radioImage,
-    },
-    {
-      name: 'اسم الكورس',
-      price: '500',
-      currency: 'ج.م',
-
-      img: radioImage,
-    },
-  ];
-
-  const showCourse = dataCourse.map((course, idx) => (
+  const showCourse = data?.map((course) => (
     <Course
-      key={idx}
-      img={course.img}
-      name={course.name}
-      price={course.price}
-      currency={course.currency}
+      key={course?.id}
+      media_path={course?.media_path}
+      title={course?.title}
+      description={course?.description}
+      price={course?.price}
+      currency={'ج.م'}
     />
   ));
   return (

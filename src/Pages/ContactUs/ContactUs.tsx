@@ -1,9 +1,7 @@
 import Footer from '../../components/Footer';
 import TopBar2 from '../../components/TopBar2';
 import janzeer from '../../assets/janzzerBlue.png';
-import { useMutation, useQuery } from 'react-query';
 import { Axios } from '../../Api/axios';
-import { Contact_Us, base_url_student } from '../../Api/Api';
 import facebook from '../../assets/icons/facebook.svg';
 import instagram from '../../assets/icons/instagram.svg';
 import tiktok from '../../assets/icons/tiktok.svg';
@@ -16,94 +14,38 @@ import Location from '../../assets/svg/Location';
 import image3 from '../../assets/contactUs/Contact us-amico 1.svg';
 import profile from '../../assets/icons/profile.svg';
 import Phone from '../../assets/svg/Phone';
-import { ErrorMessage, Field, Form, Formik } from 'formik';
-import { FooterValidation } from '../../Validation/pages/FooterValidation';
+import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
 import { ChangeEvent, useState } from 'react';
-import Profile from '../../assets/svg/Profile';
-import Cookie from 'cookie-universal';
-import logo from '../../assets/logoAuth-removebg.png';
-import lock from '../../assets/icons/lock.svg';
 import frame from '../../assets/icons/Frame.svg';
 import message from '../../assets/icons/message (2).svg';
 import phone1 from '../../assets/icons/phone1.svg';
-import image from '../../assets/background-home.svg';
-import span from '../../assets/span.png';
-import eye from '../../assets/icons/eye.svg';
-import show from '../../assets/icons/show.svg';
-import axios from 'axios';
 import { ContactValidation } from '../../Validation/pages/ContactValidation';
+import { IContactUsType } from '../../types';
 
 export default function ContactUs() {
-  const [showPassword, setShowPassword] = useState(false);
-  const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
-  type InitialValuesType = {
-    name: string;
-    email: string;
-    phone: string;
-    message: string;
-  };
-
-  const initialValues: InitialValuesType = {
+  const initialValues: IContactUsType = {
     name: '',
-    email: '',
     phone: '',
+    email: '',
     message: '',
   };
+  const [alert, setAlert] = useState('');
 
-  type SocialMediaData = {
-    TikTok: string;
-    address: string;
-    facebook: string;
-    id: number;
-    instagram: string;
-    phone: string;
-    whatsapp: string;
-    youtube: string;
-  };
-  const { data: contact, isLoading } = useQuery({
-    queryFn: () =>
-      Axios.get(`${base_url_student}/${Contact_Us}`, {
-        headers: {
-          'x-api-key': 'mwDA9w',
-        },
-      }),
-    queryKey: ['Contact_Us'],
-  });
-  const links: SocialMediaData = contact?.data?.data;
-
-  const sendForm = async (formData: InitialValuesType) => {
+  const handleSubmit = async (
+    values: IContactUsType,
+    { setSubmitting }: FormikHelpers<IContactUsType>,
+  ) => {
     try {
-      const response = await axios.post(
-        `${base_url_student}/Send-Message`,
-        formData,
-        {
-          headers: {
-            'x-api-key': 'mwDA9w',
-          },
-        },
-      );
-      console.log(formData);
-      return response.data;
-    } catch (error) {
-      console.error('Error submitting form:', error);
-      throw error;
+      const res = await Axios.post('/contact-us/send', values);
+      console.log(res);
+      if (res.status === 200) {
+        setAlert('success');
+      }
+    } catch (err) {
+      console.log(err);
+      setAlert('error');
     }
   };
-
-  const { mutateAsync } = useMutation(sendForm);
-
-  const onSubmit = async (values: InitialValuesType) => {
-    try {
-      console.log(values);
-      await mutateAsync(values);
-      // هنا يمكنك التعامل مع النجاح مثل إظهار رسالة نجاح
-      console.log('Form submitted successfully');
-    } catch (error) {
-      // هنا يمكنك التعامل مع الأخطاء مثل إظهار رسالة خطأ
-      console.error('Error submitting form:', error);
-    }
-  };
-
   return (
     <>
       <TopBar2 />
@@ -133,19 +75,19 @@ export default function ContactUs() {
           <div>
             <h3 className="text-2xl font-bold text-primary">تواصل معنا</h3>
             <div className="flex gap-4 text-2xl my-6">
-              <Link to={links?.facebook} className="text-primary">
+              <Link to={'links?.facebook'} className="text-primary">
                 <img src={facebook} alt="" />
               </Link>
-              <Link to={links?.instagram} className="text-primary">
+              <Link to={'links?.instagram'} className="text-primary">
                 <img src={instagram} alt="" />
               </Link>
-              <Link to={links?.TikTok} className="text-primary">
+              <Link to={'links?.TikTok'} className="text-primary">
                 <img src={tiktok} alt="" />
               </Link>
-              <Link to={links?.youtube} className="text-primary">
+              <Link to={'links?.youtube'} className="text-primary">
                 <img src={youtube} alt="" />
               </Link>
-              <Link to={links?.whatsapp} className="text-primary">
+              <Link to={'links?.whatsapp'} className="text-primary">
                 <img src={whatsapp} alt="" />
               </Link>
             </div>
@@ -157,13 +99,16 @@ export default function ContactUs() {
               <p
                 className="mr-4 md:block hidden"
                 onClick={() => {
-                  navigator.clipboard.writeText(links?.phone);
+                  navigator.clipboard.writeText('links?.phone');
                 }}
               >
-                {links?.phone}
+                {'links?.phone'}
               </p>
-              <a href={`tel:${links?.phone}`} className="mr-4 block md:hidden">
-                {links?.phone}
+              <a
+                href={`tel:${'links?.phone'}`}
+                className="mr-4 block md:hidden"
+              >
+                {'links?.phone'}
               </a>
               <span className="text-primary">+</span>
             </div>
@@ -172,13 +117,16 @@ export default function ContactUs() {
               <p
                 className="mr-4 md:block hidden"
                 onClick={() => {
-                  navigator.clipboard.writeText(links?.phone);
+                  navigator.clipboard.writeText('links?.phone');
                 }}
               >
-                {links?.phone}
+                {'links?.phone'}
               </p>
-              <a href={`tel:${links?.phone}`} className="mr-4 block md:hidden">
-                {links?.phone}
+              <a
+                href={`tel:${'links?.phone'}`}
+                className="mr-4 block md:hidden"
+              >
+                {'links?.phone'}
               </a>
               <span className="text-primary">+</span>
             </div>
@@ -187,7 +135,7 @@ export default function ContactUs() {
             </h3>
             <div className="flex my-4">
               <Location fill="#001F5D" />
-              <p className="mr-4">{links?.address}</p>
+              <p className="mr-4">{'links?.address'}</p>
             </div>
           </div>
           <div className="flex justify-end">
@@ -198,7 +146,7 @@ export default function ContactUs() {
           <Formik
             initialValues={initialValues}
             validationSchema={ContactValidation}
-            onSubmit={() => {}}
+            onSubmit={handleSubmit}
           >
             {({
               values,
@@ -285,8 +233,20 @@ export default function ContactUs() {
                     />
                   </div>
                 </div>
+                {alert === 'error' ? (
+                  <p className="text-sm text-center text-red-600">
+                    فشل ارسال الفورم
+                  </p>
+                ) : (
+                  <p className="text-sm text-center text-success">
+                    تم ارسال الفورم
+                  </p>
+                )}
                 <div className="mt-16 my-4 flex justify-center" dir="rtl">
-                  <button className="bg-primary text-center text-lg text-white rounded-lg lg:px-24 lg:py-3 px-8 py-1 hover:bg-black duration-300 hover:text-white shadow-md">
+                  <button
+                    type="submit"
+                    className="bg-primary text-center text-lg text-white rounded-lg lg:px-24 lg:py-3 px-8 py-1 hover:bg-black duration-300 hover:text-white shadow-md"
+                  >
                     إرسال
                   </button>
                 </div>
@@ -295,7 +255,7 @@ export default function ContactUs() {
           </Formik>
         </div>
       </div>
-      <Footer />
+      <Footer footer={false} />
     </>
   );
 }

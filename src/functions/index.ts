@@ -2,7 +2,7 @@ import { QueryFunction } from 'react-query';
 import { BLOGS, Courses, Jobs, JOBS, Training, TRAINING } from '../Api/Api';
 import { Axios, AxiosWithToken } from '../Api/axios';
 import {
-  ApplyInstitutesType,
+  IApplyInstitutesType,
   blogsWebsite,
   IInitialValuesAddJobs,
   IJobs,
@@ -60,7 +60,7 @@ export const getBlogsWebsite = async (lang: string) => {
   return response?.data;
 };
 export const createApplyInstitutesWebsite = async (
-  data: ApplyInstitutesType,
+  data: IApplyInstitutesType,
 ) => {
   const response = await Axios.post(`/apply-institute/send`, data);
   return response?.data;

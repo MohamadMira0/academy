@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Formik, useFormik, Form, Field } from 'formik';
-import { FooterValidation } from '../Validation/pages/FooterValidation';
+import { Formik, useFormik, Form, Field, ErrorMessage } from 'formik';
 import { useMutation, useQuery } from 'react-query';
 import { useQueryClient } from 'react-query';
 
@@ -13,78 +12,37 @@ import youtube from '../assets/icons/youtube.svg';
 import location from '../assets/icons/location.svg';
 import phone from '../assets/icons/phone.svg';
 import spanFooter from '../assets/spanFooter.png';
-import axios from 'axios';
-import { Contact_Us, base_url_student } from '../Api/Api';
 import { Axios } from '../Api/axios';
-const Footer = (props: any) => {
-  const queryClient = useQueryClient();
-
-  type InitialValuesType = {
-    full_name: string;
-    email: string;
-    phone: string;
-    message: string;
-  };
-
-  const initialValues: InitialValuesType = {
-    full_name: '',
-    email: '',
+import { IContactUsType } from '../types';
+import { ContactValidation } from '../Validation/pages/ContactValidation';
+interface IProps {
+  footer: boolean;
+}
+const Footer = (props: IProps) => {
+  const initialValues: IContactUsType = {
+    name: '',
     phone: '',
+    email: '',
     message: '',
   };
+  const [alert, setAlert] = useState('');
 
-  type SocialMediaData = {
-    TikTok: string;
-    address: string;
-    facebook: string;
-    id: number;
-    instagram: string;
-    phone: string;
-    whatsapp: string;
-    youtube: string;
-  };
-
-  // const { data: contact, isLoading } = useQuery({
-  //   queryFn: () =>
-  //     Axios.get(`${base_url_student}/${Contact_Us}`, {
-  //       headers: {
-  //         'x-api-key': 'mwDA9w',
-  //       },
-  //     }),
-  //   queryKey: ['Contact_Us'],
-  // });
-  // const links: SocialMediaData = contact?.data?.data;
-
-  const sendForm = async (formData: InitialValuesType) => {
+  const handleSubmit = async (
+    values: IContactUsType,
+    { setSubmitting }: FormikHelpers<IContactUsType>,
+  ) => {
     try {
-      const response = await axios.post(
-        `${base_url_student}/Send-Message`,
-        formData,
-        {
-          headers: {
-            'x-api-key': 'mwDA9w',
-          },
-        },
-      );
-      console.log(formData);
-      return response.data;
-    } catch (error) {
-      console.error('Error submitting form:', error);
-      throw error;
-    }
-  };
-
-  const { mutateAsync } = useMutation(sendForm);
-
-  const onSubmit = async (values: InitialValuesType) => {
-    try {
-      console.log(values);
-      await mutateAsync(values);
-      // هنا يمكنك التعامل مع النجاح مثل إظهار رسالة نجاح
-      console.log('Form submitted successfully');
-    } catch (error) {
-      // هنا يمكنك التعامل مع الأخطاء مثل إظهار رسالة خطأ
-      console.error('Error submitting form:', error);
+      const res = await Axios.post('/contact-us/send', values);
+      console.log(res);
+      if (res.status === 200) {
+        setAlert('success');
+        setTimeout(() => {
+          setAlert('');
+        }, 5000);
+      }
+    } catch (err) {
+      console.log(err);
+      setAlert('error');
     }
   };
 
@@ -161,8 +119,8 @@ const Footer = (props: any) => {
             <div className="p-2">
               <Formik
                 initialValues={initialValues}
-                validationSchema={FooterValidation}
-                onSubmit={onSubmit}
+                validationSchema={ContactValidation}
+                onSubmit={handleSubmit}
               >
                 {({
                   values,
@@ -174,23 +132,15 @@ const Footer = (props: any) => {
                     <div className="mb-6">
                       <Field
                         type="text"
-                        name="full_name"
+                        name="name"
                         placeholder="الأسم"
                         className="bg-white py-2 px-4 rounded-lg w-full text-black"
                       ></Field>
-                      {/* <input
-                        type="text"
-                        name="full_name"
-                        placeholder="الأسم"
-                        className="bg-white py-2 px-4 rounded-lg w-full text-black"
-                        value={values.full_name}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                      /> */}
-
-                      <p className="text-sm text-red-600 h-5">
-                        {errors.full_name ? errors.full_name : ''}
-                      </p>
+                      <ErrorMessage
+                        name="name"
+                        component="div"
+                        className="text-sm text-red-600 mt-2 "
+                      />
                     </div>
 
                     <div className="mb-6">
@@ -199,20 +149,12 @@ const Footer = (props: any) => {
                         name="email"
                         placeholder="البريد الإلكتروني"
                         className="bg-white py-2 px-4 rounded-lg w-full text-black"
-                      ></Field>
-                      {/* <input
-                        type="text"
+                      />
+                      <ErrorMessage
                         name="email"
-                        placeholder="البريد الإلكتروني"
-                        className="bg-white py-2 px-4 rounded-lg w-full text-black"
-                        value={values.email}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                      /> */}
-
-                      <p className="text-sm text-red-600 h-5">
-                        {errors.email ? errors.email : ''}
-                      </p>
+                        component="div"
+                        className="text-sm text-red-600 mt-2 "
+                      />
                     </div>
                     <div className="mb-6">
                       <Field
@@ -220,19 +162,12 @@ const Footer = (props: any) => {
                         name="phone"
                         placeholder="رقم الهاتف"
                         className="bg-white py-2 px-4 rounded-lg w-full text-black "
-                      ></Field>
-                      {/* <input
-                        type="text"
+                      />
+                      <ErrorMessage
                         name="phone"
-                        placeholder="رقم الهاتف"
-                        className="bg-white py-2 px-4 rounded-lg w-full text-black "
-                        value={values.phone}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                      /> */}
-                      <p className="text-sm text-red-600 h-5">
-                        {errors.phone ? errors.phone : ''}
-                      </p>
+                        component="div"
+                        className="text-sm text-red-600 mt-2 "
+                      />
                     </div>
                     <div className="mb-6">
                       <Field
@@ -245,13 +180,26 @@ const Footer = (props: any) => {
                         cols="30"
                         rows="6"
                         maxLength="300"
-                      ></Field>
-                      <p className="text-sm text-red-600 h-5">
-                        {errors.message ? errors.message : ''}
-                      </p>
+                      />
+                      <ErrorMessage
+                        name="message"
+                        component="div"
+                        className="text-sm text-red-600 mt-2 "
+                      />
                     </div>
-                    <div className="text-center">
+                    {alert === 'error' && (
+                      <p className="text-sm text-center text-red-600">
+                        فشل ارسال الفورم
+                      </p>
+                    )}
+                    {alert === 'success' && (
+                      <p className="text-sm text-center text-success">
+                        تم ارسال الفورم
+                      </p>
+                    )}
+                    <div className="text-center mt-4">
                       <button
+                        disabled={isSubmitting}
                         type="submit"
                         className="bg-white text-primary font-bold rounded-lg px-20 py-2 hover:bg-black duration-300 hover:text-white"
                       >

@@ -2,8 +2,8 @@ import Blog from '../../components/Blog';
 import TitleWithLogo from '../../components/TitleWithLogo';
 import Button from '../../components/Button';
 import { useQuery } from 'react-query';
-import { formatDate, getBlogs, getBlogsWebsite } from '../../functions';
-import { blogsWebsite, IBlogs } from '../../types';
+import { formatDate, getBlogsWebsite } from '../../functions';
+import { blogsWebsite } from '../../types';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
 
