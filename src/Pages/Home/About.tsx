@@ -8,7 +8,7 @@ const About = () => {
   const { lang } = useSelector((state: RootState) => state.language);
   return (
     <div className="mb-8">
-      <TitleWithLogo title="من نحن" />
+      <TitleWithLogo title={lang === 'en' ? 'Who we are' : 'من نحن'} />
       <div className="my-6 mx-6 text-center text-black font-[700] text-xl">
         {lang === 'en'
           ? 'lorem lorem lorem'

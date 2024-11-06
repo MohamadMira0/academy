@@ -50,6 +50,42 @@ export const getCoursesWebsite = async (lang: string) => {
   });
   return response?.data;
 };
+//** get First Group Courses */
+export const getCoursesFirstGroupWebsite = async (lang: string) => {
+  const response = await Axios.get(
+    `/${Courses}/show-more?student_group=first group`,
+    {
+      headers: {
+        'X-App-Locale': lang,
+      },
+    },
+  );
+  return response?.data;
+};
+//** get Second Group Courses */
+export const getCoursesSecondGroupWebsite = async (lang: string) => {
+  const response = await Axios.get(
+    `/${Courses}/show-more?student_group=second group`,
+    {
+      headers: {
+        'X-App-Locale': lang,
+      },
+    },
+  );
+  return response?.data;
+};
+//** get Navigation Group Courses */
+export const getCoursesNavigationGroupWebsite = async (lang: string) => {
+  const response = await Axios.get(
+    `/${Courses}/show-more?student_group=navigation and marine officers`,
+    {
+      headers: {
+        'X-App-Locale': lang,
+      },
+    },
+  );
+  return response?.data;
+};
 //** get Blogs */
 export const getBlogsWebsite = async (lang: string) => {
   const response = await Axios.get(`/${BLOGS}`, {

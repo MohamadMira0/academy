@@ -2,13 +2,15 @@ import Course from '../../components/Course';
 import TitleWithLogo from '../../components/TitleWithLogo';
 import Button from '../../components/Button';
 import { ICourseWebsite } from '../../types';
+import { RootState } from '../../app/store';
+import { useSelector } from 'react-redux';
 
 interface IProps {
   data: ICourseWebsite[];
 }
 export default function SecCourses(props: IProps) {
   const data: ICourseWebsite[] = props.data;
-
+  const { lang } = useSelector((state: RootState) => state.language);
   const showCourse = data?.map((course) => (
     <Course
       key={course?.id}
@@ -16,12 +18,14 @@ export default function SecCourses(props: IProps) {
       title={course?.title}
       description={course?.description}
       price={course?.price}
-      currency={'ج.م'}
+      currency={lang === 'en' ? 'EGP' : 'ج.م'}
     />
   ));
   return (
     <div className="mb-20">
-      <TitleWithLogo title="كورسات الفرقة الثانية" />
+      <TitleWithLogo
+        title={lang === 'en' ? 'Second Group Courses' : 'كورسات الفرقة الثانية'}
+      />
       <div className="bg-secondary2 pt-32 pb-10 ">
         <div className="lg:px-16 md:px-8 px-3">
           <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-25 ">

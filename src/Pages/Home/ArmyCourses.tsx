@@ -1,11 +1,14 @@
 import TitleWithLogo from '../../components/TitleWithLogo';
 import Button from '../../components/Button';
 import { ICourseWebsite } from '../../types';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../app/store';
 
 interface IProps {
   data: ICourseWebsite[];
 }
 export default function ArmyCourses(props: IProps) {
+  const { lang } = useSelector((state: RootState) => state.language);
   const data: ICourseWebsite[] = props.data;
   const lastCourse = data?.slice(0, 1);
   const showCourse = lastCourse?.map((course) => (
@@ -31,7 +34,11 @@ export default function ArmyCourses(props: IProps) {
   ));
   return (
     <div className="mb-20">
-      <TitleWithLogo title="كورسات ضباط الملاحة" />
+      <TitleWithLogo
+        title={
+          lang === 'en' ? 'Navigation Officers Courses' : 'كورسات ضباط الملاحة'
+        }
+      />
       <div>{showCourse}</div>
     </div>
   );

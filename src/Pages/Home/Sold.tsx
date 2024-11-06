@@ -1,6 +1,5 @@
 import TitleWithLogo from '../../components/TitleWithLogo';
-import imgCourse from '../../assets/courses/course.png';
-import React, { useRef, useState } from 'react';
+import { useState } from 'react';
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -14,66 +13,24 @@ import { EffectCoverflow, Pagination } from 'swiper/modules';
 import Button from '../../components/Button';
 import AlertPopUp from '../../components/AlertPopUp';
 import { ICourseWebsite } from '../../types';
+import { RootState } from '../../app/store';
+import { useSelector } from 'react-redux';
 
 interface IProps {
   data: ICourseWebsite[];
 }
 export default function Sold(props: IProps) {
   const data: ICourseWebsite[] = props.data;
-  console.log(data);
+  const { lang } = useSelector((state: RootState) => state.language);
+
   const [name, setName] = useState('');
-  const content = [
-    {
-      name: 'كورسات الفرقة الأولى',
-      price: 500,
-      img: imgCourse,
-    },
-    {
-      name: 'كورسات الفرقة الثانية',
-      price: 500,
-      img: imgCourse,
-    },
-    {
-      name: 'كورسات الفرقة الأولى',
-      price: 500,
-      img: imgCourse,
-    },
-    {
-      name: 'كورسات الفرقة الأولى',
-      price: 500,
-      img: imgCourse,
-    },
-    {
-      name: 'كورسات الفرقة الأولى',
-      price: 500,
-      img: imgCourse,
-    },
-    {
-      name: 'كورسات الفرقة الأولى',
-      price: 500,
-      img: imgCourse,
-    },
-    {
-      name: 'كورسات الفرقة الأولى',
-      price: 500,
-      img: imgCourse,
-    },
-    {
-      name: 'كورسات الفرقة الأولى',
-      price: 500,
-      img: imgCourse,
-    },
-    {
-      name: 'كورسات الفرقة الأولى',
-      price: 500,
-      img: imgCourse,
-    },
-  ];
   const [openDetails, setOpenDetails] = useState(false);
 
   return (
     <div className="mb-20">
-      <TitleWithLogo title="كورسات حصرية" />
+      <TitleWithLogo
+        title={lang === 'en' ? 'Exclusive courses' : 'كورسات حصرية'}
+      />
       <div className="bg-secondary2 pt-32 pb-10 ">
         <Swiper
           effect={'coverflow'}
@@ -93,7 +50,7 @@ export default function Sold(props: IProps) {
           }}
           modules={[EffectCoverflow, Pagination]}
           className="mySwiper"
-          initialSlide={content.length - 1}
+          initialSlide={data?.length - 1}
         >
           {data?.map((item, index) => (
             <SwiperSlide key={index}>
@@ -111,14 +68,18 @@ export default function Sold(props: IProps) {
                     <div className="flex items-center gap-1">
                       <div className="text-center">
                         <div className="flex items-center justify-center gap-1">
-                          <span>ج.م</span>
+                          <span>{lang === 'en' ? 'EGP' : 'ج.م'}</span>
                           <p>
-                            احجز جميع الكورسات ووفر
+                            {lang === 'en'
+                              ? 'Book all courses and save'
+                              : 'احجز جميع الكورسات ووفر'}
                             {item.instead_of && item?.instead_of - item?.price}
                           </p>
                         </div>
                         <div className="flex items-center justify-center gap-1">
-                          <span className="text-3xl font-bold">ج.م</span>
+                          <span className="text-3xl font-bold">
+                            {lang === 'en' ? 'EGP' : 'ج.م'}
+                          </span>
                           <p className="text-3xl font-bold">{item?.price}</p>
                         </div>
                       </div>
@@ -127,7 +88,11 @@ export default function Sold(props: IProps) {
                       <Button
                         to="/"
                         className="bg-gray-1 text-primary py-1 px-2 rounded-md text-sm hover:text-secondary3 hover:bg-white duration-300"
-                        title="المزيد من المعلومات"
+                        title={
+                          lang === 'en'
+                            ? 'More information'
+                            : 'المزيد من المعلومات'
+                        }
                         onClick={() => {
                           setName(item.title);
                           setOpenDetails(true);
@@ -136,7 +101,7 @@ export default function Sold(props: IProps) {
                       <Button
                         to="/payment"
                         className="bg-secondary3 text-white py-1 px-5 rounded-md text-sm hover:text-secondary3 hover:bg-white duration-300"
-                        title="حجز الكورس"
+                        title={lang === 'en' ? 'Course booking' : 'حجز الكورس'}
                       />
                     </div>
                   </div>

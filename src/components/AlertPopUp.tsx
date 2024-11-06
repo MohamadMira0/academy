@@ -1,4 +1,6 @@
 import { Link } from 'react-router-dom';
+import { RootState } from '../app/store';
+import { useSelector } from 'react-redux';
 
 type PopUpType = {
   openDetails: boolean;
@@ -12,6 +14,7 @@ export default function AlertPopUp({
   name,
   description,
 }: PopUpType) {
+  const { lang } = useSelector((state: RootState) => state.language);
   return (
     <>
       {/* <!-- Modal toggle --> */}
@@ -73,7 +76,7 @@ export default function AlertPopUp({
                 to={'/payment'}
                 className="bg-secondary3 text-white py-1 px-5 rounded-md text-sm hover:text-secondary3 hover:bg-white duration-300"
               >
-                حجز الكورس
+                {lang === 'en' ? 'Course booking' : 'حجز الكورس'}
               </Link>
             </div>
           </div>

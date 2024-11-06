@@ -3,55 +3,33 @@ import janzeer from '../../assets/janzzerBlue.png';
 import Footer from '../../components/Footer';
 import Button from '../../components/Button';
 import Course from '../../components/Course';
-import radioImage from '../../assets/courses/Radio.png';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../app/store';
+import { useQuery } from 'react-query';
+import { getCoursesSecondGroupWebsite } from '../../functions';
+import { ICourseWebsite } from '../../types';
 export default function SecondBand() {
-  const dataCourse = [
-    {
-      name: 'اسم الكورس',
-      price: '500',
-      currency: 'ج.م',
-      img: radioImage,
-    },
-    {
-      name: 'اسم الكورس',
-      price: '500',
-      currency: 'ج.م',
-      img: radioImage,
-    },
-    {
-      name: 'اسم الكورس',
-      price: '500',
-      currency: 'ج.م',
-      img: radioImage,
-    },
-    {
-      name: 'اسم الكورس',
-      price: '500',
-      currency: 'ج.م',
-      img: radioImage,
-    },
-    {
-      name: 'اسم الكورس',
-      price: '500',
-      currency: 'ج.م',
-      img: radioImage,
-    },
-    {
-      name: 'اسم الكورس',
-      price: '500',
-      currency: 'ج.م',
-      img: radioImage,
-    },
-  ];
+  const { lang } = useSelector((state: RootState) => state.language);
 
-  const showCourse = dataCourse.map((course) => (
+  // ** Handle Jobs
+  const { data, isLoading } = useQuery(
+    ['courses', lang],
+    () => getCoursesSecondGroupWebsite(lang),
+    {
+      keepPreviousData: true,
+    },
+  );
+  const coursesData: ICourseWebsite[] = data?.data;
+  const showCourse = coursesData.map((course) => (
     <Course
-      img={course.img}
-      name={course.name}
+      key={course.id}
+      media_path={course.media_path}
+      title={course.title}
       price={course.price}
-      currency={course.currency}
+      currency={lang === 'en' ? 'EGP' : 'ج.م'}
     />
   ));
+  if (isLoading) return <div>Loading...</div>;
   return (
     <>
       <TopBar2 />
@@ -66,7 +44,7 @@ export default function SecondBand() {
           </div>
           <div className="w-10/12" dir="rtl">
             <h1 className="text-gold text-5xl font-bold mb-4">
-              كورسات الفرقة الثانية
+              {lang === 'en' ? 'Second Group Courses' : 'كورسات الفرقة الثانية'}
             </h1>
             <p className="font-bold text-gray-7">
               هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحة ما
@@ -81,15 +59,15 @@ export default function SecondBand() {
           dir="rtl"
         >
           <Button
-            title="الكورسات"
+            title={lang === 'en' ? 'Courses' : 'الكورسات'}
             className="bg-secondary3 text-white hover:text-secondary3 hover:bg-white duration-300 rounded-lg px-20 py-2 w-full sm:w-fit"
           />
           <Button
-            title="واصل التعليم"
+            title={lang === 'en' ? 'Continue education' : 'واصل التعليم'}
             className="bg-white text-secondary3 hover:text-white hover:bg-secondary3 duration-300 rounded-lg px-20 py-2 w-full sm:w-fit"
           />
           <Button
-            title="المنجزة"
+            title={lang === 'en' ? 'Completed' : 'المنجزة'}
             className="bg-white text-secondary3 hover:text-white hover:bg-secondary3 duration-300 rounded-lg px-20 py-2 w-full sm:w-fit"
           />
         </div>
@@ -104,7 +82,7 @@ export default function SecondBand() {
           <div className="text-center pt-20">
             <Button
               className="bg-white text-secondary rounded-lg px-20 py-2 hover:bg-gray-1 hover:text-primary duration-300"
-              title="حجز جميع الكورسات"
+              title={lang === 'en' ? 'Book all courses' : 'حجز جميع الكورسات'}
             />
           </div>
         </div>

@@ -4,10 +4,13 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import AlertPopUp from './AlertPopUp';
 import { ICourseWebsite } from '../types';
+import { RootState } from '../app/store';
+import { useSelector } from 'react-redux';
 interface IProps extends ICourseWebsite {
   currency: string;
 }
 export default function Course(props: IProps) {
+  const { lang } = useSelector((state: RootState) => state.language);
   const [openDetails, setOpenDetails] = useState(false);
   return (
     <>
@@ -32,7 +35,9 @@ export default function Course(props: IProps) {
                 <Button
                   to="/"
                   className="bg-gray-1 text-primary py-1 px-2 rounded-md text-sm hover:text-secondary3 hover:bg-white duration-300"
-                  title="المزيد من المعلومات"
+                  title={
+                    lang === 'en' ? 'More information' : 'المزيد من المعلومات'
+                  }
                   data-modal-target="static-modal"
                   data-modal-toggle="static-modal"
                   onClick={() => setOpenDetails((prev) => !prev)}
@@ -41,7 +46,7 @@ export default function Course(props: IProps) {
                   to={'/payment'}
                   className="bg-secondary3 text-white py-1 px-5 rounded-md text-sm hover:text-secondary3 hover:bg-white duration-300"
                 >
-                  حجز الكورس
+                  {lang === 'en' ? 'Course booking' : 'حجز الكورس'}
                 </Link>
               </div>
             </div>

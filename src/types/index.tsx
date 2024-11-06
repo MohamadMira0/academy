@@ -54,7 +54,7 @@ export interface ICourseWebsite {
   media_path: string;
   price: number;
   title: string;
-  description: string;
+  description?: string;
   type_payment?: string;
   instead_of?: number;
 }
