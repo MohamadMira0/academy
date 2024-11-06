@@ -13,6 +13,11 @@ import TitleWithLogo from '../../components/TitleWithLogo';
 import Train from '../../components/Train/Train';
 import radio from '../../assets/courses/Radio.png';
 import StatusAlert from '../../components/Alerts/StatusAlert';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../app/store';
+import { useQuery } from 'react-query';
+import { getBlogsWebsite, getTrainingsWebsitePage } from '../../functions';
+import { ITraining, trainingsWebsite } from '../../types';
 
 export default function TrainingPage() {
   const [openDetails, setOpenDetails] = useState(false);
@@ -32,16 +37,36 @@ export default function TrainingPage() {
     education: '',
   };
 
-  // const { data: contact, isLoading } = useQuery({
-  //   queryFn: () =>
-  //     Axios.get(`${base_url_student}/${Contact_Us}`, {
-  //       headers: {
-  //         'x-api-key': 'mwDA9w',
-  //       },
-  //     }),
-  //   queryKey: ['Contact_Us'],
-  // });
+  const { lang } = useSelector((state: RootState) => state.language);
+  // ** Handle Jobs
+  const { data, isLoading } = useQuery(
+    ['blogs', lang],
+    () => getTrainingsWebsitePage(lang),
+    {
+      keepPreviousData: true,
+    },
+  );
+  const trainings: trainingsWebsite[] = data?.data?.trainings;
+  const videos = data?.data?.videos;
+  console.log(data);
 
+  // const handleSubmit = async (
+  //   values: IContactUsType,
+  //   { setSubmitting }: FormikHelpers<IContactUsType>,
+  // ) => {
+  //   try {
+  //     const res = await Axios.post('/contact-us/send', values);
+  //     console.log(res);
+  //     if (res.status === 200) {
+  //       setAlert('success');
+  //     }
+  //   } catch (err) {
+  //     console.log(err);
+  //     setAlert('error');
+  //   }
+  // };
+
+  if (isLoading) return <div>Loading...</div>;
   return (
     <>
       <TopBar2 />
@@ -87,27 +112,13 @@ export default function TrainingPage() {
         <span className="absolute top-[-3.5rem] right-0 bg-secondary2 lg:w-50 xl:w-80 sm:w-20 h-14 rounded-tl-3xl"></span>
         <div className="container lg:px-16 md:px-8 px-3 mx-auto py-10">
           <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-10 xl:gap-30 lg:gap-20">
-            <Train
-              description={
-                'هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحة ما سيلهي القارئ عن التركيز على الشكل الخارجي للنص أو شكل توضع الفقرات في الصفحة التي يقرأها'
-              }
-              title={'أسم التدريب'}
-              img={radio}
-            />
-            <Train
-              description={
-                'هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحة ما سيلهي القارئ عن التركيز على الشكل الخارجي للنص أو شكل توضع الفقرات في الصفحة التي يقرأها'
-              }
-              title={'أسم التدريب'}
-              img={radio}
-            />
-            <Train
-              description={
-                'هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحة ما سيلهي القارئ عن التركيز على الشكل الخارجي للنص أو شكل توضع الفقرات في الصفحة التي يقرأها'
-              }
-              title={'أسم التدريب'}
-              img={radio}
-            />
+            {trainings?.map((training) => (
+              <Train
+                description={training?.description}
+                title={training?.title}
+                img={training?.media?.file_path}
+              />
+            ))}
           </div>
         </div>
       </div>
@@ -116,33 +127,11 @@ export default function TrainingPage() {
         <div className="bg-secondary2 py-10 relative my-10">
           <div className="container lg:px-16 md:px-8 px-3 mx-auto py-10">
             <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6 xl:gap-15 lg:gap-10">
-              <div>
-                <img src={image2} alt="firstIntern" className="rounded-md" />
-              </div>
-              <div>
-                <img src={image2} alt="firstIntern" className="rounded-md" />
-              </div>
-              <div>
-                <img src={image2} alt="firstIntern" className="rounded-md" />
-              </div>
-              <div>
-                <img src={image2} alt="firstIntern" className="rounded-md" />
-              </div>
-              <div>
-                <img src={image2} alt="firstIntern" className="rounded-md" />
-              </div>
-              <div>
-                <img src={image2} alt="firstIntern" className="rounded-md" />
-              </div>
-              <div>
-                <img src={image2} alt="firstIntern" className="rounded-md" />
-              </div>
-              <div>
-                <img src={image2} alt="firstIntern" className="rounded-md" />
-              </div>
-              <div>
-                <img src={image2} alt="firstIntern" className="rounded-md" />
-              </div>
+              {Array.from({ length: 9 }, (_, index) => (
+                <div key={index}>
+                  <img src={image2} alt="firstIntern" className="rounded-md" />
+                </div>
+              ))}
             </div>
           </div>
         </div>

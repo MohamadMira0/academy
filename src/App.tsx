@@ -45,7 +45,7 @@ function App() {
   }, [pathname]);
   return (
     <>
-      <div className="w-fit fixed right-0 bottom-[100px]">
+      <div className="w-fit fixed z-30 right-0 bottom-[100px]">
         <img src={iconWhatsApp} alt="" className="w-11" />
       </div>
       <Routes>

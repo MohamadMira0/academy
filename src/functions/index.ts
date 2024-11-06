@@ -84,6 +84,15 @@ export const getBlogsWebsite = async (lang: string) => {
   });
   return response?.data;
 };
+//** get Training page */
+export const getTrainingsWebsitePage = async (lang: string) => {
+  const response = await Axios.get(`/${Training}`, {
+    headers: {
+      'X-App-Locale': lang,
+    },
+  });
+  return response?.data;
+};
 export const createApplyInstitutesWebsite = async (
   data: IApplyInstitutesType,
 ) => {

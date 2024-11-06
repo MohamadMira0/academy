@@ -1,4 +1,3 @@
-import React from 'react';
 import TitleWithLogo from '../../components/TitleWithLogo';
 import Button from '../../components/Button';
 import { useSelector } from 'react-redux';

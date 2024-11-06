@@ -15,6 +15,7 @@ export interface IJobs extends BaseFields {
   created_at: string;
 }
 export interface jobsWebsite {
+  id?: number;
   title: string;
   description: string;
   media: IMedia;

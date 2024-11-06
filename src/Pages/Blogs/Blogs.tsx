@@ -19,13 +19,13 @@ export default function Blogs() {
     },
   );
   const blogs: IBlogs[] = data?.data;
-  console.log(blogs);
   const showCourse = blogs?.map((blog) => (
     <Blog
-      img={blog.media.file_path}
-      title={blog.title_ar}
-      description={blog.description_ar}
-      date={formatDate(blog.updated_at)}
+      key={blog?.id}
+      img={blog?.media.file_path}
+      title={blog?.title_ar}
+      description={blog?.description_ar}
+      date={formatDate(blog?.updated_at)}
       show={200}
       message={10}
       button={lang === 'en' ? 'Learn more' : 'معرفة المزيد'}
