@@ -40,14 +40,16 @@ export default function Employ() {
   if (isLoading) return <div>loading...</div>;
   return (
     <div className="mb-20">
-      <TitleWithLogo title="إعلان التوظيف" />
+      <TitleWithLogo
+        title={lang === 'en' ? 'Job Advertisement' : 'إعلان التوظيف'}
+      />
       <div className="mx-auto lg:justify-between gap-4 container lg:px-16 md:px-8 px-3">
         {jobsShow}
         <div className="text-center my-20">
           <Button
             to="/"
             className="bg-primary text-center text-white rounded-lg px-20 py-2 hover:bg-gray-1 hover:text-primary duration-300"
-            title="المزيد"
+            title={lang === 'en' ? 'More' : 'المزيد'}
           />
         </div>
       </div>

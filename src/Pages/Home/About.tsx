@@ -28,7 +28,7 @@ const About = () => {
       <div className="text-center pb-8">
         <Button
           to="/about"
-          title="المزيد"
+          title={lang === 'en' ? 'More' : 'المزيد'}
           className="bg-primary text-white  rounded-lg px-20 py-2 mb-20 hover:text-white hover:bg-black duration-300"
         />
       </div>

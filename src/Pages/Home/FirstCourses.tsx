@@ -36,7 +36,7 @@ export default function FirstCourses(props: IProps) {
             <Button
               to="/courses/first-band"
               className="bg-white text-secondary rounded-lg px-20 py-2 hover:bg-gray-1 hover:text-primary duration-300"
-              title="المزيد"
+              title={lang === 'en' ? 'More' : 'المزيد'}
             />
           </div>
         </div>

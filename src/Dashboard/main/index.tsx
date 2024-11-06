@@ -117,7 +117,7 @@ const MainDashboard = () => {
               </p>
             </div>
             <Button
-              title="المزيد"
+              title={lang === 'en' ? 'More' : 'المزيد'}
               className="bg-gold text-center text-white rounded-lg px-14 py-1 hover:bg-black duration-300 hover:text-white"
             />
           </div>

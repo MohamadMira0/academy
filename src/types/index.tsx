@@ -34,7 +34,9 @@ export interface IInitialValuesAddBlogs extends BaseFields {
 }
 
 export interface ITraining extends IJobs {}
-export interface IBlogs extends IJobs {}
+export interface IBlogs extends IJobs {
+  updated_at: string;
+}
 
 export interface IApplyInstitutesType {
   name: string;

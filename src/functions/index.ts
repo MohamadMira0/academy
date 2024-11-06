@@ -1,13 +1,6 @@
-import { QueryFunction } from 'react-query';
-import { BLOGS, Courses, Jobs, JOBS, Training, TRAINING } from '../Api/Api';
+import { BLOGS, Courses, JOBS, Training, TRAINING } from '../Api/Api';
 import { Axios, AxiosWithToken } from '../Api/axios';
-import {
-  IApplyInstitutesType,
-  blogsWebsite,
-  IInitialValuesAddJobs,
-  IJobs,
-  ITraining,
-} from '../types';
+import { IApplyInstitutesType, IJobs } from '../types';
 //** formatDate */
 export function formatDate(dateString: string): string {
   const date = new Date(dateString);
@@ -19,10 +12,6 @@ export function formatDate(dateString: string): string {
 
 // ** Website **
 // ** get Jobs **
-// export const getJobsWebsite = async (lang: string) => {
-//   const response = await Axios.get(`/jobs`);
-//   return response?.data;
-// };
 export const getJobsWebsite = async (lang: string) => {
   const response = await Axios.get(`/jobs`, {
     headers: {

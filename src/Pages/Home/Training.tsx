@@ -35,7 +35,7 @@ export default function Training() {
           <Button
             to="/"
             className="bg-primary text-center text-white rounded-lg px-20 py-2 hover:bg-gray-1 hover:text-primary duration-300"
-            title="انضم الينا"
+            title={lang === 'en' ? 'join us' : 'انضم الينا'}
           />
         </div>
       </div>
@@ -45,7 +45,7 @@ export default function Training() {
   if (isLoading) return <div>loading...</div>;
   return (
     <div className="mb-20">
-      <TitleWithLogo title="تدريب" />
+      <TitleWithLogo title={lang === 'en' ? 'training' : 'تدريب'} />
       <div className="flex flex-row-reverse flex-wrap-reverse container justify-center mx-auto lg:justify-between gap-4 lg:px-16 md:px-8 px-3">
         {trainingsShow}
       </div>

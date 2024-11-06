@@ -3,22 +3,32 @@ import TopBar2 from '../../components/TopBar2';
 import janzeer from '../../assets/janzzerBlue.png';
 import Blog from '../../components/Blog';
 import { useQuery } from 'react-query';
-import { formatDate, getBlogs } from '../../functions';
+import { formatDate, getBlogsWebsite } from '../../functions';
 import { IBlogs } from '../../types';
+import { RootState } from '../../app/store';
+import { useSelector } from 'react-redux';
 
 export default function Blogs() {
+  const { lang } = useSelector((state: RootState) => state.language);
   // ** Handle Jobs
-  const { data, isLoading } = useQuery(['blogs'], getBlogs);
+  const { data, isLoading } = useQuery(
+    ['blogs', lang],
+    () => getBlogsWebsite(lang),
+    {
+      keepPreviousData: true,
+    },
+  );
   const blogs: IBlogs[] = data?.data;
-  const showCourse = blogs.map((blog) => (
+  console.log(blogs);
+  const showCourse = blogs?.map((blog) => (
     <Blog
       img={blog.media.file_path}
       title={blog.title_ar}
       description={blog.description_ar}
-      date={formatDate(blog.created_at)}
+      date={formatDate(blog.updated_at)}
       show={200}
       message={10}
-      button="معرفة المزيد"
+      button={lang === 'en' ? 'Learn more' : 'معرفة المزيد'}
     />
   ));
   if (isLoading) return <div>loading...</div>;
@@ -56,7 +66,7 @@ export default function Blogs() {
             {/* <div className="text-center pt-20">
               <Button
                 className="bg-white text-secondary rounded-lg px-20 py-2 hover:bg-gray-1 hover:text-primary duration-300"
-                title="معرفة المزيد"
+                title={lang ==="en" ? "Learn more":"معرفة المزيد"}
               />
             </div> */}
           </div>

@@ -23,7 +23,7 @@ export default function ArmyCourses(props: IProps) {
           <Button
             to="/courses/navigation-officers"
             className="bg-primary text-center text-white rounded-lg px-20 py-2 hover:bg-gray-1 hover:text-primary duration-300"
-            title="المزيد"
+            title={lang === 'en' ? 'More' : 'المزيد'}
           />
         </div>
       </div>
