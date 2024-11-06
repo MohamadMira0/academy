@@ -35,6 +35,8 @@ import AddJob from './Dashboard/training-and-employment/add-employment';
 import AddTraining from './Dashboard/Training/add-training';
 import UpdateTraining from './Dashboard/Training/update-training';
 import AddBlog from './Dashboard/blogs/add-blog';
+import AddCourse from './Dashboard/courses/addCourse';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   usePreventZoom();
@@ -48,6 +50,7 @@ function App() {
       <div className="w-fit fixed z-30 right-0 bottom-[100px]">
         <img src={iconWhatsApp} alt="" className="w-11" />
       </div>
+      <ToastContainer />
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
@@ -67,6 +70,7 @@ function App() {
         />
         <Route path="/payment" element={<Payment />} />
         <Route path="/course/:id" element={<ShowCourse />} />
+
         <Route path="/course/:id/exam" element={<Exam />} />
         <Route path="/admin" element={<LoginAdmin />} />
         <Route path="/dashboard" element={<Dashboard />}>
@@ -77,6 +81,8 @@ function App() {
           <Route path="add-training" element={<AddTraining />} />
           <Route path="add-blog" element={<AddBlog />} />
           <Route path="courses" element={<Courses />} />
+          <Route path="courses/add" element={<AddCourse />} />
+          <Route path="courses/edit/:id" element={<AddCourse />} />
           <Route path="student" element={<Students />} />
           <Route path="blogs" element={<BlogsDashboard />} />
           <Route path="content" element={<Content />} />

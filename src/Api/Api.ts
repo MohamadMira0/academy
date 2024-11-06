@@ -14,6 +14,7 @@ export const base_url_admin = 'https://back.gmdss-academy.com/admin';
 export const USER = 'users';
 // ** Dashboard **
 export const DASHBOARD = 'dashboard';
+export const APPLY = 'apply-institutes';
 // ** Jobs && Training **
 export const JOBS = 'jobs';
 export const TRAINING = 'training';

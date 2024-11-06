@@ -1,21 +1,12 @@
 import ReactPaginate from 'react-paginate';
 import React from 'react';
 
-type TableRow = Record<string, any>;
-
 type paginateProps = {
-  itemsPerPage: number;
-  data: TableRow[];
   setPage: React.Dispatch<React.SetStateAction<number>>;
   totalPages: number;
 };
-const PaginatedItems: React.FC<paginateProps> = ({
-  itemsPerPage,
-  data,
-  totalPages,
-  setPage,
-}) => {
-  const pageCount = totalPages / 10;
+const PaginatedItems: React.FC<paginateProps> = ({ totalPages, setPage }) => {
+  const pageCount = totalPages / 20;
   return (
     <>
       <ReactPaginate

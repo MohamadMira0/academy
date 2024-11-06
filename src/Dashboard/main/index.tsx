@@ -5,48 +5,23 @@ import Table from '../../components/Dashboard/Tables/Table';
 import Button from '../../components/Button';
 import { HiOutlineMailOpen } from 'react-icons/hi';
 import { useQuery } from 'react-query';
-import { useQueryClient } from 'react-query';
-import { base_url_admin, DASHBOARD } from '../../Api/Api';
+import { APPLY, base_url_admin, DASHBOARD } from '../../Api/Api';
 import { AxiosWithToken } from '../../Api/axios';
+import { useState } from 'react';
 
-interface Apply_Institutes {
+type Apply_Institutes = {
   id: number;
   name: string;
   email: string;
   educational_qualification: string;
   phone: string;
   read_at: number;
-}
+};
+
 interface IFetchData {
-  number_courses: number;
-  number_students: number;
-  revenue: number;
-  apply_institutes: Apply_Institutes[];
+  data: Apply_Institutes[];
+  total: number;
 }
-
-// const userData: Apply_Institutes[] = [
-//   {
-//     id: 1,
-//     name: 'احمد محمد التنجي',
-
-//     phone: '+20 000000000',
-//     email: 'example@example.com',
-//   },
-//   {
-//     id: 2,
-//     name: 'احمد محمد التنجي',
-
-//     phone: '+20 000000000',
-//     email: 'example@example.com',
-//   },
-//   {
-//     id: 3,
-//     name: 'احمد محمد التنجي',
-
-//     phone: '+20 000000000',
-//     email: 'example@example.com',
-//   },
-// ];
 
 const userColumns: Array<{ key: keyof Apply_Institutes; label: string }> = [
   { key: 'id', label: 'ID' },
@@ -57,12 +32,19 @@ const userColumns: Array<{ key: keyof Apply_Institutes; label: string }> = [
 ];
 
 const MainDashboard = () => {
-  const queryClient = useQueryClient();
-  const { data: dataFetching } = useQuery({
+  const [page, setPage] = useState(1);
+
+  const { data: mainData } = useQuery({
     queryFn: () => AxiosWithToken.get(`${base_url_admin}/${DASHBOARD}`),
-    queryKey: ['Contact_Us'],
+    queryKey: ['main'],
+  });
+  const { data: dataFetching } = useQuery({
+    queryFn: () =>
+      AxiosWithToken.get(`${base_url_admin}/${APPLY}?page=${page}`),
+    queryKey: ['Contact_Us', page],
   });
   const data: IFetchData = dataFetching?.data.data;
+
   return (
     <div>
       <h1 className="text-gold font-bold lg:text-6xl md:text-4xl text-2xl	text-center">
@@ -80,7 +62,7 @@ const MainDashboard = () => {
           <div>
             <p className="text-body">عدد الكورسات</p>
             <p className="text-indigo-900 font-bold text-3xl">
-              {data?.number_courses}
+              {mainData?.data?.data?.number_courses}
             </p>
           </div>
         </div>
@@ -91,7 +73,7 @@ const MainDashboard = () => {
           <div>
             <p className="text-body">عدد الطلاب</p>
             <p className="text-indigo-900 font-bold text-3xl">
-              {data?.number_students}
+              {mainData?.data?.data?.number_students}
             </p>
           </div>
         </div>
@@ -102,13 +84,18 @@ const MainDashboard = () => {
           <div>
             <p className="text-body">الأرباح </p>
             <p className="text-indigo-900 font-bold text-3xl">
-              {data?.revenue}
+              {mainData?.data?.data?.revenue}
             </p>
           </div>
         </div>
       </div>
       <div className="lg:mt-20 mt-8">
-        <Table data={data?.apply_institutes || []} columns={userColumns}>
+        <Table
+          setPage={setPage}
+          totalPages={data?.total}
+          data={data?.data || []}
+          columns={userColumns}
+        >
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <HiOutlineMailOpen className="text-indigo-900 w-8 h-8" />
@@ -116,10 +103,6 @@ const MainDashboard = () => {
                 طلبات التقديم بالمعهد
               </p>
             </div>
-            <Button
-              title={lang === 'en' ? 'More' : 'المزيد'}
-              className="bg-gold text-center text-white rounded-lg px-14 py-1 hover:bg-black duration-300 hover:text-white"
-            />
           </div>
         </Table>
       </div>

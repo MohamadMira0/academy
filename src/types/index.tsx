@@ -34,6 +34,18 @@ export interface IInitialValuesAddBlogs extends BaseFields {
   media?: File | null;
 }
 
+export interface IInitialValuesAddCourse extends BaseFields {
+  study_group:
+    | 'first group'
+    | 'second group'
+    | 'navigation and marine officers';
+  type_payment: 'free' | 'payed';
+  price_in_egypt: number;
+  price_out_egypt: number;
+  number_months: number;
+  media: File | Blob | MediaSource | null;
+}
+
 export interface ITraining extends IJobs {}
 export interface IBlogs extends IJobs {
   updated_at: string;
