@@ -37,6 +37,8 @@ import UpdateTraining from './Dashboard/Training/update-training';
 import AddBlog from './Dashboard/blogs/add-blog';
 import AddCourse from './Dashboard/courses/addCourse';
 import { ToastContainer } from 'react-toastify';
+import Lessons from './Dashboard/lessons';
+import AddLesson from './Dashboard/lessons/addLesson';
 
 function App() {
   usePreventZoom();
@@ -70,7 +72,6 @@ function App() {
         />
         <Route path="/payment" element={<Payment />} />
         <Route path="/course/:id" element={<ShowCourse />} />
-
         <Route path="/course/:id/exam" element={<Exam />} />
         <Route path="/admin" element={<LoginAdmin />} />
         <Route path="/dashboard" element={<Dashboard />}>
@@ -82,6 +83,12 @@ function App() {
           <Route path="add-blog" element={<AddBlog />} />
           <Route path="courses" element={<Courses />} />
           <Route path="courses/add" element={<AddCourse />} />
+          <Route path="courses/:id" element={<Lessons />} />
+          <Route path="courses/:courseId/lessons/add" element={<AddLesson />} />
+          <Route
+            path="courses/:courseId/edit/:lessonId"
+            element={<AddLesson />}
+          />
           <Route path="courses/edit/:id" element={<AddCourse />} />
           <Route path="student" element={<Students />} />
           <Route path="blogs" element={<BlogsDashboard />} />

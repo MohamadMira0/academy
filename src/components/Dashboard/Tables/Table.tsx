@@ -17,7 +17,10 @@ interface TableProps<T> {
   totalPages: number;
   setPage: React.Dispatch<React.SetStateAction<number>>;
   action?: boolean;
+  deleteAction?: boolean;
   handleDelete?: UseMutateAsyncFunction<any, unknown, string, unknown>;
+  perPage: number;
+  showPath?: string;
 }
 
 const Table = <T,>({
@@ -25,20 +28,27 @@ const Table = <T,>({
   columns,
   children,
   action,
+  deleteAction,
   totalPages,
   setPage,
   handleDelete,
+  perPage,
+  showPath,
 }: TableProps<T>) => {
   const [openPopUp, setOpenPopUp] = useState(false);
   return (
     <>
-      <div className="bg-white shadow-lg rounded-md overflow-x-auto p-4">
+      <div className="bg-white shadow-lg relative  rounded-md overflow-x-auto p-4">
         {children}
-        <table className=" min-w-full  my-4">
+        <table className="w-full my-4">
           <thead>
             <tr>
               {columns.map((column) => (
-                <th className="py-4 " key={column.key as string}>
+                <th
+                  scope="col"
+                  className="py-4 px-6"
+                  key={column.key as string}
+                >
                   {column.label}
                 </th>
               ))}
@@ -48,17 +58,23 @@ const Table = <T,>({
             {data.map((row, index) => (
               <tr key={index} className="">
                 {columns.map((column) => (
-                  <td className="py-2 " key={column.key as string}>
+                  <td
+                    scope="col"
+                    className="py-4 px-6"
+                    key={column.key as string}
+                  >
                     {String(row[column.key])}
                   </td>
                 ))}
                 {action !== false && (
-                  <td>
+                  <td className="px-6">
                     <span className="flex items-center justify-center gap-2">
-                      <AiFillDelete
-                        className="text-xl text-danger cursor-pointer"
-                        onClick={() => setOpenPopUp(true)}
-                      />
+                      {deleteAction !== false && (
+                        <AiFillDelete
+                          className="text-xl text-danger cursor-pointer"
+                          onClick={() => setOpenPopUp(true)}
+                        />
+                      )}
                       {openPopUp && (
                         <DeletePopUp
                           handleDelete={handleDelete}
@@ -69,7 +85,7 @@ const Table = <T,>({
                       <Link to={`edit/${row?.id}`}>
                         <RiEditBoxLine className="text-xl text-primary" />
                       </Link>
-                      <Link to={`edit/${row?.id}`}>
+                      <Link to={`${showPath ?? ''}${row?.id}`}>
                         <FaRegEye className="text-xl text-primary-2" />
                       </Link>
                     </span>
@@ -79,7 +95,11 @@ const Table = <T,>({
             ))}
           </tbody>
         </table>
-        <PaginatedItems setPage={setPage} totalPages={totalPages || 0} />
+        <PaginatedItems
+          setPage={setPage}
+          totalPages={totalPages || 0}
+          perPage={perPage}
+        />
       </div>
     </>
   );

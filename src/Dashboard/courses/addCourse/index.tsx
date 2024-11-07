@@ -1,27 +1,40 @@
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
 import { IoCameraOutline } from 'react-icons/io5';
 import { IInitialValuesAddCourse } from '../../../types';
-import { useNavigate } from 'react-router-dom';
-import { AxiosWithToken } from '../../../Api/axios';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Axios, AxiosWithToken } from '../../../Api/axios';
 import { base_url_admin, Courses } from '../../../Api/Api';
 import { AddCourseValidation } from '../../../Validation/dashboard/AddCourseValidation';
 import { showSuccess } from '../../../libs/ReactToastify';
+import SubmitLoader from '../../../components/Loader/SubmitLoader';
+import { useQuery } from 'react-query';
 
 const AddCourse = () => {
-  const initialValues: IInitialValuesAddCourse = {
-    title_ar: '',
-    title_en: '',
-    description_ar: '',
-    description_en: '',
-    study_group: 'first group',
-    type_payment: 'free',
-    price_in_egypt: 0,
-    price_out_egypt: 0,
-    number_months: 0,
-    media: null,
-  };
-
   const nav = useNavigate();
+  const { id } = useParams();
+
+  const { data } = useQuery({
+    queryFn: () =>
+      AxiosWithToken.get(`${base_url_admin}/${Courses}/show/${id}`),
+    queryKey: ['singleCourse'],
+    enabled: id ? true : false,
+  });
+
+  const finalData = data?.data.data;
+
+  const initialValues: IInitialValuesAddCourse = {
+    title_ar: id ? finalData?.title_ar : '',
+    title_en: id ? finalData?.title_en : '',
+    description_ar: id ? finalData?.description_ar : '',
+    description_en: id ? finalData?.description_en : '',
+    study_group: id ? finalData?.study_group : 'first group',
+    type_payment: id ? finalData?.type_payment : 'free',
+    price_in_egypt: id ? finalData?.price_in_egypt : 0,
+    price_out_egypt: id ? finalData?.price_out_egypt : 0,
+    number_months: id ? finalData?.number_months : 0,
+    media: id ? finalData?.media : null,
+    publish: id && finalData?.publish,
+  };
 
   const handleSubmit = async (values: IInitialValuesAddCourse) => {
     try {
@@ -32,15 +45,26 @@ const AddCourse = () => {
       formData.append('description_en', values.description_en);
       formData.append('study_group', values.study_group);
       formData.append('type_payment', values.type_payment);
-      formData.append('price_in_egypt', values.price_in_egypt);
-      formData.append('price_out_egypt', values.price_out_egypt);
-      formData.append('number_months', values.number_months);
-      if (values.media) {
+      if (values.type_payment === 'payed') {
+        formData.append('price_in_egypt', values.price_in_egypt.toString());
+        formData.append('price_out_egypt', values.price_out_egypt.toString());
+      }
+      formData.append('number_months', values.number_months.toString());
+
+      if (typeof values.media === 'string' || values.media instanceof Blob) {
         formData.append('media', values.media);
       }
-      await AxiosWithToken.post(`${base_url_admin}/${Courses}/store`, formData);
+      if (id) {
+        formData.append('_method', 'put');
+        formData.append('publish', values.publish ? '1' : '0');
+      }
+
+      const url = id
+        ? `${base_url_admin}/${Courses}/update/${id}`
+        : `${base_url_admin}/${Courses}/store`;
+      await AxiosWithToken.post(url, formData);
       nav('/dashboard/courses');
-      showSuccess('تم إضافة الكورس بنجاح');
+      showSuccess(id ? 'تم تعديل الكورس بنجاح' : 'تم إضافة الكورس بنجاح');
     } catch (err) {
       console.log(err);
     }
@@ -48,9 +72,10 @@ const AddCourse = () => {
   return (
     <div className="bg-white shadow-lg rounded-md overflow-x-auto lg:p-16 md:p-8 p-4">
       <Formik
-        validationSchema={AddCourseValidation}
+        validationSchema={() => AddCourseValidation(!!id)}
         initialValues={initialValues}
         onSubmit={handleSubmit}
+        enableReinitialize
       >
         {({ values, isSubmitting, setFieldValue }) => (
           <Form>
@@ -63,13 +88,26 @@ const AddCourse = () => {
                 <div className="relative w-[300px] h-[200px] bg-gray-1">
                   <div className="bg-black opacity-0 w-full h-full absolute top-0 left-0 hover:opacity-20 z-30 transition-all"></div>
                   <IoCameraOutline className="text-5xl absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20" />
-                  {typeof (values.media === Blob) && (
+                  {values.media instanceof Blob ? (
                     <img
                       className=" w-[300px] h-[200px] absolute top-0 left-0 object-cover z-10"
                       src={values.media && URL.createObjectURL(values.media)}
                     />
-                  )}
+                  ) : values.media &&
+                    typeof values.media === 'object' &&
+                    'file_path' in values.media ? (
+                    <img
+                      className="w-[300px] h-[200px] absolute top-0 left-0 object-cover z-10"
+                      src={values.media.file_path as string}
+                    />
+                  ) : null}
                 </div>
+
+                <ErrorMessage
+                  name="media"
+                  component="div"
+                  className="error text-red-600 text-sm"
+                />
               </label>
               <input
                 className="hidden appearance-none w-full px-3 shadow-switch-1 text-gray-700 border border-gray-300 rounded-sm border-none py-4"
@@ -282,42 +320,64 @@ const AddCourse = () => {
                       className="error text-red-600 text-sm"
                     />
                   </div>{' '}
-                  <div className="">
-                    <label
-                      className="block text-lg text-primary mb-2 font-bold text-gray-700"
-                      htmlFor="number_months"
-                    >
-                      عدد الأيام
-                    </label>
-                    <Field
-                      name="number_months"
-                      id="number_months"
-                      type="number"
-                      placeholder="محتوى الكورس باللغة الإنكليزية"
-                      className="appearance-none text-black block w-full px-3 shadow-switch-1 text-gray-700 border border-gray-300 rounded-sm border-none py-4"
-                      cols="30"
-                      rows="6"
-                      maxLength="300"
-                    />
-
-                    <ErrorMessage
-                      name="number_months"
-                      component="div"
-                      className="error text-red-600 text-sm"
-                    />
-                  </div>
                 </>
               )}
-            </div>
+              <div className="">
+                <label
+                  className="block text-lg text-primary mb-2 font-bold text-gray-700"
+                  htmlFor="number_months"
+                >
+                  عدد الأشهر
+                </label>
+                <Field
+                  name="number_months"
+                  id="number_months"
+                  type="number"
+                  placeholder="محتوى الكورس باللغة الإنكليزية"
+                  className="appearance-none text-black block w-full px-3 shadow-switch-1 text-gray-700 border border-gray-300 rounded-sm border-none py-4"
+                  cols="30"
+                  rows="6"
+                  maxLength="300"
+                />
 
+                <ErrorMessage
+                  name="number_months"
+                  component="div"
+                  className="error text-red-600 text-sm"
+                />
+              </div>
+            </div>
+            {id && (
+              <div>
+                <label className="inline-flex items-center cursor-pointer">
+                  <span className="me-3 text-sm font-medium text-gray-900 dark:text-gray-300">
+                    حالة الكورس
+                  </span>
+
+                  <input
+                    checked={values.publish}
+                    onChange={(e) => setFieldValue('publish', e.target.checked)}
+                    name="publish"
+                    type="checkbox"
+                    className="sr-only peer"
+                  />
+                  <div className="relative w-11 h-6 bg-gray-7 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600" />
+                </label>
+              </div>
+            )}
             <button
               className="bg-sky-600 text-center text-white rounded-lg px-10 py-2 hover:bg-sky-800 duration-300 hover:text-white flex items-center mx-auto gap-2 mt-5"
               title="حفظ"
               type="submit"
               disabled={isSubmitting}
             >
-              {isSubmitting && 'Loading'}
-              حفظ
+              <span> حفظ</span>
+
+              {isSubmitting && (
+                <span>
+                  <SubmitLoader />
+                </span>
+              )}
             </button>
           </Form>
         )}

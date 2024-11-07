@@ -15,6 +15,8 @@ export const USER = 'users';
 // ** Dashboard **
 export const DASHBOARD = 'dashboard';
 export const APPLY = 'apply-institutes';
+// ** Lessons **
+export const LESSONS = 'lessons';
 // ** Jobs && Training **
 export const JOBS = 'jobs';
 export const TRAINING = 'training';
