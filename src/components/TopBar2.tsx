@@ -16,6 +16,7 @@ export default function TopBar2() {
   const [courses, setCourses] = useState(false);
   const [training, setTraining] = useState(false);
   const dispatch = useDispatch();
+  const [login, setLogin] = useState(false);
   const [lang, setLang] = useState('en');
   const language: string = useSelector(
     (state: RootState) => state.language.lang,
@@ -162,54 +163,63 @@ export default function TopBar2() {
         >
           <ul className="flex flex-col items-center text-center font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
             <li>
-              <div className="relative">
-                <p
-                  className="cursor-pointer select-none"
-                  onClick={() => {
-                    setOpenProfile((prev) => !prev);
-                    setTraining(false);
-                    setCourses(false);
-                    setOpenLang(false);
-                  }}
-                >
-                  <span className="flex gap-1">
-                    <img src={person} alt="icon" />
-                    محمد الأحمد
-                    <img src={arrow} alt="icon" />
-                  </span>
-                </p>
-                {/* <!-- Dropdown --> */}
-                <div
-                  className={`${
-                    openProfile ? 'block top-0 right-[150px]' : 'hidden'
-                  } w-[150px] z-50 lang-hover-custom lg:absolute lg:right-0 lg:top-[20px]  lg:my-4 text-base list-none lg:bg-white divide-y divide-gray-100 rounded-lg lg:shadow dark:bg-gray-700`}
-                  id="language-dropdown-menu"
-                >
-                  <ul
-                    className="lg:py-2 ps-2 md:ps-0 font-medium w-full"
-                    role="none"
+              {login ? (
+                <div className="relative">
+                  <p
+                    className="cursor-pointer select-none"
+                    onClick={() => {
+                      setOpenProfile((prev) => !prev);
+                      setTraining(false);
+                      setCourses(false);
+                      setOpenLang(false);
+                    }}
                   >
-                    <li>
-                      <Link
-                        to={''}
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"
-                        role="menuitem"
-                      >
-                        الصفحة الشخصية
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        to={''}
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"
-                        role="menuitem"
-                      >
-                        تسجيل الخروج
-                      </Link>
-                    </li>
-                  </ul>
+                    <span className="flex gap-1">
+                      <img src={person} alt="icon" />
+                      محمد الأحمد
+                      <img src={arrow} alt="icon" />
+                    </span>
+                  </p>
+                  {/* <!-- Dropdown --> */}
+                  <div
+                    className={`${
+                      openProfile ? 'block top-0 right-[150px]' : 'hidden'
+                    } w-[150px] z-50 lang-hover-custom lg:absolute lg:right-0 lg:top-[20px]  lg:my-4 text-base list-none lg:bg-white divide-y divide-gray-100 rounded-lg lg:shadow dark:bg-gray-700`}
+                    id="language-dropdown-menu"
+                  >
+                    <ul
+                      className="lg:py-2 ps-2 md:ps-0 font-medium w-full"
+                      role="none"
+                    >
+                      <li>
+                        <Link
+                          to={''}
+                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"
+                          role="menuitem"
+                        >
+                          {lang === 'en' ? 'Profile' : 'الصفحة الشخصية'}
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          to={''}
+                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"
+                          role="menuitem"
+                        >
+                          {lang === 'en' ? 'logout' : 'تسجيل الخروج'}
+                        </Link>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
-              </div>
+              ) : (
+                <Link
+                  className="bg-primary text-white  rounded-lg px-8 py-1 mb-20 hover:text-white hover:bg-black duration-300"
+                  to={'/login'}
+                >
+                  {lang === 'en' ? 'Login' : 'تسجيل الدخول'}
+                </Link>
+              )}
             </li>
             <li>
               <NavLink
@@ -219,7 +229,7 @@ export default function TopBar2() {
                   return isActive ? { color: '#1d4ed8' } : {};
                 }}
               >
-                الرئسية
+                {lang === 'en' ? 'Home' : 'الرئسية'}
               </NavLink>
             </li>
             <li>
@@ -230,7 +240,7 @@ export default function TopBar2() {
                   return isActive ? { color: '#1d4ed8' } : {};
                 }}
               >
-                من نحن
+                {lang === 'en' ? 'About Us' : 'من نحن'}
               </NavLink>
             </li>
             <li className="relative">
@@ -245,7 +255,7 @@ export default function TopBar2() {
                 className={`block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700`}
               >
                 <span className="flex gap-1 items-center">
-                  كورسات
+                  {lang === 'en' ? 'Courses' : 'كورسات'}
                   <img src={arrow} alt="icon" />
                 </span>
               </a>
@@ -266,7 +276,7 @@ export default function TopBar2() {
                       className=" w-full block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"
                       role="menuitem"
                     >
-                      الفرقة الاولى
+                      {lang === 'en' ? 'First Group' : 'الفرقة الاولى'}
                     </Link>
                   </li>
                   <li>
@@ -275,7 +285,7 @@ export default function TopBar2() {
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"
                       role="menuitem"
                     >
-                      الفرقة الثانية
+                      {lang === 'en' ? 'Second Group' : 'الفرقة الثانية'}
                     </Link>
                   </li>
                 </ul>
@@ -289,7 +299,7 @@ export default function TopBar2() {
                   return isActive ? { color: '#1d4ed8' } : {};
                 }}
               >
-                كورسات ضباط الملاحة
+                {lang === 'en' ? 'Navigation Courses' : 'كورسات ضباط الملاحة'}
               </NavLink>
             </li>
             <li>
@@ -300,7 +310,7 @@ export default function TopBar2() {
                   return isActive ? { color: '#1d4ed8' } : {};
                 }}
               >
-                التقديم بالمعهد
+                {lang === 'en' ? 'Apply Institutes' : 'التقديم بالمعهد'}
               </NavLink>
             </li>
             <li className="relative">
@@ -315,7 +325,9 @@ export default function TopBar2() {
                 className="block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
               >
                 <span className="flex gap-1 items-center">
-                  التوظيف و التدريب
+                  {lang === 'en'
+                    ? 'Recruitment and training'
+                    : 'التوظيف و التدريب'}
                   <img src={arrow} alt="icon" />
                 </span>{' '}
               </a>
@@ -333,7 +345,7 @@ export default function TopBar2() {
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"
                       role="menuitem"
                     >
-                      التوظيف
+                      {lang === 'en' ? 'Recruitment' : 'التوظيف'}
                     </Link>
                   </li>
                   <li>
@@ -342,7 +354,7 @@ export default function TopBar2() {
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"
                       role="menuitem"
                     >
-                      التدريب
+                      {lang === 'en' ? 'Training' : 'التدريب'}
                     </Link>
                   </li>
                 </ul>
@@ -356,7 +368,7 @@ export default function TopBar2() {
                   return isActive ? { color: '#1d4ed8' } : {};
                 }}
               >
-                المدونات
+                {lang === 'en' ? 'Blogs' : 'المدونات'}
               </NavLink>
             </li>
             <li>
@@ -367,7 +379,7 @@ export default function TopBar2() {
                   return isActive ? { color: '#1d4ed8' } : {};
                 }}
               >
-                تواصل معنا
+                {lang === 'en' ? 'Contact Us' : 'تواصل معنا'}
               </NavLink>
             </li>
           </ul>

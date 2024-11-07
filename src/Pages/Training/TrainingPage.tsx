@@ -1,23 +1,23 @@
 import Footer from '../../components/Footer';
 import TopBar2 from '../../components/TopBar2';
-import janzeer from '../../assets/janzzerBlue.png';
-import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
 import message from '../../assets/icons/message (2).svg';
 import phone1 from '../../assets/icons/phone1.svg';
 import profile from '../../assets/icons/profile.svg';
 import { InstituteValidation } from '../../Validation/pages/InstituteValidation';
 import { ChangeEvent, useState } from 'react';
-import image1 from '../../assets/courses/image2.png';
 import image2 from '../../assets/courses/course.png';
 import TitleWithLogo from '../../components/TitleWithLogo';
 import Train from '../../components/Train/Train';
-import radio from '../../assets/courses/Radio.png';
 import StatusAlert from '../../components/Alerts/StatusAlert';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
 import { useQuery } from 'react-query';
-import { getBlogsWebsite, getTrainingsWebsitePage } from '../../functions';
-import { ITraining, trainingsWebsite } from '../../types';
+import { getTrainingsWebsitePage } from '../../functions';
+import { trainingsWebsite } from '../../types';
+import { Axios } from '../../Api/axios';
+import { MdCastForEducation } from 'react-icons/md';
+import { MdOutlineModelTraining } from 'react-icons/md';
 
 export default function TrainingPage() {
   const [openDetails, setOpenDetails] = useState(false);
@@ -25,17 +25,18 @@ export default function TrainingPage() {
     name: string;
     email: string;
     phone: number | null;
-    nameTrain: string;
-    education: string | null;
+    training_id: string | number;
+    educational_qualification: string | null;
   };
 
   const initialValues: InitialValuesType = {
     name: '',
     email: '',
     phone: null,
-    nameTrain: '',
-    education: '',
+    training_id: 1,
+    educational_qualification: '',
   };
+  const [alert, setAlert] = useState('');
 
   const { lang } = useSelector((state: RootState) => state.language);
   // ** Handle Jobs
@@ -48,23 +49,25 @@ export default function TrainingPage() {
   );
   const trainings: trainingsWebsite[] = data?.data?.trainings;
   const videos = data?.data?.videos;
-  console.log(data);
+  console.log(videos);
 
-  // const handleSubmit = async (
-  //   values: IContactUsType,
-  //   { setSubmitting }: FormikHelpers<IContactUsType>,
-  // ) => {
-  //   try {
-  //     const res = await Axios.post('/contact-us/send', values);
-  //     console.log(res);
-  //     if (res.status === 200) {
-  //       setAlert('success');
-  //     }
-  //   } catch (err) {
-  //     console.log(err);
-  //     setAlert('error');
-  //   }
-  // };
+  const handleSubmit = async (
+    values: InitialValuesType,
+    { setSubmitting }: FormikHelpers<InitialValuesType>,
+  ) => {
+    try {
+      const res = await Axios.post('/trainings/send', values);
+      console.log(res);
+      if (res.status === 200) {
+        setAlert('success');
+      }
+      setOpenDetails(true);
+    } catch (err) {
+      console.log(err);
+      setAlert('error');
+      setOpenDetails(true);
+    }
+  };
 
   if (isLoading) return <div>Loading...</div>;
   return (
@@ -73,7 +76,9 @@ export default function TrainingPage() {
       <div className="container lg:px-16 md:px-8 px-3 mx-auto py-16" dir="rtl">
         <div className="grid lg:grid-cols-2 grid-cols-1 lg:gap-30 gap-10">
           <div className="order-2 lg:order-1 lg:mb-16 md:mb-8 mb-6">
-            <h1 className="text-gold text-5xl font-bold">التدريبات</h1>
+            <h1 className="text-gold text-5xl font-bold">
+              {lang === 'en' ? 'Exercises' : 'التدريبات'}
+            </h1>
             <p className="font-bold text-gray-7 text-2xl mt-10">
               هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحة ما
               سيلهي القارئ عن التركيز على الشكل الخارجي للنص أو شكل توضع الفقرات
@@ -86,7 +91,13 @@ export default function TrainingPage() {
           </div>
         </div>
         <div className="lg:mt-20 mt-10">
-          <TitleWithLogo title="تجارب واقعية من برامج التدريب" />
+          <TitleWithLogo
+            title={
+              lang === 'en'
+                ? 'Realistic experiences from training programs'
+                : 'تجارب واقعية من برامج التدريب'
+            }
+          />
           <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-10">
             <iframe
               className="w-full h-[250px]"
@@ -114,6 +125,7 @@ export default function TrainingPage() {
           <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-10 xl:gap-30 lg:gap-20">
             {trainings?.map((training) => (
               <Train
+                key={training.id}
                 description={training?.description}
                 title={training?.title}
                 img={training?.media?.file_path}
@@ -123,7 +135,9 @@ export default function TrainingPage() {
         </div>
       </div>
       <div className="lg:mt-20 mt-10">
-        <TitleWithLogo title="المتدربون السابقون" />
+        <TitleWithLogo
+          title={lang === 'en' ? 'Former trainees' : 'المتدربون السابقون'}
+        />
         <div className="bg-secondary2 py-10 relative my-10">
           <div className="container lg:px-16 md:px-8 px-3 mx-auto py-10">
             <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6 xl:gap-15 lg:gap-10">
@@ -137,7 +151,9 @@ export default function TrainingPage() {
         </div>
       </div>
       <div className="lg:mt-20 mt-10">
-        <TitleWithLogo title="المتدربون السابقون" />
+        <TitleWithLogo
+          title={lang === 'en' ? 'Apply for training' : 'التقديم على التدريب'}
+        />
         <div
           className="container lg:px-16 md:px-8 px-3 mx-auto py-10"
           dir="rtl"
@@ -145,11 +161,9 @@ export default function TrainingPage() {
           <Formik
             initialValues={initialValues}
             validationSchema={InstituteValidation}
-            onSubmit={() => {}}
+            onSubmit={handleSubmit}
           >
             {({
-              values,
-              errors,
               isSubmitting,
               setFieldValue,
               /* and other goodies */
@@ -211,47 +225,42 @@ export default function TrainingPage() {
                   </div>
                 </div>
                 <div className=" flex items-start gap-8 md:mb-6 mb-3">
-                  <img src={phone1} alt="person" className="w-8" />
+                  <MdOutlineModelTraining className="w-10 h-10 text-[#5BA3D4]" />
                   <div className="w-full">
                     <div className="text-black text-right text-xl rounded-md px-6 py-2 bg-white outline-none custom-shadow w-full border-2 border-transparent duration-300 focus:border-secondary3 cursor-pointer">
                       <Field
                         as="select"
-                        // onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                        //   setFieldValue(
-                        //     'nameTrain',
-                        //     e.target.value.replace(/[^0-9-]/g, ''),
-                        //   )
-                        // }
-                        // className="text-black text-right text-xl rounded-md px-6 py-2 bg-white outline-none custom-shadow w-full border-2 border-transparent duration-300 focus:border-secondary3 cursor-pointer"
                         className="border-none w-full outline-none"
-                        name="nameTrain"
+                        name="training_id"
                       >
                         <option value="" disabled>
                           اسم التدريب
                         </option>
-                        <option value="red">Red</option>
-                        <option value="green">Green</option>
-                        <option value="blue">Blue</option>
+                        {trainings?.map((training) => (
+                          <option value={training?.id}>
+                            {training?.title}
+                          </option>
+                        ))}
                       </Field>
                     </div>
                     <ErrorMessage
-                      name="phone"
+                      name="training_id"
                       component="div"
                       className="text-sm text-red-600 mt-2 "
                     />
                   </div>
                 </div>
                 <div className=" flex items-start gap-8 md:mb-6 mb-3">
-                  <img src={phone1} alt="person" className="w-8" />
+                  <MdCastForEducation className="w-10 h-10 text-[#5BA3D4]" />
                   <div className="w-full">
                     <Field
                       type="text"
                       className="text-black text-right text-xl rounded-md px-6 py-2 bg-white outline-none custom-shadow w-full border-2 border-transparent duration-300 focus:border-secondary3"
-                      name="education"
+                      name="educational_qualification"
                       placeholder="المؤهل الدراسي"
                     />
                     <ErrorMessage
-                      name="education"
+                      name="educational_qualification"
                       component="div"
                       className="text-sm text-red-600 mt-2 "
                     />
@@ -259,10 +268,13 @@ export default function TrainingPage() {
                 </div>
                 <div className="flex justify-center mt-10">
                   <button
-                    onClick={() => setOpenDetails((prev) => !prev)}
+                    disabled={isSubmitting}
+                    type="submit"
                     className="bg-primary text-white text-lg py-1 lg:px-16 px-8 rounded-md border border-transparent hover:bg-white hover:border-primary hover:text-primary duration-300"
                   >
-                    التقديم على التدريب
+                    {lang === 'en'
+                      ? 'Apply for training'
+                      : 'التقديم على التدريب'}
                   </button>
                 </div>
               </Form>
@@ -273,7 +285,7 @@ export default function TrainingPage() {
       <StatusAlert
         openDetails={openDetails}
         setOpenDetails={setOpenDetails}
-        status="error"
+        status={alert}
       />
       <Footer footer />
     </>

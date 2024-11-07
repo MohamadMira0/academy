@@ -2,7 +2,6 @@ import TopBar2 from '../../components/TopBar2';
 import image from '../../assets/about.png';
 import janzeer from '../../assets/janzzerBlue.png';
 import Footer from '../../components/Footer';
-import Video from '../../components/Video/Video.jsx';
 
 export default function AboutUs() {
   return (

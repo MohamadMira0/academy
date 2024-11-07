@@ -10,11 +10,10 @@ import image from '../../assets/background-home.svg';
 import { Link } from 'react-router-dom';
 import span from '../../assets/span.png';
 import eye from '../../assets/icons/eye.svg';
-import show from '../../assets/icons/show.svg';
-import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
 import { RegisterValidation } from '../../Validation/auth/RegisterValidation';
-import { useQuery } from 'react-query';
-import { Axios } from '../../Api/axios';
+import axios, { AxiosError } from 'axios';
+import { base_url_student } from '../../Api/Api';
 
 export default function Register() {
   const [showPassword, setShowPassword] = useState(false);
@@ -42,36 +41,28 @@ export default function Register() {
   const [loading, setLoading] = useState(false);
   const cookie = Cookie();
 
-  // const { data, isLoading } = useQuery({
-  //   queryFn: () =>
-  //     Axios.post(`${base_url_student}/${Contact_Us}`, {
-  //       headers: {
-  //         'x-api-key': 'mwDA9w',
-  //       },
-  //     }),
-  //   queryKey: ['Contact_Us'],
-  // });
-
-  // Handle Submit
-  // async function handleSubmit(e) {
-  //   e.preventDefault();
-  //   setLoading(true);
-  //   try {
-  //     const res = await axios.post(`${base_url_student}/${LOGIN}`, form);
-  //     const token = res.data.data.token;
-  //     cookie.set("Bearer", token);
-  //     setLoading(false);
-  //     window.location.pathname = "/dashboard/home";
-  //   } catch (err) {
-  //     console.log(err);
-  //     setLoading(false);
-  //     if (err.response.status === 401) {
-  //       setErr("Email or Password is not Correct");
-  //     } else {
-  //       setErr("Internal Server ERR");
-  //     }
-  //   }
-  // }
+  // ** Handle Submit
+  const handleSubmit = async (
+    values: InitialValuesType,
+    { setSubmitting }: FormikHelpers<InitialValuesType>,
+  ) => {
+    try {
+      console.log(values);
+      const res = await axios.post(`${base_url_student}/auth/signup`, values);
+      const token = res.data.data.token;
+      cookie.set('Bearer', token);
+      setLoading(false);
+      window.location.pathname = '/';
+    } catch (err: any) {
+      console.log(err);
+      setLoading(false);
+      if (err.response.status === 422) {
+        setErr('email has been already exist');
+      } else {
+        setErr('Internal Server ERR');
+      }
+    }
+  };
 
   return (
     <>
@@ -93,7 +84,7 @@ export default function Register() {
                 <Formik
                   initialValues={initialValues}
                   validationSchema={RegisterValidation}
-                  onSubmit={() => {}}
+                  onSubmit={handleSubmit}
                 >
                   {({
                     values,
@@ -230,7 +221,11 @@ export default function Register() {
                         className="text-center mt-16 my-4 flex gap-4 items-center"
                         dir="rtl"
                       >
-                        <button className="bg-primary text-center text-lg text-white rounded-lg px-8 py-1 hover:bg-black duration-300 hover:text-white shadow-md">
+                        <button
+                          disabled={isSubmitting}
+                          type="submit"
+                          className="bg-primary text-center text-lg text-white rounded-lg px-8 py-1 hover:bg-black duration-300 hover:text-white shadow-md"
+                        >
                           تسجيل الدخول
                         </button>
                         <div className="flex">

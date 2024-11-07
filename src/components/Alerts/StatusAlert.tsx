@@ -10,6 +10,7 @@ export default function StatusAlert({
   setOpenDetails: React.Dispatch<React.SetStateAction<boolean>>;
   status: string;
 }) {
+  console.log(status);
   return (
     <>
       {/* <!-- Modal toggle --> */}

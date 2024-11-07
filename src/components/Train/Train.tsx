@@ -12,7 +12,11 @@ export default function Train({
     <>
       <div>
         <div className="rounded-t-lg w-full">
-          <img src={img} alt="image-course" className="rounded-t-lg w-full" />
+          <img
+            src={img}
+            alt="image-course"
+            className="rounded-t-lg w-full h-65 "
+          />
         </div>
         <div className="p-4 bg-white text-center rounded-b-lg">
           <h3 className="text-xl text-primary font-bold mb-4">{title}</h3>
