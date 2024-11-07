@@ -14,6 +14,8 @@ export default function SecCourses(props: IProps) {
   const showCourse = data?.map((course) => (
     <Course
       key={course?.id}
+      id={course?.id}
+      type={'course'}
       media_path={course?.media_path}
       title={course?.title}
       description={course?.description}

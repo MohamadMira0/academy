@@ -8,6 +8,7 @@ import person from '../assets/icons/person.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { languageAction } from '../app/features/languages/langSlice';
 import { RootState } from '../app/store';
+import Cookie from 'cookie-universal';
 
 export default function TopBar2() {
   const [open, setOpen] = useState(false);
@@ -16,12 +17,13 @@ export default function TopBar2() {
   const [courses, setCourses] = useState(false);
   const [training, setTraining] = useState(false);
   const dispatch = useDispatch();
-  const [login, setLogin] = useState(false);
   const [lang, setLang] = useState('en');
   const language: string = useSelector(
     (state: RootState) => state.language.lang,
   );
   const [screenSize, setScreenSize] = useState(window.innerWidth);
+  const cookie = Cookie();
+  const token = cookie.get('Bearer');
   useEffect(() => {
     const handleResize = () => {
       setScreenSize(window.innerWidth);
@@ -163,7 +165,7 @@ export default function TopBar2() {
         >
           <ul className="flex flex-col items-center text-center font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
             <li>
-              {login ? (
+              {token ? (
                 <div className="relative">
                   <p
                     className="cursor-pointer select-none"

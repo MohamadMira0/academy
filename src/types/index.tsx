@@ -40,10 +40,18 @@ export interface IInitialValuesAddCourse extends BaseFields {
     | 'second group'
     | 'navigation and marine officers';
   type_payment: 'free' | 'payed';
-  price_in_egypt: number;
-  price_out_egypt: number;
-  number_months: number;
-  media: File | Blob | MediaSource | null;
+  price_in_egypt: number | string;
+  price_out_egypt: number | string;
+  number_months: number | string;
+  media: File | Blob | MediaSource | string;
+  publish?: boolean;
+}
+
+export interface IInitialValuesAddLesson {
+  title_ar: string;
+  title_en: string;
+  media_material: File;
+  video: File;
 }
 
 export interface ITraining extends IJobs {}
@@ -65,7 +73,8 @@ export interface IContactUsType {
 }
 
 export interface ICourseWebsite {
-  id?: number;
+  id: number;
+  type: string;
   media_path: string;
   price: number;
   title: string;

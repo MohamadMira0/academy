@@ -43,7 +43,7 @@ export default function Course(props: IProps) {
                   onClick={() => setOpenDetails((prev) => !prev)}
                 />
                 <Link
-                  to={'/payment'}
+                  to={`/payment/${props.id}/${props.type}`}
                   className="bg-secondary3 text-white py-1 px-5 rounded-md text-sm hover:text-secondary3 hover:bg-white duration-300"
                 >
                   {lang === 'en' ? 'Course booking' : 'حجز الكورس'}
@@ -55,6 +55,7 @@ export default function Course(props: IProps) {
         </div>
       </div>
       <AlertPopUp
+        id={props.id}
         name={props.title}
         description={props.description}
         openDetails={openDetails}

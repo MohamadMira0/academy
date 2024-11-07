@@ -49,7 +49,6 @@ export default function TrainingPage() {
   );
   const trainings: trainingsWebsite[] = data?.data?.trainings;
   const videos = data?.data?.videos;
-  console.log(videos);
 
   const handleSubmit = async (
     values: InitialValuesType,

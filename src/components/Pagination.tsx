@@ -4,9 +4,14 @@ import React from 'react';
 type paginateProps = {
   setPage: React.Dispatch<React.SetStateAction<number>>;
   totalPages: number;
+  perPage: number;
 };
-const PaginatedItems: React.FC<paginateProps> = ({ totalPages, setPage }) => {
-  const pageCount = totalPages / 20;
+const PaginatedItems: React.FC<paginateProps> = ({
+  totalPages,
+  setPage,
+  perPage,
+}) => {
+  const pageCount = totalPages / perPage;
   return (
     <>
       <ReactPaginate

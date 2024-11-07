@@ -5,7 +5,15 @@ import { store } from '../app/store';
 
 const cookie = Cookie();
 const tokenAdmin = cookie.get('BearerAdmin');
+const tokenStudent = cookie.get('Bearer');
 
+// إعداد Axios instance للطالب
+export const AxiosWithTokenStudent = axios.create({
+  baseURL: base_url_student,
+  headers: {
+    Authorization: `Bearer ${tokenStudent}`,
+  },
+});
 // إعداد Axios instance للطالب
 export const Axios = axios.create({
   baseURL: base_url_student,

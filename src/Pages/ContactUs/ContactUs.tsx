@@ -7,8 +7,6 @@ import instagram from '../../assets/icons/instagram.svg';
 import tiktok from '../../assets/icons/tiktok.svg';
 import whatsapp from '../../assets/icons/whatsapp.svg';
 import youtube from '../../assets/icons/youtube.svg';
-import location from '../../assets/icons/location.svg';
-import phone from '../../assets/icons/phone.svg';
 import { Link } from 'react-router-dom';
 import Location from '../../assets/svg/Location';
 import image3 from '../../assets/contactUs/Contact us-amico 1.svg';
@@ -149,8 +147,6 @@ export default function ContactUs() {
             onSubmit={handleSubmit}
           >
             {({
-              values,
-              errors,
               isSubmitting,
               setFieldValue,
               /* and other goodies */
@@ -244,6 +240,7 @@ export default function ContactUs() {
                 )}
                 <div className="mt-16 my-4 flex justify-center" dir="rtl">
                   <button
+                    disabled={isSubmitting}
                     type="submit"
                     className="bg-primary text-center text-lg text-white rounded-lg lg:px-24 lg:py-3 px-8 py-1 hover:bg-black duration-300 hover:text-white shadow-md"
                   >

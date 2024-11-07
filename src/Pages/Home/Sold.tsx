@@ -24,6 +24,9 @@ export default function Sold(props: IProps) {
   const { lang } = useSelector((state: RootState) => state.language);
 
   const [name, setName] = useState('');
+  const [idCourse, setIdCourse] = useState<number | string | undefined>(
+    undefined,
+  );
   const [openDetails, setOpenDetails] = useState(false);
 
   return (
@@ -95,11 +98,12 @@ export default function Sold(props: IProps) {
                         }
                         onClick={() => {
                           setName(item.title);
+                          setIdCourse(item.id);
                           setOpenDetails(true);
                         }}
                       />
                       <Button
-                        to="/payment"
+                        to={`/payment/${item.id}/${'offer'}`}
                         className="bg-secondary3 text-white py-1 px-5 rounded-md text-sm hover:text-secondary3 hover:bg-white duration-300"
                         title={lang === 'en' ? 'Course booking' : 'حجز الكورس'}
                       />
@@ -113,6 +117,7 @@ export default function Sold(props: IProps) {
         </Swiper>
       </div>
       <AlertPopUp
+        id={idCourse}
         name={name}
         openDetails={openDetails}
         setOpenDetails={setOpenDetails}

@@ -12,8 +12,9 @@ import span from '../../assets/span.png';
 import eye from '../../assets/icons/eye.svg';
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
 import { RegisterValidation } from '../../Validation/auth/RegisterValidation';
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import { base_url_student } from '../../Api/Api';
+import SubmitLoader from '../../components/Loader/SubmitLoader';
 
 export default function Register() {
   const [showPassword, setShowPassword] = useState(false);
@@ -38,7 +39,6 @@ export default function Register() {
   };
 
   const [err, setErr] = useState('');
-  const [loading, setLoading] = useState(false);
   const cookie = Cookie();
 
   // ** Handle Submit
@@ -47,15 +47,13 @@ export default function Register() {
     { setSubmitting }: FormikHelpers<InitialValuesType>,
   ) => {
     try {
-      console.log(values);
+      setErr('');
       const res = await axios.post(`${base_url_student}/auth/signup`, values);
       const token = res.data.data.token;
       cookie.set('Bearer', token);
-      setLoading(false);
       window.location.pathname = '/';
     } catch (err: any) {
       console.log(err);
-      setLoading(false);
       if (err.response.status === 422) {
         setErr('email has been already exist');
       } else {
@@ -87,8 +85,6 @@ export default function Register() {
                   onSubmit={handleSubmit}
                 >
                   {({
-                    values,
-                    errors,
                     isSubmitting,
                     setFieldValue,
                     /* and other goodies */
@@ -226,8 +222,13 @@ export default function Register() {
                           type="submit"
                           className="bg-primary text-center text-lg text-white rounded-lg px-8 py-1 hover:bg-black duration-300 hover:text-white shadow-md"
                         >
-                          تسجيل الدخول
+                          {isSubmitting ? (
+                            <SubmitLoader className="w-8 h-7" />
+                          ) : (
+                            'تسجيل الدخول'
+                          )}
                         </button>
+
                         <div className="flex">
                           <p className="text-lg">لديك حساب؟</p>
                           <Link
@@ -238,6 +239,11 @@ export default function Register() {
                           </Link>
                         </div>
                       </div>
+                      {err !== '' && (
+                        <p className="text-sm text-red-600 text-center">
+                          {err}
+                        </p>
+                      )}
                     </Form>
                   )}
                 </Formik>
