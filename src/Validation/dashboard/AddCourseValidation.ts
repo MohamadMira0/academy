@@ -35,3 +35,38 @@ export const AddCourseValidation = (isEditMode: boolean) =>
           ),
     publish: Yup.bool().notRequired(),
   });
+
+export const AddOfferValidation = (isEditMode: boolean) =>
+  Yup.object({
+    title_ar: Yup.string()
+      .min(3, 'العنوان باللغة العربية يجب ان يتضمن على الأقل 3 حروف')
+      .required('الرجاء ادخال العنوان باللغة العربية'),
+    title_en: Yup.string()
+      .min(3, 'العنوان باللغة الإنكليزية يجب ان يتضمن على الأقل 3 حروف')
+      .required('الرجاء ادخال العنوان باللغة الإنكليزية'),
+    description_ar: Yup.string()
+      .min(3, 'الوصف باللغة الإنكليزية يجب ان يتضمن على الأقل 3 حروف')
+      .required('الرجاء ادخال الوصف باللغة الإنكليزية'),
+    description_en: Yup.string()
+      .min(3, 'الوصف باللغة الإنكليزية يجب ان يتضمن على الأقل 3 حروف')
+      .required('الرجاء ادخال الوصف باللغة الإنكليزية'),
+    price_in_egypt: Yup.number().required('الرجاء ادخال السعر').min(1),
+    instead_of_in_egypt: Yup.number().required('الرجاء ادخال السعر').min(1),
+    price_out_egypt: Yup.number().required('الرجاء ادخال السعر').min(1),
+    instead_of_out_egypt: Yup.number().required('الرجاء ادخال السعر').min(1),
+    media: isEditMode
+      ? Yup.mixed().notRequired()
+      : Yup.mixed()
+          .required('الرجاء ادخال صورة')
+          .test(
+            'fileType',
+            'يجب أن يكون الملف صورة بصيغة jpg أو png أو jpeg',
+            (value) =>
+              value instanceof File &&
+              ['image/jpg', 'image/jpeg', 'image/png'].includes(value.type),
+          ),
+    course_ids: Yup.string()
+      .required('الرجاء اختيار كورس')
+      .notOneOf(['Please Choose Course'], 'الرجاء اختيار كورس'),
+    publish: Yup.bool().notRequired(),
+  });

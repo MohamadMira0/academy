@@ -2,7 +2,7 @@ import { MdDashboard } from 'react-icons/md';
 import { FaPeopleGroup } from 'react-icons/fa6';
 import { MdWork } from 'react-icons/md';
 import { FaFileSignature } from 'react-icons/fa6';
-import { BiSolidBookContent } from 'react-icons/bi';
+import { BiSolidBookContent, BiSolidOffer } from 'react-icons/bi';
 import { MdOutlineDeveloperBoard } from 'react-icons/md';
 
 export const links = [
@@ -20,6 +20,11 @@ export const links = [
     label: 'الكورسات ',
     to: '/dashboard/courses',
     icons: MdOutlineDeveloperBoard,
+  },
+  {
+    label: 'العروض ',
+    to: '/dashboard/offers',
+    icons: BiSolidOffer,
   },
   {
     label: 'التدريب والتوظيف ',

@@ -1,12 +1,19 @@
 import { UseMutateAsyncFunction } from 'react-query';
+import SubmitLoader from '../Loader/SubmitLoader';
 
 type DeletePopup = {
   setOpenPopUp: React.Dispatch<React.SetStateAction<boolean>>;
   handleDelete?: UseMutateAsyncFunction<any, unknown, string, unknown>;
   id: string;
+  DeleteLoading?: boolean;
 };
 
-const DeletePopUp = ({ setOpenPopUp, handleDelete, id }: DeletePopup) => {
+const DeletePopUp = ({
+  setOpenPopUp,
+  handleDelete,
+  id,
+  DeleteLoading,
+}: DeletePopup) => {
   return (
     <>
       <div className="bg-black fixed top-0 left-0 w-full h-full z-10 opacity-20"></div>
@@ -69,10 +76,11 @@ const DeletePopUp = ({ setOpenPopUp, handleDelete, id }: DeletePopup) => {
                 </button>
                 <button
                   type="submit"
-                  className="py-2 px-3 text-sm font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-900"
+                  disabled={DeleteLoading}
+                  className="py-2 px-3 text-sm font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-900 flex items-center gap-2"
                   onClick={() => handleDelete(id)}
                 >
-                  Yes, I'm sure
+                  {DeleteLoading && <SubmitLoader />} Yes, I'm sure
                 </button>
               </div>
             </div>

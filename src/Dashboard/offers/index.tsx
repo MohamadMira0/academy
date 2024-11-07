@@ -1,9 +1,9 @@
 import Table from '../../components/Dashboard/Tables/Table';
 import { AxiosWithToken } from '../../Api/axios';
-import { base_url_admin, LESSONS, Courses } from '../../Api/Api';
+import { base_url_admin, Courses as mainCourses, OFFERS } from '../../Api/Api';
 import { useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import SubmitLoader from '../../components/Loader/SubmitLoader';
 
 type Apply_Institutes = {
@@ -22,33 +22,28 @@ interface IFetchData {
 
 const userColumns: Array<{ key: keyof Apply_Institutes; label: string }> = [
   { key: 'id', label: 'ID' },
-  { key: 'title_ar', label: 'عنوان الإعلان' },
+  { key: 'title', label: 'عنوان الإعلان' },
+
+  { key: 'description', label: 'الوصف' },
 ];
 
-const Lessons = () => {
+const Offers = () => {
   const [page, setPage] = useState(1);
   const queryClient = useQueryClient();
-  const [closeDialog, setCloseDialog] = useState(false);
-  const { id } = useParams();
 
-  const { mutateAsync, isLoading: DeleteLoading } = useMutation({
+  const { mutateAsync } = useMutation({
     mutationFn: async (id: string) => {
-      return AxiosWithToken.delete(
-        `${base_url_admin}/${Courses}/${LESSONS}/delete/${id}`,
-      );
+      return AxiosWithToken.delete(`${base_url_admin}/${mainCourses}/${id}`);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(['lessons']);
-      setCloseDialog(true);
+      queryClient.invalidateQueries(['courses']);
     },
   });
 
   const { data: dataFetching, isLoading } = useQuery({
     queryFn: () =>
-      AxiosWithToken.get(
-        `${base_url_admin}/${Courses}/${LESSONS}?course_id=${id}`,
-      ),
-    queryKey: ['lessons', page],
+      AxiosWithToken.get(`${base_url_admin}/${OFFERS}?page=${page}`),
+    queryKey: ['offers', page],
   });
   const data: IFetchData = dataFetching?.data.data;
 
@@ -57,20 +52,20 @@ const Lessons = () => {
   return (
     <div className="bg-white shadow-lg rounded-md overflow-x-auto lg:p-16 md:p-8 p-4">
       <div className="flex items-center justify-between mb-5 ">
-        <h1 className="md:text-4xl font-bold">الدروس</h1>
+        <h1 className="md:text-4xl font-bold">العروض</h1>
         <Link
-          to={'lessons/add'}
+          to={'/dashboard/offers/add'}
           className="bg-sky-600 text-center text-white rounded-lg px-10 py-2 hover:bg-sky-800 duration-300 hover:text-white flex items-center gap-2"
         >
           <span className="font-bold" style={{ fontSize: '24px' }}>
             +
           </span>
-          <p> إضافة درس</p>
+          <p> إضافة عرض</p>
         </Link>
       </div>
       {isLoading ? (
         <div className="flex items-center justify-center gap-3">
-          <span>جار تحميل الدروس</span>
+          <span>جار تحميل العروض</span>
           <SubmitLoader className="w-8 h-8 text-gray-8" />
         </div>
       ) : (
@@ -81,13 +76,11 @@ const Lessons = () => {
           columns={userColumns}
           handleDelete={mutateAsync}
           perPage={data?.per_page}
-          showPath="show/"
-          DeleteLoading={DeleteLoading}
-          closeDialog={closeDialog}
+          deleteAction={false}
         />
       )}
     </div>
   );
 };
 
-export default Lessons;
+export default Offers;

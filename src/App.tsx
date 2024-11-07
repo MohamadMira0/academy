@@ -39,6 +39,10 @@ import AddCourse from './Dashboard/courses/addCourse';
 import { ToastContainer } from 'react-toastify';
 import Lessons from './Dashboard/lessons';
 import AddLesson from './Dashboard/lessons/addLesson';
+import Quizes from './Dashboard/quizes';
+import AddQuiz from './Dashboard/quizes/addQuiz';
+import Offers from './Dashboard/offers';
+import AddOffer from './Dashboard/offers/addOffers';
 
 function App() {
   usePreventZoom();
@@ -89,7 +93,23 @@ function App() {
             path="courses/:courseId/edit/:lessonId"
             element={<AddLesson />}
           />
+          <Route path="courses/:id/show/:lessonId" element={<Quizes />} />
+          <Route
+            path="courses/:courseId/show/:lessonId/quizes/add"
+            element={<AddQuiz />}
+          />{' '}
+          <Route
+            path="courses/:courseId/show/:lessonId/quizes/add"
+            element={<AddQuiz />}
+          />
+          <Route
+            path="courses/:courseId/show/:lessonId/edit/:quizId"
+            element={<AddQuiz />}
+          />
           <Route path="courses/edit/:id" element={<AddCourse />} />
+          <Route path="offers" element={<Offers />} />
+          <Route path="offers/add" element={<AddOffer />} />
+          <Route path="offers/edit/:id" element={<AddOffer />} />
           <Route path="student" element={<Students />} />
           <Route path="blogs" element={<BlogsDashboard />} />
           <Route path="content" element={<Content />} />

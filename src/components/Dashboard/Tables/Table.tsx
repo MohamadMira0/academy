@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 import PaginatedItems from '../../Pagination';
 import { AiFillDelete } from 'react-icons/ai';
 import { RiEditBoxLine } from 'react-icons/ri';
@@ -21,6 +21,9 @@ interface TableProps<T> {
   handleDelete?: UseMutateAsyncFunction<any, unknown, string, unknown>;
   perPage: number;
   showPath?: string;
+  withoutShow?: boolean;
+  DeleteLoading?: boolean;
+  closeDialog?: boolean;
 }
 
 const Table = <T,>({
@@ -34,8 +37,16 @@ const Table = <T,>({
   handleDelete,
   perPage,
   showPath,
+  withoutShow,
+  DeleteLoading,
+  closeDialog,
 }: TableProps<T>) => {
   const [openPopUp, setOpenPopUp] = useState(false);
+
+  useEffect(() => {
+    setOpenPopUp(false);
+  }, [closeDialog]);
+
   return (
     <>
       <div className="bg-white shadow-lg relative  rounded-md overflow-x-auto p-4">
@@ -80,14 +91,17 @@ const Table = <T,>({
                           handleDelete={handleDelete}
                           setOpenPopUp={setOpenPopUp}
                           id={row?.id}
+                          DeleteLoading={DeleteLoading}
                         />
                       )}
                       <Link to={`edit/${row?.id}`}>
                         <RiEditBoxLine className="text-xl text-primary" />
                       </Link>
-                      <Link to={`${showPath ?? ''}${row?.id}`}>
-                        <FaRegEye className="text-xl text-primary-2" />
-                      </Link>
+                      {withoutShow !== false && (
+                        <Link to={`${showPath ?? ''}${row?.id}`}>
+                          <FaRegEye className="text-xl text-primary-2" />
+                        </Link>
+                      )}
                     </span>
                   </td>
                 )}

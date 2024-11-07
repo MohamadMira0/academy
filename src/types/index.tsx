@@ -47,11 +47,31 @@ export interface IInitialValuesAddCourse extends BaseFields {
   publish?: boolean;
 }
 
+export interface IInitialValuesAddOffer extends BaseFields {
+  price_in_egypt: number | string;
+  instead_of_in_egypt: number | string;
+  price_out_egypt: number | string;
+  instead_of_out_egypt: number | string;
+  media: string | Blob;
+  publish?: boolean;
+  course_ids: number | string;
+}
+
 export interface IInitialValuesAddLesson {
   title_ar: string;
   title_en: string;
   media_material: File;
   video: File;
+}
+
+export type answer = {
+  answer: string;
+  is_true: boolean;
+};
+
+export interface IInitialValuesAddQuiz {
+  question: string;
+  answers: answer[];
 }
 
 export interface ITraining extends IJobs {}

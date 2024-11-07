@@ -17,6 +17,10 @@ export const DASHBOARD = 'dashboard';
 export const APPLY = 'apply-institutes';
 // ** Lessons **
 export const LESSONS = 'lessons';
+// ** Offers **
+export const OFFERS = 'offers';
+// ** Quizes **
+export const QUIZES = 'quiz';
 // ** Jobs && Training **
 export const JOBS = 'jobs';
 export const TRAINING = 'training';
