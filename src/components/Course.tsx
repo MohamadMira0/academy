@@ -7,7 +7,8 @@ import { ICourseWebsite } from '../types';
 import { RootState } from '../app/store';
 import { useSelector } from 'react-redux';
 interface IProps extends ICourseWebsite {
-  currency: string;
+  currency?: string;
+  profile?: boolean;
 }
 export default function Course(props: IProps) {
   const { lang } = useSelector((state: RootState) => state.language);
@@ -21,7 +22,7 @@ export default function Course(props: IProps) {
             <img src={janzeer} alt="icon" />
           </div>
         </div>
-        <div className="relative rounded-md overflow-hidden">
+        <div className="relative rounded-md overflow-hidden w-65">
           <div
             style={{ backgroundImage: `url('${props.media_path}')` }}
             className="z-0 bg-cover bg-center w-full bg-no-repeat h-[275px]"
@@ -31,9 +32,13 @@ export default function Course(props: IProps) {
                 <span>{props.currency}</span>
                 <p className="text-xl ">{props.price}</p>
               </div>
-              <div className="flex items-center gap-2">
+              <div
+                className={`${
+                  props.profile ? 'justify-center' : ''
+                } flex items-center gap-2 w-full`}
+              >
                 <Button
-                  to="/"
+                  to={`/course/${props.id}`}
                   className="bg-gray-1 text-primary py-1 px-2 rounded-md text-sm hover:text-secondary3 hover:bg-white duration-300"
                   title={
                     lang === 'en' ? 'More information' : 'المزيد من المعلومات'
@@ -42,12 +47,14 @@ export default function Course(props: IProps) {
                   data-modal-toggle="static-modal"
                   onClick={() => setOpenDetails((prev) => !prev)}
                 />
-                <Link
-                  to={`/payment/${props.id}/${props.type}`}
-                  className="bg-secondary3 text-white py-1 px-5 rounded-md text-sm hover:text-secondary3 hover:bg-white duration-300"
-                >
-                  {lang === 'en' ? 'Course booking' : 'حجز الكورس'}
-                </Link>
+                {!props.profile && (
+                  <Link
+                    to={`/payment/${props.id}/${props.type}`}
+                    className="bg-secondary3 text-white py-1 px-5 rounded-md text-sm hover:text-secondary3 hover:bg-white duration-300"
+                  >
+                    {lang === 'en' ? 'Course booking' : 'حجز الكورس'}
+                  </Link>
+                )}
               </div>
             </div>
             <div className="w-full h-full absolute top-0 left-0  bg-gradient-to-b from-gray-4 from-0% via-gray-5 via-50%  to-gray-6 to-100% "></div>

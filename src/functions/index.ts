@@ -1,5 +1,5 @@
 import { BLOGS, Courses, JOBS, Training, TRAINING } from '../Api/Api';
-import { Axios, AxiosWithToken } from '../Api/axios';
+import { Axios, AxiosWithToken, AxiosWithTokenStudent } from '../Api/axios';
 import { IApplyInstitutesType, IJobs } from '../types';
 //** formatDate */
 export function formatDate(dateString: string): string {
@@ -28,6 +28,18 @@ export const getTrainingsWebsite = async (lang: string) => {
       'X-App-Locale': lang,
     },
   });
+  return response?.data;
+};
+//** get Profile User */
+export const getProfileCoursesWebsite = async (lang: string, group: string) => {
+  const response = await AxiosWithTokenStudent.get(
+    `/${Courses}/show-my-onprocess-courses?student_group=${group}`,
+    {
+      headers: {
+        'X-App-Locale': lang,
+      },
+    },
+  );
   return response?.data;
 };
 //** get Courses */

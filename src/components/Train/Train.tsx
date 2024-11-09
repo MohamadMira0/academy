@@ -1,3 +1,6 @@
+import { useSelector } from 'react-redux';
+import { RootState } from '../../app/store';
+
 // import radio from '../../assets/courses/Radio.png';
 export default function Train({
   title,
@@ -8,6 +11,8 @@ export default function Train({
   description: string;
   img: string;
 }) {
+  const { lang } = useSelector((state: RootState) => state.language);
+
   return (
     <>
       <div>
@@ -22,7 +27,7 @@ export default function Train({
           <h3 className="text-xl text-primary font-bold mb-4">{title}</h3>
           <p className="text-text-gray text-sm font-bold mb-4">{description}</p>
           <button className="bg-primary text-white text-lg py-1 lg:px-16 px-8 rounded-md border border-transparent hover:bg-white hover:border-primary hover:text-primary duration-300 mb-4">
-            انضم الينا
+            {lang === 'en' ? 'join us' : 'انضم الينا'}
           </button>
         </div>
       </div>

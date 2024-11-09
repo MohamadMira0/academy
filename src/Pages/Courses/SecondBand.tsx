@@ -13,16 +13,19 @@ export default function SecondBand() {
 
   // ** Handle Jobs
   const { data, isLoading } = useQuery(
-    ['courses', lang],
+    ['secondCourses', lang],
     () => getCoursesSecondGroupWebsite(lang),
     {
       keepPreviousData: true,
     },
   );
   const coursesData: ICourseWebsite[] = data?.data;
-  const showCourse = coursesData.map((course) => (
+  console.log(coursesData);
+  const showCourse = coursesData?.map((course) => (
     <Course
       key={course.id}
+      type="course"
+      id={course.id}
       media_path={course.media_path}
       title={course.title}
       price={course.price}
@@ -62,14 +65,14 @@ export default function SecondBand() {
             title={lang === 'en' ? 'Courses' : 'الكورسات'}
             className="bg-secondary3 text-white hover:text-secondary3 hover:bg-white duration-300 rounded-lg px-20 py-2 w-full sm:w-fit"
           />
-          <Button
+          {/* <Button
             title={lang === 'en' ? 'Continue education' : 'واصل التعليم'}
             className="bg-white text-secondary3 hover:text-white hover:bg-secondary3 duration-300 rounded-lg px-20 py-2 w-full sm:w-fit"
           />
           <Button
             title={lang === 'en' ? 'Completed' : 'المنجزة'}
             className="bg-white text-secondary3 hover:text-white hover:bg-secondary3 duration-300 rounded-lg px-20 py-2 w-full sm:w-fit"
-          />
+          /> */}
         </div>
       </div>
       <div className="bg-secondary2 pt-32 pb-10 relative">

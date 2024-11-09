@@ -23,8 +23,8 @@ export default function Blogs() {
     <Blog
       key={blog?.id}
       img={blog?.media.file_path}
-      title={blog?.title_ar}
-      description={blog?.description_ar}
+      title={blog?.title}
+      description={blog?.description}
       date={formatDate(blog?.updated_at)}
       show={200}
       message={10}
@@ -45,7 +45,10 @@ export default function Blogs() {
             />
           </div>
           <div className="w-10/12 lg:mb-16 md:mb-8 mb-6">
-            <h1 className="text-gold text-5xl font-bold mb-8"> المدونات</h1>
+            <h1 className="text-gold text-5xl font-bold mb-8">
+              {' '}
+              {lang === 'en' ? 'Blogs' : 'المدونات'}
+            </h1>
             <p className="font-bold text-gray-7 text-2xl">
               هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحة ما
               سيلهي القارئ عن التركيز على الشكل الخارجي للنص أو شكل توضع الفقرات

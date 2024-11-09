@@ -24,6 +24,7 @@ export default function TopBar2() {
   const [screenSize, setScreenSize] = useState(window.innerWidth);
   const cookie = Cookie();
   const token = cookie.get('Bearer');
+  const username = cookie.get('username');
   useEffect(() => {
     const handleResize = () => {
       setScreenSize(window.innerWidth);
@@ -178,7 +179,7 @@ export default function TopBar2() {
                   >
                     <span className="flex gap-1">
                       <img src={person} alt="icon" />
-                      محمد الأحمد
+                      {username}
                       <img src={arrow} alt="icon" />
                     </span>
                   </p>
@@ -195,7 +196,7 @@ export default function TopBar2() {
                     >
                       <li>
                         <Link
-                          to={''}
+                          to={'/profile'}
                           className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"
                           role="menuitem"
                         >

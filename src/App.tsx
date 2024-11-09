@@ -43,6 +43,10 @@ import Quizes from './Dashboard/quizes';
 import AddQuiz from './Dashboard/quizes/addQuiz';
 import Offers from './Dashboard/offers';
 import AddOffer from './Dashboard/offers/addOffers';
+import ForgotPassword from './Pages/Auth/ForgotPassword/ForgotPassword';
+import CheckForgotPasswordToken from './Pages/Auth/ForgotPassword/CheckForgotPasswordToken';
+import ResetPassword from './Pages/Auth/ForgotPassword/ResetPassword';
+import Profile from './Pages/Profile';
 
 function App() {
   usePreventZoom();
@@ -60,7 +64,14 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route
+          path="/check-forgot-password-token"
+          element={<CheckForgotPasswordToken />}
+        />
         <Route path="/" element={<Home />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="/about" element={<AboutUs />} />
         <Route path="/institute" element={<InstitutePage />} />
         <Route path="/employ" element={<EmployPage />} />

@@ -4,7 +4,7 @@ export interface BaseFields {
   title_ar: string;
   title_en: string;
 }
-interface IMedia {
+export interface IMedia {
   file_path: string;
   filename: string;
   title: string;
@@ -75,7 +75,11 @@ export interface IInitialValuesAddQuiz {
 }
 
 export interface ITraining extends IJobs {}
-export interface IBlogs extends IJobs {
+export interface IBlogs {
+  id: number;
+  title: string;
+  description: string;
+  media: IMedia;
   updated_at: string;
 }
 
@@ -94,9 +98,9 @@ export interface IContactUsType {
 
 export interface ICourseWebsite {
   id: number;
-  type: string;
+  type?: string;
   media_path: string;
-  price: number;
+  price?: number;
   title: string;
   description?: string;
   type_payment?: string;

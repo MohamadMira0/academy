@@ -18,7 +18,6 @@ import { useSelector } from 'react-redux';
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
-  const [forgotPassword, setForgotPassword] = useState(false);
   const { lang } = useSelector((state: RootState) => state.language);
   type InitialValuesType = {
     email: string;
@@ -43,32 +42,10 @@ export default function Login() {
       setErr('');
       const res = await axios.post(`${base_url_student}/auth/signin`, values);
       const token = res.data.data.token;
+      const username = res.data.data.user.first_name;
       cookie.set('Bearer', token);
-      // window.location.pathname = '/';
-      console.log(res);
-    } catch (err: any) {
-      console.log(err);
-      if (err.response.status === 400) {
-        setErr('email or password incorrect');
-      } else {
-        setErr('Internal Server ERR');
-      }
-    }
-  };
-  // ** Handle Submit Forgot Password
-  const handleSubmitForgot = async (
-    values: InitialValuesType,
-    { setSubmitting }: FormikHelpers<InitialValuesType>,
-  ) => {
-    try {
-      setErr('');
-      const res = await axios.post(
-        `${base_url_student}/auth/forgot-password`,
-        values,
-      );
-      const token = res.data.data.token;
-      cookie.set('Bearer', token);
-      // window.location.pathname = '/';
+      cookie.set('username', username);
+      window.location.pathname = '/';
       console.log(res);
     } catch (err: any) {
       console.log(err);
@@ -95,7 +72,9 @@ export default function Login() {
               </div>
               <div dir="rtl" className="flex flex-col justify-center">
                 <div className="text-right ms-12 mb-8">
-                  <h1 className="text-primary text-3xl">قم بتسجيل الدخول</h1>
+                  <h1 className="text-primary text-3xl">
+                    {lang === 'en' ? 'Login' : 'قم بتسجيل الدخول'}
+                  </h1>
                 </div>
 
                 <Formik
@@ -167,17 +146,18 @@ export default function Login() {
                             htmlFor="remember"
                             className="select-none text-lg"
                           >
-                            تذكرني
+                            {lang === 'en' ? 'remember me' : 'تذكرني'}
                           </label>
                         </div>
                         <Link
-                          to={''}
-                          onClick={() => setForgotPassword(true)}
+                          to={'/forgot-password'}
                           className="text-secondary3 hover:text-black duration-300 text-lg"
                           data-modal-target="default-modal"
                           data-modal-toggle="default-modal"
                         >
-                          هل نسيت كلمة السر؟
+                          {lang === 'en'
+                            ? 'Forgot your password?'
+                            : 'هل نسيت كلمة السر؟'}
                         </Link>
                       </div>
                       <div
@@ -191,17 +171,21 @@ export default function Login() {
                         >
                           {isSubmitting ? (
                             <SubmitLoader className="w-8 h-7" />
+                          ) : lang === 'en' ? (
+                            'Login'
                           ) : (
                             'تسجيل الدخول'
                           )}
                         </button>
                         <div className="flex">
-                          <p className="text-lg">مستخدم جديد؟</p>
+                          <p className="text-lg">
+                            {lang === 'en' ? 'New User' : 'مستخدم جديد؟'}
+                          </p>
                           <Link
                             to={'/register'}
                             className="text-primary ms-2 hover:text-black duration-300 text-lg"
                           >
-                            قم بالتسجيل
+                            {lang === 'en' ? 'Register' : 'قم بالتسجيل'}
                           </Link>
                         </div>
                       </div>
@@ -218,101 +202,6 @@ export default function Login() {
 
             <div className="flex items-start justify-center my-4">
               <img src={span} alt="span" />
-            </div>
-          </div>
-        </div>
-        {/* <!-- Main modal --> */}
-        {forgotPassword && (
-          <div className="h-full fixed top-0 left-0 w-full bg-neutral-800 opacity-25"></div>
-        )}
-        <div
-          id="default-modal"
-          tabIndex={-1}
-          aria-hidden="true"
-          className={`${
-            forgotPassword ? '' : 'hidden'
-          } overflow-y-auto overflow-x-hidden fixed top-1/2 left-1/2 z-50 justify-center items-center w-full md:inset-0`}
-        >
-          <div className="relative p-4 w-full max-w-2xl max-h-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-blend-overlay">
-            {/* <!-- Modal content --> */}
-            <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
-              {/* <!-- Modal header --> */}
-              <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
-                  {lang === 'en' ? 'Forgot Password' : 'نسيت كلمة المرور'}
-                </h3>
-                <button
-                  type="button"
-                  className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                  data-modal-hide="default-modal"
-                  onClick={() => setForgotPassword(false)}
-                >
-                  <svg
-                    className="w-3 h-3"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 14 14"
-                  >
-                    <path
-                      stroke="currentColor"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
-                    />
-                  </svg>
-                  <span className="sr-only">Close modal</span>
-                </button>
-              </div>
-              {/* <!-- Modal body --> */}
-              <div className="p-4 md:p-5 space-y-4">
-                <Formik
-                  initialValues={initialValues}
-                  validationSchema={LoginValidation}
-                  onSubmit={handleSubmitForgot}
-                >
-                  {({
-                    isSubmitting,
-                    /* and other goodies */
-                  }) => (
-                    <Form>
-                      <div className="w-full">
-                        <Field
-                          type="email"
-                          placeholder="name129@email.com"
-                          className="text-black text-xl rounded-md px-6 py-2 bg-white outline-none custom-shadow w-full border-2 border-transparent duration-300 focus:border-secondary3"
-                          name="email"
-                        />
-                        <ErrorMessage
-                          name="email"
-                          component="div"
-                          className="text-sm text-red-600 mt-2 "
-                        />
-                      </div>
-                      {/* <!-- Modal footer --> */}
-                      <div className="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
-                        <button
-                          disabled={isSubmitting}
-                          data-modal-hide="default-modal"
-                          type="submit"
-                          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                        >
-                          {lang === 'en' ? 'Send' : 'ارسال'}
-                        </button>
-                        <button
-                          data-modal-hide="default-modal"
-                          type="button"
-                          className="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-                          onClick={() => setForgotPassword(false)}
-                        >
-                          {lang === 'en' ? 'cancel' : 'الغاء'}
-                        </button>
-                      </div>
-                    </Form>
-                  )}
-                </Formik>
-              </div>
             </div>
           </div>
         </div>
