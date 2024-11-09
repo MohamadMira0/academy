@@ -50,6 +50,7 @@ import Profile from './Pages/Profile';
 import AddStudent from './Dashboard/students/addStudents';
 import ShowStudent from './Dashboard/students/showStudent';
 import RequireAuth from './functions/RequireAuth';
+import Settings from './Pages/Profile/Settings';
 
 function App() {
   usePreventZoom();
@@ -75,6 +76,7 @@ function App() {
         />
         <Route path="/" element={<Home />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/settings" element={<Settings />} />
         <Route path="/about" element={<AboutUs />} />
         <Route path="/institute" element={<InstitutePage />} />
         <Route path="/employ" element={<EmployPage />} />

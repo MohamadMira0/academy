@@ -62,7 +62,7 @@ export interface IInitialValuesAddUser {
   last_name: string;
   phone: string;
   email: string;
-  password: string;
+  password?: string;
 }
 
 export interface IInitialValuesAddLesson {

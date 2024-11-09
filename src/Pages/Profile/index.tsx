@@ -6,6 +6,10 @@ import { getProfileCoursesWebsite } from '../../functions';
 import TopBar2 from '../../components/TopBar2';
 import Footer from '../../components/Footer';
 import { useState } from 'react';
+import { AxiosWithTokenStudent } from '../../Api/axios';
+import { AiOutlineMail } from 'react-icons/ai';
+import { FaPhoneAlt } from 'react-icons/fa';
+import SubmitLoader from '../../components/Loader/SubmitLoader';
 
 interface IFetchData {
   id: number;
@@ -43,29 +47,38 @@ const Profile = () => {
       keepPreviousData: true,
     },
   );
+
+  const { data: userFetching, isLoading } = useQuery({
+    queryFn: () => AxiosWithTokenStudent.get(`/student/show-profile`),
+    queryKey: ['show-User'],
+  });
+  const userData = userFetching?.data.data.user;
+  const data = userFetching?.data.data;
+  console.log(userData);
+  console.log(data);
+
   const navigation_course: IFetchData[] = navigation_group?.data;
-  console.log(first_course);
-  const showMyFirstGroupCourses = first_course?.map((course) => (
+  const showMyFirstGroupCourses = first_course?.map((course, key) => (
     <Course
-      key={course.id}
+      key={key}
       id={course.id}
       media_path={course.media_path}
       title={course.title}
       profile
     />
   ));
-  const showMySecondGroupCourses = second_course?.map((course) => (
+  const showMySecondGroupCourses = second_course?.map((course, key) => (
     <Course
-      key={course.id}
+      key={key}
       id={course.id}
       media_path={course.media_path}
       title={course.title}
       profile
     />
   ));
-  const showMyNavigationGroupCourses = navigation_course?.map((course) => (
+  const showMyNavigationGroupCourses = navigation_course?.map((course, key) => (
     <Course
-      key={course.id}
+      key={key}
       id={course.id}
       media_path={course.media_path}
       title={course.title}
@@ -73,9 +86,41 @@ const Profile = () => {
     />
   ));
 
+  if (isLoading)
+    return (
+      <div className="w-screen h-screen flex items-center justify-center">
+        <SubmitLoader className="!w-10 !h-10" />
+      </div>
+    );
   return (
     <>
       <TopBar2 />
+      <div className="flex flex-wrap flex-col items-center justify-center gap-2 lg:mt-29 md:mt-26 mt-4">
+        <h1 className="md:text-3xl font-bold text-sky-600 ">
+          {userData?.first_name} {userData?.last_name}
+        </h1>
+        <div className="mt-4 flex items-center flex-wrap gap-20">
+          <div>
+            <h1 className="text-sky-600">
+              {lang === 'en' ? 'Email' : 'البريد اإلكتروني'}
+            </h1>
+            <span className="flex items-center gap-2">
+              <AiOutlineMail className="text-sky-600" />
+              {userData?.email}
+            </span>
+          </div>{' '}
+          <div>
+            <h1 className="text-sky-600">
+              {lang === 'en' ? 'Phone' : 'رقم االهاتف'}
+            </h1>
+            <span className="flex items-center gap-2">
+              <FaPhoneAlt className="text-sky-600" />
+
+              {userData?.phone}
+            </span>
+          </div>
+        </div>
+      </div>
       <div
         className="flex flex-wrap items-center justify-center gap-2 lg:mt-29 md:mt-26 mt-4"
         dir="rtl"

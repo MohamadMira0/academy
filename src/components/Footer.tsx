@@ -110,9 +110,9 @@ const Footer = (props: IProps) => {
                 </a>
                 <span>+</span>
               </div>
-              <h3 className="font-bold text-xl mt-10">
+              {/* <h3 className="font-bold text-xl mt-10">
                 {lang === 'en' ? 'Location' : 'مقر الأكاديمية'}
-              </h3>
+              </h3> */}
               {/* <div className="flex my-4">
                 <img src={location} alt="" />
                 <p className="mr-4">{links?.address}</p>
