@@ -49,6 +49,7 @@ import ResetPassword from './Pages/Auth/ForgotPassword/ResetPassword';
 import Profile from './Pages/Profile';
 import AddStudent from './Dashboard/students/addStudents';
 import ShowStudent from './Dashboard/students/showStudent';
+import RequireAuth from './functions/RequireAuth';
 
 function App() {
   usePreventZoom();
@@ -91,40 +92,45 @@ function App() {
         <Route path="/course/:id" element={<ShowCourse />} />
         <Route path="/course/:id/exam" element={<Exam />} />
         <Route path="/admin" element={<LoginAdmin />} />
-        <Route path="/dashboard" element={<Dashboard />}>
-          <Route path="main" index element={<MainDashboard />} />
-          <Route path="training" element={<Jobs />} />
-          <Route path="training/:id" element={<UpdateTraining />} />
-          <Route path="add-job" element={<AddJob />} />
-          <Route path="add-training" element={<AddTraining />} />
-          <Route path="add-blog" element={<AddBlog />} />
-          <Route path="courses" element={<Courses />} />
-          <Route path="courses/add" element={<AddCourse />} />
-          <Route path="courses/:id" element={<Lessons />} />
-          <Route path="courses/:courseId/lessons/add" element={<AddLesson />} />
-          <Route
-            path="courses/:courseId/edit/:lessonId"
-            element={<AddLesson />}
-          />
-          <Route path="courses/:id/show/:lessonId" element={<Quizes />} />
-          <Route
-            path="courses/:courseId/show/:lessonId/quizes/add"
-            element={<AddQuiz />}
-          />{' '}
-          <Route
-            path="courses/:courseId/show/:lessonId/edit/:quizId"
-            element={<AddQuiz />}
-          />
-          <Route path="courses/edit/:id" element={<AddCourse />} />
-          <Route path="offers" element={<Offers />} />
-          <Route path="offers/add" element={<AddOffer />} />
-          <Route path="offers/edit/:id" element={<AddOffer />} />
-          <Route path="student" element={<Students />} />
-          <Route path="student/add" element={<AddStudent />} />
-          <Route path="student/:id" element={<ShowStudent />} />
-          <Route path="student/edit/:id" element={<AddStudent />} />
-          <Route path="blogs" element={<BlogsDashboard />} />
-          <Route path="content" element={<Content />} />
+        <Route element={<RequireAuth />}>
+          <Route path="/dashboard" element={<Dashboard />}>
+            <Route path="main" index element={<MainDashboard />} />
+            <Route path="training" element={<Jobs />} />
+            <Route path="training/:id" element={<UpdateTraining />} />
+            <Route path="add-job" element={<AddJob />} />
+            <Route path="add-training" element={<AddTraining />} />
+            <Route path="add-blog" element={<AddBlog />} />
+            <Route path="courses" element={<Courses />} />
+            <Route path="courses/add" element={<AddCourse />} />
+            <Route path="courses/:id" element={<Lessons />} />
+            <Route
+              path="courses/:courseId/lessons/add"
+              element={<AddLesson />}
+            />
+            <Route
+              path="courses/:courseId/edit/:lessonId"
+              element={<AddLesson />}
+            />
+            <Route path="courses/:id/show/:lessonId" element={<Quizes />} />
+            <Route
+              path="courses/:courseId/show/:lessonId/quizes/add"
+              element={<AddQuiz />}
+            />{' '}
+            <Route
+              path="courses/:courseId/show/:lessonId/edit/:quizId"
+              element={<AddQuiz />}
+            />
+            <Route path="courses/edit/:id" element={<AddCourse />} />
+            <Route path="offers" element={<Offers />} />
+            <Route path="offers/add" element={<AddOffer />} />
+            <Route path="offers/edit/:id" element={<AddOffer />} />
+            <Route path="student" element={<Students />} />
+            <Route path="student/add" element={<AddStudent />} />
+            <Route path="student/:id" element={<ShowStudent />} />
+            <Route path="student/edit/:id" element={<AddStudent />} />
+            <Route path="blogs" element={<BlogsDashboard />} />
+            <Route path="content" element={<Content />} />
+          </Route>
         </Route>
       </Routes>
     </>

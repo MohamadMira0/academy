@@ -17,10 +17,11 @@ export default function TopBar2() {
   const [courses, setCourses] = useState(false);
   const [training, setTraining] = useState(false);
   const dispatch = useDispatch();
-  const [lang, setLang] = useState('en');
   const language: string = useSelector(
     (state: RootState) => state.language.lang,
   );
+  const [lang, setLang] = useState(language);
+
   const [screenSize, setScreenSize] = useState(window.innerWidth);
   const cookie = Cookie();
   const token = cookie.get('Bearer');
@@ -38,6 +39,11 @@ export default function TopBar2() {
       window.removeEventListener('resize', handleResize);
     };
   }, [screenSize]);
+
+  const handleLogout = () => {
+    cookie.remove('Bearer');
+    window.location.pathname = '/';
+  };
 
   return (
     <nav
@@ -204,13 +210,13 @@ export default function TopBar2() {
                         </Link>
                       </li>
                       <li>
-                        <Link
-                          to={''}
-                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"
+                        <a
+                          onClick={handleLogout}
+                          className="block px-4 cursor-pointer py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"
                           role="menuitem"
                         >
                           {lang === 'en' ? 'logout' : 'تسجيل الخروج'}
-                        </Link>
+                        </a>
                       </li>
                     </ul>
                   </div>

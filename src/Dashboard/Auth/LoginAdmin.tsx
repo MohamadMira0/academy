@@ -40,7 +40,9 @@ export default function LoginAdmin() {
         values,
       );
       const token = res.data.data.token;
+      const isAdmin = res.data.data.user.is_admin;
       cookie.set('BearerAdmin', token);
+      cookie.set('kalb', isAdmin);
       window.location.pathname = '/dashboard';
 
       console.log('Data submitted successfully:', res.data);

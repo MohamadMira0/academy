@@ -214,8 +214,3 @@ export const updateBlog = async (formData: FormData, id: string) => {
   );
   return response?.data;
 };
-
-export const deleteBlog = async (id: number) => {
-  const response = await AxiosWithToken.delete(`${BLOGS}/delete/${id}`);
-  return response?.data;
-};
