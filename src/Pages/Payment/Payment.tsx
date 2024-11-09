@@ -44,8 +44,11 @@ export default function Payment() {
       const url = res?.data?.data?.url;
       window.location.replace(url);
       console.log(res);
-    } catch (err) {
+    } catch (err: any) {
       console.log(err);
+      if (err.response.status) {
+        window.location.pathname = '/login';
+      }
     }
   };
   return (

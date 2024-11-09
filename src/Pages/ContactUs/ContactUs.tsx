@@ -85,7 +85,7 @@ export default function ContactUs() {
               <Link to={'links?.youtube'} className="text-primary">
                 <img src={youtube} alt="" />
               </Link>
-              <Link to={'links?.whatsapp'} className="text-primary">
+              <Link to={'٠١٠١٠٥١٩٥٩٧ '} className="text-primary">
                 <img src={whatsapp} alt="" />
               </Link>
             </div>
@@ -97,16 +97,13 @@ export default function ContactUs() {
               <p
                 className="mr-4 md:block hidden"
                 onClick={() => {
-                  navigator.clipboard.writeText('links?.phone');
+                  navigator.clipboard.writeText('٠١٠١٠٥١٩٥٩٧');
                 }}
               >
-                {'links?.phone'}
+                ٠١٠١٠٥١٩٥٩٧
               </p>
-              <a
-                href={`tel:${'links?.phone'}`}
-                className="mr-4 block md:hidden"
-              >
-                {'links?.phone'}
+              <a href={`tel:٠١٠١٠٥١٩٥٩٧`} className="mr-4 block md:hidden">
+                ٠١٠١٠٥١٩٥٩٧
               </a>
               <span className="text-primary">+</span>
             </div>
@@ -118,13 +115,10 @@ export default function ContactUs() {
                   navigator.clipboard.writeText('links?.phone');
                 }}
               >
-                {'links?.phone'}
+                ٠٢٢٧٠٦٦٨٥٠٥
               </p>
-              <a
-                href={`tel:${'links?.phone'}`}
-                className="mr-4 block md:hidden"
-              >
-                {'links?.phone'}
+              <a href={`tel:٠٢٢٧٠٦٦٨٥٠٥`} className="mr-4 block md:hidden">
+                ٠٢٢٧٠٦٦٨٥٠٥
               </a>
               <span className="text-primary">+</span>
             </div>

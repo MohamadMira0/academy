@@ -3,13 +3,14 @@ import Footer from '../../components/Footer';
 import TopBar2 from '../../components/TopBar2';
 import pdf from '../../assets/icons/pdf.svg';
 import Accordion from '../../components/Inputs/Accordion';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import zoom from '../../assets/icons/zoom.svg';
 import { useQuery } from 'react-query';
 import { getCourseUserWebsite } from '../../functions';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
 import SubmitLoader from '../../components/Loader/SubmitLoader';
+import { AxiosWithTokenStudent } from '../../Api/axios';
 interface ILessons {
   id: number;
   is_done: number;
@@ -19,16 +20,21 @@ interface ILessons {
 export default function ShowCourse() {
   const { lang } = useSelector((state: RootState) => state.language);
   const { id } = useParams();
+  const nav = useNavigate();
 
   // ** Handlers
   const { data: fetchData, isLoading } = useQuery(
-    ['one-course', lang],
+    [`one-course ${id}`, lang],
     () => getCourseUserWebsite(lang, id),
     {
       keepPreviousData: true,
     },
   );
-  const getVideo = (id: number) => {};
+  const getVideo = async (id: number) => {
+    const res = await AxiosWithTokenStudent.get(`/courses/show-video/${id}`);
+    window.location.href = res.data.data.url;
+    console.log(res);
+  };
 
   console.log(fetchData);
   const data = fetchData?.data;
@@ -38,17 +44,21 @@ export default function ShowCourse() {
 
   const data2 = lessons?.map((item, index) => (
     <Accordion key={index} title={item.title} icon={item.is_done}>
-      <div className="flex items-center gap-2 justify-between bg-white rounded-xl mx-4 mb-4 p-4">
+      <div className="flex flex-wrap items-center gap-2 justify-between bg-white rounded-xl mx-4 mb-4 p-4">
         <button
           onClick={() => getVideo(item.id)}
           className="font-bold text-gray-800 bg-primary text-white px-2 py-1 rounded-lg hover:bg-black duration-300"
         >
           {lang === 'en' ? 'show video' : 'مشاهدة الفيديو'}
         </button>
-        <button className="flex flex-row-reverse items-center gap-2 bg-red-600 rounded-lg text-white px-2 py-1 hover:bg-red-800 duration-300">
+        <a
+          href={item.media_material_path}
+          target="_blank"
+          className="flex flex-row-reverse items-center gap-2 bg-red-600 rounded-lg text-white px-2 py-1 hover:bg-red-800 duration-300"
+        >
           <img src={pdf} width={14} alt="iconPdf" />
           {lang === 'en' ? 'material' : 'تحميل المادة'}
-        </button>
+        </a>
         <Button
           to={`/course/${item.id}/exam`}
           className="font-bold text-gray-800 bg-success text-white px-2 py-1 rounded-lg hover:bg-black duration-300"

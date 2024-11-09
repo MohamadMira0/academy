@@ -1,8 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Formik, useFormik, Form, Field, ErrorMessage } from 'formik';
-import { useMutation, useQuery } from 'react-query';
-import { useQueryClient } from 'react-query';
+import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
 
 import facebook from '../assets/icons/facebook.svg';
 import instagram from '../assets/icons/instagram.svg';
@@ -15,10 +12,14 @@ import spanFooter from '../assets/spanFooter.png';
 import { Axios } from '../Api/axios';
 import { IContactUsType } from '../types';
 import { ContactValidation } from '../Validation/pages/ContactValidation';
+import { RootState } from '../app/store';
+import { useSelector } from 'react-redux';
 interface IProps {
   footer: boolean;
 }
 const Footer = (props: IProps) => {
+  const { lang } = useSelector((state: RootState) => state.language);
+
   const initialValues: IContactUsType = {
     name: '',
     phone: '',
@@ -55,7 +56,10 @@ const Footer = (props: IProps) => {
             dir="rtl"
           >
             <div>
-              <h3 className="text-xl font-bold">تواصل معنا</h3>
+              <h3 className="text-xl font-bold">
+                {lang === 'en' ? 'Contact US' : 'تواصل معنا'}
+              </h3>
+              <p>info@gmdss-academy.com</p>
               {/* <div className="flex gap-4 text-2xl my-6">
                 <Link to={links?.facebook} className="text-stroke">
                   <img src={facebook} alt="" />
@@ -73,22 +77,21 @@ const Footer = (props: IProps) => {
                   <img src={whatsapp} alt="" />
                 </Link>
               </div> */}
-              <h3 className="font-bold text-xl mt-10">ارقام التواصل</h3>
-              {/* <div className="flex my-4">
+              <h3 className="font-bold text-xl mt-10">
+                {lang === 'en' ? 'Contact Numbers' : 'ارقام التواصل'}
+              </h3>
+              <div className="flex my-4">
                 <img src={phone} alt="" />
                 <p
                   className="mr-4 md:block hidden"
                   onClick={() => {
-                    navigator.clipboard.writeText(links?.phone);
+                    navigator.clipboard.writeText('٠١٠١٠٥١٩٥٩٧');
                   }}
                 >
-                  {links?.phone}
+                  ٠١٠١٠٥١٩٥٩٧
                 </p>
-                <a
-                  href={`tel:${links?.phone}`}
-                  className="mr-4 block md:hidden"
-                >
-                  {links?.phone}
+                <a href={`tel:٠١٠١٠٥١٩٥٩٧`} className="mr-4 block md:hidden">
+                  ٠١٠١٠٥١٩٥٩٧
                 </a>
                 <span>+</span>
               </div>
@@ -97,21 +100,20 @@ const Footer = (props: IProps) => {
                 <p
                   className="mr-4 md:block hidden"
                   onClick={() => {
-                    navigator.clipboard.writeText(links?.phone);
+                    navigator.clipboard.writeText('٠٢٢٧٠٦٦٨٥٠٥');
                   }}
                 >
-                  {links?.phone}
+                  ٠٢٢٧٠٦٦٨٥٠٥
                 </p>
-                <a
-                  href={`tel:${links?.phone}`}
-                  className="mr-4 block md:hidden"
-                >
-                  {links?.phone}
+                <a href={`tel:٠٢٢٧٠٦٦٨٥٠٥`} className="mr-4 block md:hidden">
+                  ٠٢٢٧٠٦٦٨٥٠٥
                 </a>
                 <span>+</span>
               </div>
-              <h3 className="font-bold text-xl mt-10">مقر الأكاديمية</h3>
-              <div className="flex my-4">
+              <h3 className="font-bold text-xl mt-10">
+                {lang === 'en' ? 'Location' : 'مقر الأكاديمية'}
+              </h3>
+              {/* <div className="flex my-4">
                 <img src={location} alt="" />
                 <p className="mr-4">{links?.address}</p>
               </div> */}
@@ -124,7 +126,6 @@ const Footer = (props: IProps) => {
               >
                 {({
                   values,
-                  errors,
                   isSubmitting,
                   /* and other goodies */
                 }) => (
@@ -133,7 +134,7 @@ const Footer = (props: IProps) => {
                       <Field
                         type="text"
                         name="name"
-                        placeholder="الأسم"
+                        placeholder={lang === 'en' ? 'Name' : 'الأسم'}
                         className="bg-white py-2 px-4 rounded-lg w-full text-black"
                       ></Field>
                       <ErrorMessage
@@ -147,7 +148,9 @@ const Footer = (props: IProps) => {
                       <Field
                         type="text"
                         name="email"
-                        placeholder="البريد الإلكتروني"
+                        placeholder={
+                          lang === 'en' ? 'Email' : 'البريد الإلكتروني'
+                        }
                         className="bg-white py-2 px-4 rounded-lg w-full text-black"
                       />
                       <ErrorMessage
@@ -160,7 +163,9 @@ const Footer = (props: IProps) => {
                       <Field
                         type="text"
                         name="phone"
-                        placeholder="رقم الهاتف"
+                        placeholder={
+                          lang === 'en' ? 'Number Phone' : 'رقم الهاتف'
+                        }
                         className="bg-white py-2 px-4 rounded-lg w-full text-black "
                       />
                       <ErrorMessage
@@ -175,7 +180,7 @@ const Footer = (props: IProps) => {
                         name="message"
                         id=""
                         value={values.message}
-                        placeholder="رسالة"
+                        placeholder={lang === 'en' ? 'Message' : 'رسالة'}
                         className="bg-white text-black py-2 px-4 rounded-lg w-full "
                         cols="30"
                         rows="6"
@@ -189,12 +194,16 @@ const Footer = (props: IProps) => {
                     </div>
                     {alert === 'error' && (
                       <p className="text-sm text-center text-red-600">
-                        فشل ارسال الفورم
+                        {lang === 'en'
+                          ? 'Error on sent form'
+                          : 'فشل ارسال الفورم'}
                       </p>
                     )}
                     {alert === 'success' && (
                       <p className="text-sm text-center text-success">
-                        تم ارسال الفورم
+                        {lang === 'en'
+                          ? 'Success Sent form'
+                          : 'تم ارسال الفورم'}
                       </p>
                     )}
                     <div className="text-center mt-4">
@@ -203,7 +212,7 @@ const Footer = (props: IProps) => {
                         type="submit"
                         className="bg-white text-primary font-bold rounded-lg px-20 py-2 hover:bg-black duration-300 hover:text-white"
                       >
-                        ارسال
+                        {lang === 'en' ? 'Sent' : 'ارسال'}
                       </button>
                     </div>
                   </Form>

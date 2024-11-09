@@ -2,8 +2,12 @@ import TopBar2 from '../../components/TopBar2';
 import image from '../../assets/about.png';
 import janzeer from '../../assets/janzzerBlue.png';
 import Footer from '../../components/Footer';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../app/store';
 
 export default function AboutUs() {
+  const { lang } = useSelector((state: RootState) => state.language);
+
   return (
     <>
       <TopBar2 />
@@ -18,17 +22,13 @@ export default function AboutUs() {
           </div>
           <div className="w-10/12" dir="rtl">
             <h1 className="text-gold text-5xl font-bold mb-4">
-              الأكاديمية العربية{' '}
+              {lang === 'en' ? 'Arab Academy' : 'الأكاديمية العربية'}
             </h1>
             <h2 className="text-primary text-4xl font-bold mb-4">
-              للاتصالات اللاسلكية والاستغاثات البحرية
+              {lang === 'en'
+                ? 'For radio communications and marine distresses'
+                : 'للاتصالات اللاسلكية والاستغاثات البحرية'}
             </h2>
-            <p className="font-bold text-gray-7 text-2xl">
-              هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحة ما
-              سيلهي القارئ عن التركيز على الشكل الخارجي للنص أو شكل توضع الفقرات
-              في الصفحة التي يقرأها. ولذلك يتم استخدام طريقة لوريم إيبسوم لأنها
-              تعطي توزيعاَ طبيعياَ{' '}
-            </p>
           </div>
         </div>
         <div className="grid lg:grid-cols-2 grid-cols-1 gap-32 content-center items-stretch lg:mt-30 md:mt-20 mt-8">
@@ -37,48 +37,26 @@ export default function AboutUs() {
           </div>
           <div>
             <p className="font-bold text-gray-7 text-right text-2xl leading-10">
-              هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحة ما
-              سيلهي القارئ عن التركيز على الشكل الخارجي للنص أو شكل توضع الفقرات
-              في الصفحة التي يقرأها. ولذلك يتم استخدام طريقة لوريم إيبسوم لأنها
-              تعطي توزيعاَ طبيعياَ -إلى حد ما- للأحرف عوضاً عن استخدام "هنا يوجد
-              محتوى نصي، هنا يوجد محتوى نصي" فتجعلها تبدو (أي الأحرف) وكأنها نص
-              مقروء. العديد من برامح النشر المكتبي وبرامح تحرير صفحات الويب
-              تستخدم لوريم إيبسوم بشكل إفتراضي كنموذج عن النص، وإذا قمت بإدخال
-              "lorem ipsum" في أي محرك بحث ستظهر العديد من المواقع الحديثة العهد
-              في نتائج البحث. على مدى السنين ظهرت نسخ جديدة ومختلفة من نص لوريم
-              إيبسوم، أحياناً عن طريق الصدفة، وأحياناً عن عمد كإدخال بعض
-              العبارات الفكاهية إليها.
+              {lang === 'en'
+                ? `We are the "Academy of Radio Communications and Maritime Distress", a digital educational platform that provides educational services and visual explanations for the first time in the Arabic language for scientific materials for specialized certificates in maritime distress and safety, such as the General Class Radio Operator Certificate (GOC) in the depths of the seas and oceans, as well as the Restricted Class Radio Operator Certificate (ROC) according to the (GMDSS) system, in accordance with the International Convention on Standards of Training, Certification and Watchkeeping for Seafarers (STCW) to prepare specialized technical cadres in the field of navigation and marine officers and radio operators (radio officers) by experts in the field with more than fifteen years in the depths of the seas.                                       `
+                : ` نحن "أكاديمية الاتصالات اللاسلكيه والاستغاثات البحريه" هي منصة تعليمية رقمية تقدم خدمات تعليميه وشروحات مرئية لاول مره باللغة العربية لمواد علمية لشهادات متخصصه فى الاستغاثه والسلامه البحريه من شهادة مشغل لاسلكي من الدرجة العامه (GOC) بأعماق البحار والمحيطات وايضا شهادة مشغل لاسلكي من الدرجة المقيده (ROC) وفقا لنظام (GMDSS) طبقا لإتفاقية الدولية لمعاييرالتدريب وإصدارالشهادات والمراقبه للبحاره (STCW) لإعداد كوادر فنية  متخصصه فى المجال من ضباط الملاحة و البحريين ومشغلي راديو اللاسلكي   (ضباط اللاسلكي ) على يد خبراء فى المجال اكثر من خمسة عشر عاما فى اعماق البحار 
+`}
             </p>
           </div>
-        </div>
-        <div>
-          <h1 className="text-primary font-bold text-2xl text-right mb-4 mt-20">
-            ما هو "لوريم إيبسوم" ؟
-          </h1>
-          <p className="font-bold text-gray-7 text-right text-lg leading-10">
-            لوريم إيبسوم(Lorem Ipsum) هو ببساطة نص شكلي (بمعنى أن الغاية هي
-            الشكل وليس المحتوى) ويُستخدم في صناعات المطابع ودور النشر. كان لوريم
-            إيبسوم ولايزال المعيار للنص الشكلي منذ القرن الخامس عشر عندما قامت
-            مطبعة مجهولة برص مجموعة من الأحرف بشكل عشوائي أخذتها من نص، لتكوّن
-            كتيّب بمثابة دليل أو مرجع شكلي لهذه الأحرف. خمسة قرون من الزمن لم
-            تقضي على هذا النص، بل انه حتى صار مستخدماً وبشكله الأصلي في الطباعة
-            والتنضيد الإلكتروني. انتشر بشكل كبير في ستينيّات هذا القرن مع إصدار
-            رقائق "ليتراسيت" (Letraset) البلاستيكية تحوي مقاطع من هذا النص، وعاد
-            لينتشر مرة أخرى مؤخراَ مع ظهور برامج النشر الإلكتروني مثل "ألدوس
-            بايج مايكر" (Aldus PageMaker) والتي حوت أيضاً على نسخ من نص لوريم
-            إيبسوم.
-          </p>
         </div>
       </div>
 
       <div className="my-16 w-full p-4 flex justify-center">
         <iframe
-          className="md:w-2/4 w-full "
           width="560"
           height="315"
-          src="https://www.youtube.com/embed/c3YOpjVbz3g?si=_jDpyYup1CKNd1ly"
+          src="https://www.youtube.com/embed/ilLgsOmi1UQ?si=OEb8JtR3N6D8eP3v"
+          title="YouTube video player"
+          frameorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen
         ></iframe>
-        {/* <Video /> */}
       </div>
       <Footer footer />
     </>
