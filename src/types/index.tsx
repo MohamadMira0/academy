@@ -57,6 +57,14 @@ export interface IInitialValuesAddOffer extends BaseFields {
   course_ids: number | string;
 }
 
+export interface IInitialValuesAddUser {
+  first_name: string;
+  last_name: string;
+  phone: string;
+  email: string;
+  password: string;
+}
+
 export interface IInitialValuesAddLesson {
   title_ar: string;
   title_en: string;

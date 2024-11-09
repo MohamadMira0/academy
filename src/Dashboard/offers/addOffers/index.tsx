@@ -8,6 +8,7 @@ import { AddOfferValidation } from '../../../Validation/dashboard/AddCourseValid
 import { showSuccess } from '../../../libs/ReactToastify';
 import SubmitLoader from '../../../components/Loader/SubmitLoader';
 import { useQuery } from 'react-query';
+import Select from 'react-select';
 
 const AddOffer = () => {
   const nav = useNavigate();
@@ -40,7 +41,11 @@ const AddOffer = () => {
     instead_of_out_egypt: id ? finalData?.instead_of_out_egypt : 0,
     media: id ? finalData?.media : null,
     publish: id && finalData?.publish,
-    course_ids: id ? finalData?.courses[0]?.id : 'Please Choose Course',
+    course_ids: id
+      ? finalData?.courses?.map((item: any) => {
+          return { value: item.id, label: item.title };
+        })
+      : 'Please Choose Course',
   };
 
   const handleSubmit = async (values: IInitialValuesAddOffer) => {
@@ -61,7 +66,10 @@ const AddOffer = () => {
         'instead_of_out_egypt',
         values.instead_of_out_egypt.toString(),
       );
-      formData.append('course_ids[0]', values.course_ids.toString());
+
+      for (let i = 0; i < values.course_ids.length; i++) {
+        formData.append(`course_ids[${i}]`, values.course_ids[i].value);
+      }
 
       if (typeof values.media === 'string' || values.media instanceof Blob) {
         formData.append('media', values.media);
@@ -323,31 +331,27 @@ const AddOffer = () => {
                 />
               </div>{' '}
             </div>
-            <Field
-              as="select"
+            <Select
               name="course_ids"
               id="course_ids"
               placeholder="محتوى الكورس باللغة الإنكليزية"
               className="appearance-none text-black block w-full px-3 shadow-switch-1 text-gray-700 border border-gray-300 rounded-sm border-none py-4"
-              cols="30"
-              rows="6"
-              maxLength="300"
-            >
-              <option disabled selected>
-                Please Choose Course
-              </option>
-              {coursesData?.data.data?.map((item: any, key: number) => (
-                <option key={key} value={item.id}>
-                  {item.title}
-                </option>
-              ))}
-            </Field>
+              value={values.course_ids}
+              options={coursesData?.data.data?.map((item: any, key: number) => {
+                return { value: item.id, label: item.title };
+              })}
+              isMulti
+              onChange={(selectedOption) => {
+                setFieldValue('course_ids', selectedOption);
+              }}
+            />
+
             <ErrorMessage
               name="course_ids"
               component="div"
               className="error text-red-600 text-sm mt-3"
             />
-            <div></div>
+
             {id && (
               <div className="mt-4">
                 <label className="inline-flex items-center cursor-pointer">

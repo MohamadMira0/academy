@@ -47,6 +47,8 @@ import ForgotPassword from './Pages/Auth/ForgotPassword/ForgotPassword';
 import CheckForgotPasswordToken from './Pages/Auth/ForgotPassword/CheckForgotPasswordToken';
 import ResetPassword from './Pages/Auth/ForgotPassword/ResetPassword';
 import Profile from './Pages/Profile';
+import AddStudent from './Dashboard/students/addStudents';
+import ShowStudent from './Dashboard/students/showStudent';
 
 function App() {
   usePreventZoom();
@@ -110,10 +112,6 @@ function App() {
             element={<AddQuiz />}
           />{' '}
           <Route
-            path="courses/:courseId/show/:lessonId/quizes/add"
-            element={<AddQuiz />}
-          />
-          <Route
             path="courses/:courseId/show/:lessonId/edit/:quizId"
             element={<AddQuiz />}
           />
@@ -122,6 +120,9 @@ function App() {
           <Route path="offers/add" element={<AddOffer />} />
           <Route path="offers/edit/:id" element={<AddOffer />} />
           <Route path="student" element={<Students />} />
+          <Route path="student/add" element={<AddStudent />} />
+          <Route path="student/:id" element={<ShowStudent />} />
+          <Route path="student/edit/:id" element={<AddStudent />} />
           <Route path="blogs" element={<BlogsDashboard />} />
           <Route path="content" element={<Content />} />
         </Route>

@@ -65,7 +65,7 @@ export const AddOfferValidation = (isEditMode: boolean) =>
               value instanceof File &&
               ['image/jpg', 'image/jpeg', 'image/png'].includes(value.type),
           ),
-    course_ids: Yup.string()
+    course_ids: Yup.mixed()
       .required('الرجاء اختيار كورس')
       .notOneOf(['Please Choose Course'], 'الرجاء اختيار كورس'),
     publish: Yup.bool().notRequired(),

@@ -36,9 +36,4 @@ export const links = [
     to: '/dashboard/blogs',
     icons: FaFileSignature,
   },
-  {
-    label: 'المحتوى ',
-    to: '/dashboard/content',
-    icons: BiSolidBookContent,
-  },
 ];
