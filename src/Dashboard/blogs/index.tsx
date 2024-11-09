@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { deleteBlog, formatDate, getBlogs } from '../../functions';
 import { IBlogs } from '../../types';
+import SubmitLoader from '../../components/Loader/SubmitLoader';
 
 const BlogsDashboard = () => {
   const queryClient = useQueryClient();
@@ -36,7 +37,7 @@ const BlogsDashboard = () => {
           className="w-full rounded-md h-[275px]"
         />
         <div className="text-center p-4">
-          <h3 className="text-primary text-2xl font-bold">{blog.title_ar}</h3>
+          <h3 className="text-primary text-2xl font-bold">{blog.title}</h3>
         </div>
         <div className="flex justify-around flex-wrap gap-1">
           <div className="flex items-center justify-center gap-1 py-1 px-3 text-white bg-sky-700 rounded-full">
@@ -48,7 +49,7 @@ const BlogsDashboard = () => {
             <TbMessageCircle className="text-xs" />
           </div>
           <div className="flex items-center justify-center self-center text-white gap-1 py-1 px-3 bg-sky-700 rounded-full">
-            <p className="text-xs flex">{formatDate(blog.created_at)}</p>
+            <p className="text-xs flex">{formatDate(blog.updated_at)}</p>
             <MdAccessTime className="text-xs" />
           </div>
         </div>
@@ -56,7 +57,12 @@ const BlogsDashboard = () => {
     </div>
   ));
 
-  if (isLoading) return <div>loading...</div>;
+  if (isLoading)
+    return (
+      <div className="w-screen h-screen flex items-center justify-center">
+        <SubmitLoader className="!w-10 !h-10" />
+      </div>
+    );
   return (
     <div className="bg-white shadow-lg rounded-md overflow-x-auto lg:p-16 md:p-8 p-4">
       <div className="flex justify-center items-center flex-wrap my-4 mb-10 gap-4">

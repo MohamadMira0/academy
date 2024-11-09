@@ -1,651 +1,69 @@
-import { useState } from 'react';
 import Button from '../../components/Button';
 import Footer from '../../components/Footer';
 import TopBar2 from '../../components/TopBar2';
 import pdf from '../../assets/icons/pdf.svg';
-import trueIcon from '../../assets/icons/true.svg';
-import arrowBottom from '../../assets/icons/arrowBottom.svg';
 import Accordion from '../../components/Inputs/Accordion';
-import { Link } from 'react-router-dom';
-import whatsIconWhite from '../../assets/icons/whatsIconWhite.svg';
+import { Link, useParams } from 'react-router-dom';
 import zoom from '../../assets/icons/zoom.svg';
-
+import { useQuery } from 'react-query';
+import { getCourseUserWebsite } from '../../functions';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../app/store';
+import SubmitLoader from '../../components/Loader/SubmitLoader';
+interface ILessons {
+  id: number;
+  is_done: number;
+  title: string;
+  media_material_path: string;
+}
 export default function ShowCourse() {
-  const [focusSearch, setFocusSearch] = useState(false);
-  const dummyData = [
-    {
-      title: 'اسم الوحدة',
-      icon: trueIcon,
-      content: [
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-      ],
-    },
-    {
-      title: 'اسم الوحدة',
-      icon: trueIcon,
-      content: [
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-      ],
-    },
-    {
-      title: 'اسم الوحدة',
-      icon: trueIcon,
-      content: [
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-      ],
-    },
-    {
-      title: 'اسم الوحدة',
-      icon: trueIcon,
-      content: [
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-      ],
-    },
-    {
-      title: 'اسم الوحدة',
-      icon: trueIcon,
-      content: [
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-      ],
-    },
-    {
-      title: 'اسم الوحدة',
-      icon: trueIcon,
-      content: [
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-      ],
-    },
-    {
-      title: 'اسم الوحدة',
-      icon: trueIcon,
-      content: [
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-      ],
-    },
-    {
-      title: 'اسم الوحدة',
-      icon: trueIcon,
-      content: [
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-      ],
-    },
-    {
-      title: 'اسم الوحدة',
-      icon: trueIcon,
-      content: [
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-      ],
-    },
-    {
-      title: 'اسم الوحدة',
-      icon: trueIcon,
-      content: [
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-      ],
-    },
-    {
-      title: 'اسم الوحدة',
-      icon: trueIcon,
-      content: [
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-      ],
-    },
-    {
-      title: 'اسم الوحدة',
-      icon: trueIcon,
-      content: [
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-      ],
-    },
-    {
-      title: 'اسم الوحدة',
-      icon: trueIcon,
-      content: [
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-      ],
-    },
-    {
-      title: 'اسم الوحدة',
-      icon: trueIcon,
-      content: [
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-      ],
-    },
-    {
-      title: 'اسم الوحدة',
-      icon: trueIcon,
-      content: [
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-      ],
-    },
-    {
-      title: 'اسم الوحدة',
-      icon: trueIcon,
-      content: [
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-      ],
-    },
-    {
-      title: 'اسم الوحدة',
-      icon: trueIcon,
-      content: [
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-      ],
-    },
-    {
-      title: 'اسم الوحدة',
-      icon: trueIcon,
-      content: [
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-      ],
-    },
-    {
-      title: 'اسم الوحدة',
-      icon: trueIcon,
-      content: [
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-      ],
-    },
-    {
-      title: 'اسم الوحدة',
-      icon: trueIcon,
-      content: [
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-      ],
-    },
-    {
-      title: 'اسم الوحدة',
-      icon: trueIcon,
-      content: [
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-      ],
-    },
-    {
-      title: 'اسم الوحدة',
-      icon: trueIcon,
-      content: [
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-      ],
-    },
-    {
-      title: 'اسم الوحدة',
-      icon: trueIcon,
-      content: [
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-      ],
-    },
-    {
-      title: 'اسم الوحدة',
-      icon: trueIcon,
-      content: [
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-      ],
-    },
-    {
-      title: 'اسم الوحدة',
-      icon: trueIcon,
-      content: [
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-      ],
-    },
-    {
-      title: 'اسم الوحدة',
-      icon: trueIcon,
-      content: [
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-      ],
-    },
-    {
-      title: 'اسم الوحدة',
-      icon: trueIcon,
-      content: [
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-      ],
-    },
-    {
-      title: 'اسم الوحدة',
-      icon: trueIcon,
-      content: [
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-      ],
-    },
-    {
-      title: 'اسم الوحدة',
-      icon: trueIcon,
-      content: [
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-      ],
-    },
-    {
-      title: 'اسم الوحدة',
-      icon: trueIcon,
-      content: [
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-      ],
-    },
-    {
-      title: 'اسم الوحدة',
-      icon: trueIcon,
-      content: [
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-      ],
-    },
-    {
-      title: 'اسم الوحدة',
-      icon: trueIcon,
-      content: [
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-      ],
-    },
-    {
-      title: 'اسم الوحدة',
-      icon: trueIcon,
-      content: [
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-        {
-          name: 'اسم الوحدة',
-        },
-      ],
-    },
-  ];
+  const { lang } = useSelector((state: RootState) => state.language);
+  const { id } = useParams();
 
-  // const data = dummyData.map((course, i) => (
-  //   <div
-  //     key={i}
-  //     className="p-4 flex items-center justify-between bg-white rounded-xl mb-4"
-  //   >
-  //     {/* <div className="flex items-center gap-4">
-  //       <img src={course.icon} alt={`index-${i}`} />
-  //       <h3>{course.name}</h3>
-  //     </div>
-  //     <img src={arrowBottom} alt="icon" /> */}
+  // ** Handlers
+  const { data: fetchData, isLoading } = useQuery(
+    ['one-course', lang],
+    () => getCourseUserWebsite(lang, id),
+    {
+      keepPreviousData: true,
+    },
+  );
+  const getVideo = (id: number) => {};
 
-  //   </div>
-  // ));
+  console.log(fetchData);
+  const data = fetchData?.data;
+  const lessons: ILessons[] = fetchData?.data?.lessons;
+  console.log(data);
+  console.log(lessons);
 
-  interface CourseData {
-    name: string;
-    age: number;
-  }
-
-  const data = dummyData.map((item, index) => (
-    <Accordion key={index} title={item.title} icon={item.icon}>
-      {item.content.map((content, i) => (
-        <div
-          key={i}
-          className="p-4 flex items-center justify-between bg-white rounded-xl mb-4"
+  const data2 = lessons?.map((item, index) => (
+    <Accordion key={index} title={item.title} icon={item.is_done}>
+      <div className="flex items-center gap-2 justify-between bg-white rounded-xl mx-4 mb-4 p-4">
+        <button
+          onClick={() => getVideo(item.id)}
+          className="font-bold text-gray-800 bg-primary text-white px-2 py-1 rounded-lg hover:bg-black duration-300"
         >
-          <div className="flex items-center gap-2">
-            <img src={item.icon} alt="icon" />
-            <h3 className="font-bold text-gray-800">
-              {(content as CourseData).name}
-            </h3>
-          </div>
-        </div>
-      ))}
+          {lang === 'en' ? 'show video' : 'مشاهدة الفيديو'}
+        </button>
+        <button className="flex flex-row-reverse items-center gap-2 bg-red-600 rounded-lg text-white px-2 py-1 hover:bg-red-800 duration-300">
+          <img src={pdf} width={14} alt="iconPdf" />
+          {lang === 'en' ? 'material' : 'تحميل المادة'}
+        </button>
+        <Button
+          to={`/course/${item.id}/exam`}
+          className="font-bold text-gray-800 bg-success text-white px-2 py-1 rounded-lg hover:bg-black duration-300"
+          title={lang === 'en' ? 'exam' : 'الامتحان'}
+        />
+      </div>
     </Accordion>
   ));
 
+  if (isLoading)
+    return (
+      <div className="w-screen h-screen flex items-center justify-center">
+        <SubmitLoader className="!w-10 !h-10" />
+      </div>
+    );
   return (
     <>
       <TopBar2 />
@@ -653,115 +71,75 @@ export default function ShowCourse() {
         className="md:container lg:px-16 md:px-8 px-3 pt-20 pb-10 mx-auto"
         dir="rtl"
       >
-        <div>
-          <h1 className="text-gold text-5xl font-bold">اسم الكورس </h1>
-        </div>
         <div className="grid grid-cols-3">
           <div className="px-4 border-l border-gray-8">
-            <form className="max-w-md mx-auto mt-8">
-              <div className="relative">
-                <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                  <svg
-                    className={`${
-                      focusSearch ? 'text-secondary3' : 'text-gray-8'
-                    } w-4 h-4 dark:text-gray-8`}
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                    />
-                  </svg>
-                </div>
-                <input
-                  type="search"
-                  id="default-search"
-                  className="block w-full shadow-lg p-4 ps-10 text-sm text-gray-900 border-2 border-gray-8 rounded-lg bg-gray-50 outline-none focus:border-secondary3"
-                  placeholder="البحث داخل القسم."
-                  onFocus={() => setFocusSearch((prev) => !prev)}
-                  onBlur={() => setFocusSearch((prev) => !prev)}
-                  required
-                />
-              </div>
-            </form>
             <div
               className="sidebar sticky top-0 h-screen overflow-y-auto bg-blue-2 rounded-xl mt-4 px-4"
               dir="ltr"
             >
               <div className="mt-4 w-full" dir="rtl">
-                {data}
+                {data2}
               </div>
             </div>
           </div>
-          <div className="col-span-2 px-4">
-            <h2 className="text-primary font-bold text-2xl">عنوان الجزء</h2>
-            <div className="flex items-center justify-between ">
-              <p className="text-gray-7 text-xl">عنوان الفيديو</p>
-              <button className="flex flex-row-reverse items-center gap-8 bg-red-600 rounded-lg text-white px-6 py-2 hover:bg-red-800 duration-300">
-                <img src={pdf} alt="iconPdf" />
-                تحميل المادة
-              </button>
+          <div dir="ltr" className="col-span-2 px-4">
+            <div className="flex justify-center my-6">
+              <img src={data?.media_path} alt="img" />
             </div>
-            <div className="my-4 flex justify-center">
-              <iframe
-                className="w-full"
-                width="560"
-                height="450"
-                src="https://www.youtube.com/embed/c3YOpjVbz3g?si=_jDpyYup1CKNd1ly"
-                title="YouTube video player"
-                frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerpolicy="strict-origin-when-cross-origin"
-                allowFullScreen
-              ></iframe>
+            <div className="flex items-center gap-2">
+              <h1 className="text-primary-2 font-bold text-xl">
+                {lang === 'en' ? ' course name' : 'اسم الكورس'} :
+              </h1>
+              <h1 className=" font-bold text-xl">{data?.title}</h1>
             </div>
-            <div>
-              <Button
-                to="/course/1/exam"
-                title="الإنتقال الى الأمتحان"
-                className="bg-primary text-white py-1 px-4 rounded-md text-lg hover:bg-black duration-300"
-              />
+            <div className="flex items-center gap-2">
+              <h2 className="text-primary-2 font-bold text-xl">
+                {lang === 'en' ? 'description' : 'الوصف'}
+              </h2>
+              <p className=" font-bold text-xl">{data?.description}</p>
             </div>
-            <div className="flex flex-wrap items-center justify-between md:my-10 my-4 gap-y-3">
-              <div className="lg:w-8/12 md:w-10/12 w-full">
+            <div className="flex items-center gap-2">
+              <h2 className="text-primary-2 font-bold text-xl">
+                {lang === 'en' ? 'status' : 'حالة الكورس'} :
+              </h2>
+              <p className=" font-bold text-xl">{data?.status}</p>
+            </div>
+            <div className="flex items-center gap-2">
+              <h2 className="text-primary-2 font-bold text-xl">
+                {lang === 'en' ? 'number lessons' : 'عدد الدروس '} :
+              </h2>
+              <p className=" font-bold text-xl">{data?.number_lessons}</p>
+            </div>
+            <div className="flex items-center gap-2">
+              <h2 className="text-primary-2 font-bold text-xl">
+                {lang === 'en' ? 'completed lessons' : 'عدد الدروس المكتملة'} :
+              </h2>
+              <p className=" font-bold text-xl">{data?.completed_lessons}</p>
+            </div>
+            <div className="flex flex-wrap items-center justify-between gap-y-3">
+              <div className="flex gap-2 items-center">
                 <p className="text-primary-2 font-bold text-xl">
-                  هل تعاني من مشكلة في فهم الكورس ؟
+                  {lang === 'en'
+                    ? 'expire date course'
+                    : 'تاريخ انتهاء صلاحية الكورس'}
+                  :
                 </p>
-              </div>
-              <div className="lg:w-3/12 md:w-2/12 w-full ">
-                <Link
-                  to={''}
-                  className="bg-green-400 px-6 py-2 flex items-center justify-center w-full text-white gap-4 rounded-md"
-                >
-                  <p>تواصل معنا</p>
-                  <img
-                    src={whatsIconWhite}
-                    alt="icon whatsApp"
-                    className="w-5"
-                  />
-                </Link>
+                <p className=" font-bold text-xl">{data?.expire_date}</p>
               </div>
             </div>
-            <div className="flex flex-wrap items-center justify-between md:my-10 my-4 gap-y-3">
-              <div className="lg:w-8/12 md:w-1/12 w-full">
-                <p className="text-primary-2 font-bold text-xl">
-                  انضم الى الجلسة مع أ. محمد احمد
-                </p>
-              </div>
-              <div className="lg:w-3/12 md:w-2/12 w-full">
-                <Link
-                  to={''}
-                  className="bg-zoom px-6 py-3 flex items-center justify-center  w-full text-white gap-4 rounded-md "
-                >
-                  <img src={zoom} alt="icon zoom" className="w-28" />
-                </Link>
-              </div>
+            <div className="flex items-center gap-2">
+              <p className="text-primary-2 font-bold text-xl">
+                {lang === 'en'
+                  ? 'Join the session with the teacher'
+                  : 'انضم الى الجلسة مع المدرس'}{' '}
+                :
+              </p>
+              <Link
+                to={data?.meeting_link}
+                className="bg-zoom px-4 py-2 flex items-center justify-center text-white gap-4 rounded-md "
+              >
+                <img src={zoom} alt="icon zoom" className="w-28" />
+              </Link>
             </div>
           </div>
         </div>

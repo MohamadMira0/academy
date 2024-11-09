@@ -42,6 +42,36 @@ export const getProfileCoursesWebsite = async (lang: string, group: string) => {
   );
   return response?.data;
 };
+//** get Course User */
+export const getCourseUserWebsite = async (
+  lang: string,
+  id: number | string | undefined,
+) => {
+  const response = await AxiosWithTokenStudent.get(
+    `/${Courses}/open-course/${id}`,
+    {
+      headers: {
+        'X-App-Locale': lang,
+      },
+    },
+  );
+  return response?.data;
+};
+//** get get Data one Course User */
+export const getDataOneCourse = async (
+  lang: string,
+  id: number | string | undefined,
+) => {
+  const response = await AxiosWithTokenStudent.get(
+    `/${Courses}/open-course/${id}`,
+    {
+      headers: {
+        'X-App-Locale': lang,
+      },
+    },
+  );
+  return response?.data;
+};
 //** get Courses */
 export const getCoursesWebsite = async (lang: string) => {
   const response = await Axios.get(`/${Courses}/index-main`, {

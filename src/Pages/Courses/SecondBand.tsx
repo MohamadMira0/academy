@@ -32,7 +32,12 @@ export default function SecondBand() {
       currency={lang === 'en' ? 'EGP' : 'ج.م'}
     />
   ));
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading)
+    return (
+      <div className="w-screen h-screen flex items-center justify-center">
+        <SubmitLoader className="!w-10 !h-10" />
+      </div>
+    );
   return (
     <>
       <TopBar2 />

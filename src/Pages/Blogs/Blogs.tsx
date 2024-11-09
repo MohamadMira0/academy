@@ -7,6 +7,7 @@ import { formatDate, getBlogsWebsite } from '../../functions';
 import { IBlogs } from '../../types';
 import { RootState } from '../../app/store';
 import { useSelector } from 'react-redux';
+import SubmitLoader from '../../components/Loader/SubmitLoader';
 
 export default function Blogs() {
   const { lang } = useSelector((state: RootState) => state.language);
@@ -31,7 +32,12 @@ export default function Blogs() {
       button={lang === 'en' ? 'Learn more' : 'معرفة المزيد'}
     />
   ));
-  if (isLoading) return <div>loading...</div>;
+  if (isLoading)
+    return (
+      <div className="w-screen h-screen flex items-center justify-center">
+        <SubmitLoader className="!w-10 !h-10" />
+      </div>
+    );
   return (
     <>
       <TopBar2 />

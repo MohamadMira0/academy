@@ -8,6 +8,7 @@ import { getCoursesFirstGroupWebsite } from '../../functions';
 import { RootState } from '../../app/store';
 import { useSelector } from 'react-redux';
 import { ICourseWebsite } from '../../types';
+import SubmitLoader from '../../components/Loader/SubmitLoader';
 export default function FirstBand() {
   const { lang } = useSelector((state: RootState) => state.language);
 
@@ -32,7 +33,12 @@ export default function FirstBand() {
       currency={lang === 'en' ? 'EGP' : 'ج.م'}
     />
   ));
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading)
+    return (
+      <div className="w-screen h-screen flex items-center justify-center">
+        <SubmitLoader className="!w-10 !h-10" />
+      </div>
+    );
   return (
     <>
       <TopBar2 />

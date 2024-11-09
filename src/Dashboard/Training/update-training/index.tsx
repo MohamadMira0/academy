@@ -71,7 +71,12 @@ const UpdateTraining = () => {
       console.log(err);
     }
   };
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading)
+    return (
+      <div className="w-screen h-screen flex items-center justify-center">
+        <SubmitLoader className="!w-10 !h-10" />
+      </div>
+    );
   return (
     <div className="bg-white shadow-lg rounded-sm border-none py-4 overflow-x-auto lg:p-16 md:p-8 p-4">
       <Formik

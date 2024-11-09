@@ -20,7 +20,12 @@ export default function EmployPage() {
 
   // const showJobs = jobs;
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading)
+    return (
+      <div className="w-screen h-screen flex items-center justify-center">
+        <SubmitLoader className="!w-10 !h-10" />
+      </div>
+    );
   const showJobs = jobs?.map((job) => (
     <div className="flex justify-start flex-row-reverse items-center">
       <div key={job?.id} className=" top-0 left-0">

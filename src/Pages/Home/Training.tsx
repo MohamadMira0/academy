@@ -5,6 +5,7 @@ import { getTrainingsWebsite } from '../../functions';
 import { trainingsWebsite } from '../../types';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
+import SubmitLoader from '../../components/Loader/SubmitLoader';
 
 export default function Training() {
   const lang: string = useSelector((state: RootState) => state.language.lang);
@@ -42,7 +43,12 @@ export default function Training() {
     </div>
   ));
 
-  if (isLoading) return <div>loading...</div>;
+  if (isLoading)
+    return (
+      <div className="w-screen h-screen flex items-center justify-center">
+        <SubmitLoader className="!w-10 !h-10" />
+      </div>
+    );
   return (
     <div className="mb-20">
       <TitleWithLogo title={lang === 'en' ? 'training' : 'تدريب'} />

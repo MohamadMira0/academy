@@ -1,9 +1,11 @@
 import { useState } from 'react';
+import { FaCheckCircle } from 'react-icons/fa';
+import { FaCircleXmark } from 'react-icons/fa6';
 
 interface AccordionProps {
   title: string;
   content?: string;
-  icon: string;
+  icon: number;
   children?: React.ReactNode;
 }
 
@@ -27,7 +29,11 @@ export default function Accordion({
         style={{ cursor: 'pointer' }}
       >
         <div className="flex items-center gap-2">
-          <img src={icon} alt="icon" />
+          {icon === 0 ? (
+            <FaCircleXmark className="text-red-600" />
+          ) : (
+            <FaCheckCircle className="text-success" />
+          )}
           <h3 className="font-bold text-gray-800">{title}</h3>
         </div>
         <span
@@ -52,7 +58,7 @@ export default function Accordion({
         </span>
       </div>
       <div
-        className={`transition-max-height px-4 duration-300 overflow-hidden ${
+        className={`transition-max-height duration-300 overflow-hidden ${
           isOpen ? 'max-h-96  py-3' : 'max-h-0'
         }`}
       >
