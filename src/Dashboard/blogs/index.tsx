@@ -1,35 +1,49 @@
-import Button from '../../components/Button';
 import { TbMessageCircle } from 'react-icons/tb';
 import { MdAccessTime } from 'react-icons/md';
 import IconBxShow from '../../assets/svg/IconBxShow';
 import { FaRegEdit } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { deleteBlog, formatDate, getBlogs } from '../../functions';
+import { formatDate, getBlogs } from '../../functions';
 import { IBlogs } from '../../types';
 import SubmitLoader from '../../components/Loader/SubmitLoader';
+import { AiFillDelete } from 'react-icons/ai';
+import { useState } from 'react';
+import DeletePopUp from '../../components/Dashboard/DeletePopUp';
+import { AxiosWithToken } from '../../Api/axios';
+import { base_url_admin, BLOGS } from '../../Api/Api';
 
 const BlogsDashboard = () => {
   const queryClient = useQueryClient();
 
   // ** Handle Jobs
   const { data, isLoading } = useQuery(['blogs'], getBlogs);
+  const [openPopUp, setOpenPopUp] = useState(false);
+
   const blogs: IBlogs[] = data?.data;
-  const deleteJobMutation = useMutation(deleteBlog, {
+  const { mutateAsync, isLoading: DeleteLoading } = useMutation({
+    mutationFn: async (id: string) => {
+      return AxiosWithToken.delete(`${base_url_admin}/${BLOGS}/delete/${id}`);
+    },
     onSuccess: () => {
       queryClient.invalidateQueries(['blogs']);
+      setOpenPopUp(false);
     },
   });
-  const handleDeleteJob = async (id: number) => {
-    await deleteJobMutation.mutateAsync(id);
-  };
 
-  console.log(blogs);
   const blogsShow = blogs?.map((blog) => (
     <div className="bg-secondary2 rounded-md shadow-lg p-4 max-w-90">
-      <div className="flex justify-end text-primary">
-        <p className="cursor-pointer">تعديل البيانات</p>
-        <FaRegEdit />
+      <div className="flex justify-between text-primary">
+        <div>
+          <AiFillDelete
+            className="text-xl text-danger cursor-pointer"
+            onClick={() => setOpenPopUp(blog.id)}
+          />
+        </div>
+        <div className="flex gap-2">
+          <p className="cursor-pointer">تعديل البيانات</p>
+          <FaRegEdit />
+        </div>
       </div>
       <div className=" rounded-md overflow-hidden py-4">
         <img
@@ -65,20 +79,14 @@ const BlogsDashboard = () => {
     );
   return (
     <div className="bg-white shadow-lg rounded-md overflow-x-auto lg:p-16 md:p-8 p-4">
-      <div className="flex justify-center items-center flex-wrap my-4 mb-10 gap-4">
-        <Button
-          title="تفعيل"
-          className={`bg-sky-600 text-center text-white rounded-sm px-10 py-2 hover:bg-sky-800 duration-300 hover:text-white`}
+      {openPopUp && (
+        <DeletePopUp
+          setOpenPopUp={setOpenPopUp}
+          handleDelete={mutateAsync}
+          id={openPopUp}
+          DeleteLoading={DeleteLoading}
         />
-        <Button
-          title="حذف"
-          className={`bg-transparent text-center text-sky-600 border border-sky-600 rounded-sm px-10 py-2 hover:bg-sky-800 duration-300 hover:text-white`}
-        />
-        <Button
-          title="إخفاء"
-          className={`bg-transparent text-center text-sky-600 border border-sky-600 rounded-sm px-10 py-2 hover:bg-sky-800 duration-300 hover:text-white `}
-        />
-      </div>
+      )}
       <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-10 justify-center-">
         {blogsShow}
       </div>

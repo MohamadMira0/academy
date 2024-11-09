@@ -43,10 +43,12 @@ export default function Login() {
       const res = await axios.post(`${base_url_student}/auth/signin`, values);
       const token = res.data.data.token;
       const username = res.data.data.user.first_name;
+      const isAdmin = res.data.data.user.is_admin;
+
       cookie.set('Bearer', token);
+      cookie.set('kalb', isAdmin);
       cookie.set('username', username);
       window.location.pathname = '/';
-      console.log(res);
     } catch (err: any) {
       console.log(err);
       if (err.response.status === 400) {
