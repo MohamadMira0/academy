@@ -18,6 +18,7 @@ import { trainingsWebsite } from '../../types';
 import { Axios } from '../../Api/axios';
 import { MdCastForEducation } from 'react-icons/md';
 import { MdOutlineModelTraining } from 'react-icons/md';
+import SubmitLoader from '../../components/Loader/SubmitLoader';
 
 export default function TrainingPage() {
   const [openDetails, setOpenDetails] = useState(false);
@@ -49,6 +50,7 @@ export default function TrainingPage() {
   );
   const trainings: trainingsWebsite[] = data?.data?.trainings;
   const videos = data?.data?.videos;
+  console.log(data?.data);
 
   const handleSubmit = async (
     values: InitialValuesType,
@@ -94,34 +96,26 @@ export default function TrainingPage() {
             <img src={image2} alt="" />
           </div>
         </div>
-        <div className="lg:mt-20 mt-10">
-          <TitleWithLogo
-            title={
-              lang === 'en'
-                ? 'Realistic experiences from training programs'
-                : 'تجارب واقعية من برامج التدريب'
-            }
-          />
-          <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-10">
-            <iframe
-              className="w-full h-[250px]"
-              src="https://www.youtube.com/embed/c3YOpjVbz3g?si=_jDpyYup1CKNd1ly"
-            ></iframe>
-            {/* <Video /> */}
-
-            <iframe
-              className="w-full h-[250px]"
-              src="https://www.youtube.com/embed/c3YOpjVbz3g?si=_jDpyYup1CKNd1ly"
-            ></iframe>
-            {/* <Video /> */}
-
-            <iframe
-              className="w-full h-[250px]"
-              src="https://www.youtube.com/embed/c3YOpjVbz3g?si=_jDpyYup1CKNd1ly"
-            ></iframe>
-            {/* <Video /> */}
+        {videos.length !== 0 && (
+          <div className="lg:mt-20 mt-10">
+            <TitleWithLogo
+              title={
+                lang === 'en'
+                  ? 'Realistic experiences from training programs'
+                  : 'تجارب واقعية من برامج التدريب'
+              }
+            />
+            <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-10">
+              {videos?.map((video: any, idx: number) => {
+                <iframe
+                  key={idx}
+                  className="w-full h-[250px]"
+                  src="https://www.youtube.com/embed/c3YOpjVbz3g?si=_jDpyYup1CKNd1ly"
+                ></iframe>;
+              })}
+            </div>
           </div>
-        </div>
+        )}
       </div>
       <div className="bg-secondary2 py-10 relative my-10">
         <span className="absolute top-[-3.5rem] right-0 bg-secondary2 lg:w-50 xl:w-80 sm:w-20 h-14 rounded-tl-3xl"></span>

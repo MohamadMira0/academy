@@ -53,7 +53,7 @@ export default function Employ() {
         {jobsShow}
         <div className="text-center my-20">
           <Button
-            to="/"
+            to="/employ"
             className="bg-primary text-center text-white rounded-lg px-20 py-2 hover:bg-gray-1 hover:text-primary duration-300"
             title={lang === 'en' ? 'More' : 'المزيد'}
           />

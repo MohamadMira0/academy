@@ -52,10 +52,10 @@ export default function AboutUs() {
           height="315"
           src="https://www.youtube.com/embed/ilLgsOmi1UQ?si=OEb8JtR3N6D8eP3v"
           title="YouTube video player"
-          frameorder="0"
+          frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerpolicy="strict-origin-when-cross-origin"
-          allowfullscreen
+          referrerPolicy="strict-origin-when-cross-origin"
+          allowFullScreen
         ></iframe>
       </div>
       <Footer footer />

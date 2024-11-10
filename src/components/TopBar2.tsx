@@ -50,132 +50,21 @@ export default function TopBar2() {
       className="bg-white border-gray-200 dark:bg-gray-900 shadow-lg"
       dir="rtl"
     >
-      <div className="max-w-screen-2xl flex flex-wrap items-center justify-between mx-auto p-4">
+      <div className="max-w-screen-2xl flex flex-wrap items-center justify-center 2xsm:justify-between mx-auto p-4">
         <Link
           to="/"
           className="flex items-center space-x-3 rtl:space-x-reverse"
         >
-          <img src={logo} className="w-20" alt="Logo" />
+          <img src={logo} className="w-20 md:w-24 xl:w-30" alt="Logo" />
         </Link>
 
-        <div className="relative flex items-center md:order-2 space-x-1 md:space-x-0 rtl:space-x-reverse">
-          <button
-            onClick={() => {
-              setOpenLang((prev) => !prev);
-              setCourses(false);
-              setOpenProfile(false);
-              setTraining(false);
-            }}
-            type="button"
-            data-accordion-target="#accordion-collapse-body-1"
-            aria-expanded="true"
-            aria-controls="accordion-collapse-body-1"
-            className="inline-flex items-center font-medium justify-center px-4 py-2 text-sm text-gray-900 dark:text-white rounded-lg cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
-          >
-            <a
-              href="#"
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"
-              role="menuitem"
-            >
-              <div className="inline-flex items-center">
-                <span className="flex gap-1 items-center">
-                  <img
-                    src={language === 'ar' ? arabic : english}
-                    alt="icon"
-                    className="me-2"
-                  />
-                  {language === 'ar' ? 'العربية' : 'English'}
-                  <img src={arrow} alt="icon" />
-                </span>
-              </div>
-            </a>
-          </button>
-          {openLang && (
-            <div
-              className={`w-[120px] z-50 lang-hover-custom absolute right-0 top-[20px]  my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700`}
-              id="accordion-collapse-body-1"
-              aria-labelledby="accordion-collapse-heading-1"
-            >
-              <ul className="py-2 font-medium" role="none">
-                <li
-                  onClick={() => {
-                    setLang('en');
-                    dispatch(languageAction('en'));
-                    setOpenLang(false);
-                  }}
-                >
-                  <a
-                    href="#"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"
-                    role="menuitem"
-                  >
-                    <div className="inline-flex items-center">
-                      <img src={english} alt="english" />
-                      English (US)
-                    </div>
-                  </a>
-                </li>
-                <li
-                  onClick={() => {
-                    setLang('ar');
-                    dispatch(languageAction('ar'));
-                    setOpenLang(false);
-                  }}
-                >
-                  <a
-                    href="#"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"
-                    role="menuitem"
-                  >
-                    <div className="inline-flex items-center">
-                      <img src={arabic} alt="icon" />
-                      العربية
-                    </div>
-                  </a>
-                </li>
-              </ul>
-            </div>
-          )}
-          <button
-            onClick={() => setOpen((prev) => !prev)}
-            data-collapse-toggle="navbar-language"
-            type="button"
-            className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-            aria-controls="navbar-language"
-            aria-expanded="false"
-          >
-            <span className="sr-only">Open main menu</span>
-            <svg
-              className="w-5 h-5"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 17 14"
-            >
-              <path
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M1 1h15M1 7h15M1 13h15"
-              />
-            </svg>
-          </button>
-        </div>
-        <div
-          className={`${
-            open
-              ? 'w-full'
-              : 'items-center justify-between hidden w-full md:flex md:w-auto md:order-1'
-          }`}
-          id="navbar-language"
-        >
-          <ul className="flex flex-col items-center text-center font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-            <li>
+        <div className="relative flex items-center lg:order-2 space-x-1 lg:space-x-0 rtl:space-x-reverse">
+          <div className="flex items-center gap-1">
+            <div>
               {token ? (
-                <div className="relative">
+                <div className="relative ">
                   <p
-                    className="cursor-pointer select-none"
+                    className="cursor-pointer select-none "
                     onClick={() => {
                       setOpenProfile((prev) => !prev);
                       setTraining(false);
@@ -185,15 +74,15 @@ export default function TopBar2() {
                   >
                     <span className="flex gap-1">
                       <img src={person} alt="icon" />
-                      {username}
+                      <span className="lg:hidden xl:block">{username}</span>
                       <img src={arrow} alt="icon" />
                     </span>
                   </p>
                   {/* <!-- Dropdown --> */}
                   <div
                     className={`${
-                      openProfile ? 'block top-0 right-[150px]' : 'hidden'
-                    } w-[150px] z-50 lang-hover-custom lg:absolute lg:right-0 lg:top-[20px]  lg:my-4 text-base list-none lg:bg-white divide-y divide-gray-100 rounded-lg lg:shadow dark:bg-gray-700`}
+                      openProfile ? 'block' : 'hidden'
+                    } w-[150px] z-50 lang-hover-custom absolute right-0 top-[20px] my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700`}
                     id="language-dropdown-menu"
                   >
                     <ul
@@ -238,7 +127,117 @@ export default function TopBar2() {
                   {lang === 'en' ? 'Login' : 'تسجيل الدخول'}
                 </Link>
               )}
-            </li>
+            </div>
+            <div className="relative h-fit flex items-center">
+              <button
+                onClick={() => {
+                  setOpenLang((prev) => !prev);
+                  setCourses(false);
+                  setOpenProfile(false);
+                  setTraining(false);
+                }}
+                type="button"
+                data-accordion-target="#accordion-collapse-body-1"
+                aria-expanded="true"
+                aria-controls="accordion-collapse-body-1"
+                className="inline-flex items-center font-medium justify-center text-sm text-gray-900 dark:text-white rounded-lg cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
+              >
+                <div className="inline-flex items-center">
+                  <span className="flex gap-1 items-center">
+                    <img
+                      src={language === 'ar' ? arabic : english}
+                      alt="icon"
+                    />
+                    <span className="lg:hidden xl:block">
+                      {language === 'ar' ? 'العربية' : 'English'}
+                    </span>
+                    <img src={arrow} alt="icon" />
+                  </span>
+                </div>
+              </button>
+              {openLang && (
+                <div
+                  className={`w-[120px] z-50 lang-hover-custom absolute transform left-1/2 -translate-x-1/2 top-[20px]  my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700`}
+                  id="accordion-collapse-body-1"
+                  aria-labelledby="accordion-collapse-heading-1"
+                >
+                  <ul className="py-2 font-medium" role="none">
+                    <li
+                      onClick={() => {
+                        setLang('en');
+                        dispatch(languageAction('en'));
+                        setOpenLang(false);
+                      }}
+                    >
+                      <a
+                        href="#"
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"
+                        role="menuitem"
+                      >
+                        <div className="inline-flex items-center">
+                          <img src={english} alt="english" />
+                          English (US)
+                        </div>
+                      </a>
+                    </li>
+                    <li
+                      onClick={() => {
+                        setLang('ar');
+                        dispatch(languageAction('ar'));
+                        setOpenLang(false);
+                      }}
+                    >
+                      <a
+                        href="#"
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"
+                        role="menuitem"
+                      >
+                        <div className="inline-flex items-center">
+                          <img src={arabic} alt="icon" />
+                          العربية
+                        </div>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              )}
+            </div>
+          </div>
+          <button
+            onClick={() => setOpen((prev) => !prev)}
+            data-collapse-toggle="navbar-language"
+            type="button"
+            className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+            aria-controls="navbar-language"
+            aria-expanded="false"
+          >
+            <span className="sr-only">Open main menu</span>
+            <svg
+              className="w-5 h-5"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 17 14"
+            >
+              <path
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M1 1h15M1 7h15M1 13h15"
+              />
+            </svg>
+          </button>
+        </div>
+        <div
+          className={`${
+            open
+              ? 'w-full'
+              : 'items-center justify-between hidden w-full lg:flex lg:w-auto lg:order-1'
+          }`}
+          id="navbar-language"
+        >
+          <ul className="flex flex-col items-center text-center font-medium p-4 lg:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 lg:space-x-2 xl:space-x-4 rtl:space-x-reverse lg:flex-row lg:mt-0 lg:border-0 lg:bg-white dark:bg-gray-800 lg:dark:bg-gray-900 dark:border-gray-700">
             <li>
               <NavLink
                 to={'/'}

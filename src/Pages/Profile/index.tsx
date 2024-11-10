@@ -163,17 +163,17 @@ const Profile = () => {
         dir="rtl"
       >
         <div className={`${typeCourses === 0 ? '' : 'hidden'}`}>
-          <div className="flex flex-wrap items-center justify-between gap-2 gap-y-16">
+          <div className="grid 3xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-25 ">
             {showMyFirstGroupCourses}
           </div>
         </div>
         <div className={`${typeCourses === 1 ? '' : 'hidden'}`}>
-          <div className="flex flex-wrap items-center justify-between gap-2 gap-y-16">
+          <div className="grid 3xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-25 ">
             {showMySecondGroupCourses}
           </div>
         </div>
         <div className={`${typeCourses === 2 ? '' : 'hidden'}`}>
-          <div className="flex flex-wrap items-center justify-between gap-2 gap-y-16">
+          <div className="grid 3xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-25 ">
             {showMyNavigationGroupCourses}
           </div>
         </div>

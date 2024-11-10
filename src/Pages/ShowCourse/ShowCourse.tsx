@@ -44,7 +44,7 @@ export default function ShowCourse() {
 
   const data2 = lessons?.map((item, index) => (
     <Accordion key={index} title={item.title} icon={item.is_done}>
-      <div className="flex flex-wrap items-center gap-2 justify-between bg-white rounded-xl mx-4 mb-4 p-4">
+      <div className="flex flex-wrap items-center gap-2 justify-center xl:justify-between bg-white rounded-xl mx-4 mb-4 p-4">
         <button
           onClick={() => getVideo(item.id)}
           className="font-bold text-gray-800 bg-primary text-white px-2 py-1 rounded-lg hover:bg-black duration-300"

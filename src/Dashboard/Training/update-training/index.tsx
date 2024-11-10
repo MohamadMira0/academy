@@ -13,6 +13,7 @@ import { FaRegFileImage } from 'react-icons/fa';
 import { AiFillFileImage } from 'react-icons/ai';
 import { FaRegEdit } from 'react-icons/fa';
 import { AddBasicValidation } from '../../../Validation/dashboard/AddBlogValidation';
+import SubmitLoader from '../../../components/Loader/SubmitLoader';
 
 const UpdateTraining = () => {
   const [openImage, setOpenImage] = useState(false);

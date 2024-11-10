@@ -76,7 +76,9 @@ export default function Sold(props: IProps) {
                             {lang === 'en'
                               ? 'Book all courses and save'
                               : 'احجز جميع الكورسات ووفر'}
-                            {item.instead_of && item?.instead_of - item?.price}
+                            {item.instead_of &&
+                              item?.price &&
+                              item?.instead_of - item?.price}
                           </p>
                         </div>
                         <div className="flex items-center justify-center gap-1">

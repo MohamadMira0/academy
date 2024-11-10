@@ -10,18 +10,8 @@ const About = () => {
       <TitleWithLogo title={lang === 'en' ? 'Who we are' : 'من نحن'} />
       <div className="my-6 mx-6 text-center text-black font-[700] text-xl">
         {lang === 'en'
-          ? 'lorem lorem lorem'
-          : `
-        هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحة ما سيلهي
-        القارئ عن التركيز على الشكل الخارجي للنص أو شكل توضع الفقرات في الصفحة
-        التي يقرأها. ولذلك يتم استخدام طريقة لوريم إيبسوم لأنها تعطي توزيعاَ
-        طبيعياَ -إلى حد ما- للأحرف عوضاً عن استخدام "هنا يوجد محتوى نصي، هنا
-        يوجد محتوى نصي" فتجعلها تبدو (أي الأحرف) وكأنها نص مقروء. العديد من
-        برامح النشر المكتبي وبرامح تحرير صفحات الويب تستخدم لوريم إيبسوم بشكل
-        إفتراضي كنموذج عن النص، وإذا قمت بإدخال "lorem ipsum" في أي محرك بحث
-        ستظهر العديد من المواقع الحديثة العهد في نتائج البحث. على مدى السنين
-        ظهرت نسخ جديدة ومختلفة من نص لوريم إيبسوم، أحياناً عن طريق الصدفة،
-        وأحياناً عن عمد كإدخال بعض العبارات الفكاهية إليها
+          ? `We are the "Academy of Radio Communications and Maritime Distress", a digital educational platform that provides educational services and visual explanations for the first time in the Arabic language for scientific materials for specialized certificates in maritime distress and safety, such as the General Class Radio Operator Certificate (GOC) in the depths of the seas and oceans, as well as the Restricted Class Radio Operator Certificate (ROC) according to the (GMDSS) system, in accordance with the International Convention on Standards of Training, Certification and Watchkeeping for Seafarers (STCW) to prepare specialized technical cadres in the field of navigation and marine officers and radio operators (radio officers) by experts in the field with more than fifteen years in the depths of the seas.                                       `
+          : ` نحن "أكاديمية الاتصالات اللاسلكيه والاستغاثات البحريه" هي منصة تعليمية رقمية تقدم خدمات تعليميه وشروحات مرئية لاول مره باللغة العربية لمواد علمية لشهادات متخصصه فى الاستغاثه والسلامه البحريه من شهادة مشغل لاسلكي من الدرجة العامه (GOC) بأعماق البحار والمحيطات وايضا شهادة مشغل لاسلكي من الدرجة المقيده (ROC) وفقا لنظام (GMDSS) طبقا لإتفاقية الدولية لمعاييرالتدريب وإصدارالشهادات والمراقبه للبحاره (STCW) لإعداد كوادر فنية  متخصصه فى المجال من ضباط الملاحة و البحريين ومشغلي راديو اللاسلكي   (ضباط اللاسلكي ) على يد خبراء فى المجال اكثر من خمسة عشر عاما فى اعماق البحار 
 `}
       </div>
       <div className="text-center pb-8">

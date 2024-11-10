@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
 import { getJobsWebsitePage } from '../../functions';
 import { jobsWebsite } from '../../types';
+import SubmitLoader from '../../components/Loader/SubmitLoader';
 
 export default function EmployPage() {
   const { lang } = useSelector((state: RootState) => state.language);
@@ -26,8 +27,8 @@ export default function EmployPage() {
         <SubmitLoader className="!w-10 !h-10" />
       </div>
     );
-  const showJobs = jobs?.map((job) => (
-    <div className="flex justify-start flex-row-reverse items-center">
+  const showJobs = jobs?.map((job, idx) => (
+    <div key={idx} className="flex justify-start flex-row-reverse items-center">
       <div key={job?.id} className=" top-0 left-0">
         <img src={job?.media.file_path} alt="span" className="w-60" />
       </div>

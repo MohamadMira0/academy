@@ -69,32 +69,24 @@ export default function FirstBand() {
         >
           <Button
             title={lang === 'en' ? 'Courses' : 'الكورسات'}
-            className="bg-secondary3 text-white hover:text-secondary3 hover:bg-white duration-300 rounded-lg px-20 py-2 w-full sm:w-fit"
+            className="bg-secondary3 text-white rounded-lg px-20 py-2 w-full sm:w-fit cursor-text"
           />
-          {/* <Button
-            title={lang === 'en' ? 'Continue education' : 'واصل التعليم'}
-            className="bg-white text-secondary3 hover:text-white hover:bg-secondary3 duration-300 rounded-lg px-20 py-2 w-full sm:w-fit"
-          />
-          <Button
-            title={lang === 'en' ? 'Completed' : 'المنجزة'}
-            className="bg-white text-secondary3 hover:text-white hover:bg-secondary3 duration-300 rounded-lg px-20 py-2 w-full sm:w-fit"
-          /> */}
         </div>
       </div>
       <div className="bg-secondary2 pt-32 pb-10 relative">
         <span className="absolute top-[-3.5rem] right-0 bg-secondary2 lg:w-50 sm:w-20 h-14 rounded-tl-3xl"></span>
         <div className="lg:px-16 md:px-8 px-3">
-          <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-25 ">
+          <div className="grid 3xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-25 ">
             {showCourse}
           </div>
 
-          <div className="text-center pt-20">
+          {/* <div className="text-center pt-20">
             <Button
               to="/"
               className="bg-white text-secondary rounded-lg px-20 py-2 hover:bg-gray-1 hover:text-primary duration-300"
               title={lang === 'en' ? 'Book all courses' : 'حجز جميع الكورسات'}
             />
-          </div>
+          </div> */}
         </div>
       </div>
       <Footer footer />
