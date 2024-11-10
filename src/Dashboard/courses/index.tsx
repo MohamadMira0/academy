@@ -22,8 +22,8 @@ interface IFetchData {
 
 const userColumns: Array<{ key: keyof Apply_Institutes; label: string }> = [
   { key: 'id', label: 'ID' },
-  { key: 'title_ar', label: 'عنوان الإعلان' },
-  { key: 'study_group', label: 'المؤهل التعليمي' },
+  { key: 'title_ar', label: 'اسم الكورس' },
+  { key: 'study_group', label: 'الفرقة' },
   { key: 'type_payment', label: 'حالة الكورس' },
   { key: 'number_months', label: 'عدد الأشهر ' },
 ];

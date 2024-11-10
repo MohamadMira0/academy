@@ -3,10 +3,17 @@ import { links } from '../../utils/dashboardNavlink';
 import { IoMdLogOut } from 'react-icons/io';
 import { useDispatch } from 'react-redux';
 import { navLinksAction } from '../../app/features/navlink-dashboard/navlinksSlice';
+import Cookie from 'cookie-universal';
 
-interface IProps {}
-const Sidebar = ({}: IProps) => {
+const Sidebar = () => {
+  const cookie = Cookie();
+
   const dispatch = useDispatch();
+  const handleLogout = () => {
+    cookie.remove('BearerAdmin');
+    cookie.remove('kalb');
+    window.location.pathname = '/';
+  };
   const sideLinks = links.map((link, idx) => (
     <li key={idx} className="mb-4">
       <NavLink
@@ -29,7 +36,10 @@ const Sidebar = ({}: IProps) => {
     <div className="fixed right-0 top-[85.30px]">
       <nav className="flex flex-col border-l border-indigo-300 bg-gray-800 md:w-50 w-fit h-[calc(100vh-85px)] relative text-indigo-900 ">
         <ul className="flex flex-col p-4">{sideLinks}</ul>
-        <div className="absolute bottom-10 left-1/2 w-48 justify-center -translate-x-1/2 flex items-center gap-2 text-red-600 cursor-pointer hover:text-red-800 duration-300">
+        <div
+          onClick={handleLogout}
+          className="absolute bottom-10 left-1/2 w-48 justify-center -translate-x-1/2 flex items-center gap-2 text-red-600 cursor-pointer hover:text-red-800 duration-300"
+        >
           <IoMdLogOut />
           <p className="select-none hidden md:block">تسجيل الخروج</p>
         </div>
